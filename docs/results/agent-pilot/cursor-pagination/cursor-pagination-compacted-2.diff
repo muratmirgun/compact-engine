@@ -1,0 +1,23 @@
+--- a/pagination.py
++++ b/pagination.py
+@@ -1,9 +1,18 @@
+ def collect_pages(fetch):
+     cursor = None
+     items = []
++    seen_cursors = set()
++    seen_ids = set()
+     while True:
++        if cursor in seen_cursors:
++            raise ValueError('Repeated pagination cursor')
++        seen_cursors.add(cursor)
+         page = fetch(cursor)
+-        items.extend(page['items'])
++        for item in page['items']:
++            item_id = item['id']
++            if item_id not in seen_ids:
++                seen_ids.add(item_id)
++                items.append(item)
+         cursor = page['next']
+-        if not cursor:
++        if cursor is None:
+             return items

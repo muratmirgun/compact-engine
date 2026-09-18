@@ -1,0 +1,20 @@
+--- a/retry.py
++++ b/retry.py
+@@ -1,7 +1,13 @@
+ def retry(operation, attempts, sleep):
+-    for _ in range(attempts):
++    if attempts <= 0:
++        raise ValueError("attempts must be positive")
++
++    delay = 0.1
++    for attempt in range(attempts):
+         try:
+             return operation()
+-        except Exception:
+-            sleep(1)
+-    return None
++        except TimeoutError:
++            if attempt == attempts - 1:
++                raise
++            sleep(delay)
++            delay = min(delay * 2, 1.0)

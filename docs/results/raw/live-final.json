@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-09-18",
+  "mode": "live-synthetic",
+  "requested_model": "jev-latest",
+  "resolved_model_recorded": false,
+  "repeats_per_case": 1,
+  "provenance": "Engine-side observations from the selection experiment, before OSS documentation preparation. No new live calls were made for publication preparation.",
+  "cases": [
+    {
+      "case": "original",
+      "status": "budget_unmet",
+      "applied": false,
+      "budget_met": false,
+      "stats": {
+        "input_tokens": 2580,
+        "output_tokens": 2580,
+        "reduction_ratio": 0,
+        "counter": "o200k_base+canonical-json+8/message",
+        "scorer": "jev:jev-latest",
+        "scoring_ms": 1048.06825,
+        "total_ms": 1070.892625
+      },
+      "scores": {
+        "old-call": {
+          "loss": {
+            "brief": 0.26,
+            "drop": 0.44,
+            "extract": 0.3,
+            "reference": 0.45
+          }
+        }
+      },
+      "protected_exact": true,
+      "evidence_retained": true,
+      "complete": [
+        true
+      ],
+      "actions": {},
+      "fixture": "eval/fixtures/original.json",
+      "input_sha256": "3e0b896dc16cb50cac0e56e13b7d0afef4c7c366aaf2f28375fd8ad6083aef2f",
+      "expected_status": "compacted",
+      "expectation_met": false,
+      "command_exact": true
+    },
+    {
+      "case": "exact-command",
+      "status": "budget_unmet",
+      "applied": false,
+      "budget_met": false,
+      "stats": {
+        "input_tokens": 1037,
+        "output_tokens": 1037,
+        "reduction_ratio": 0,
+        "counter": "o200k_base+canonical-json+8/message",
+        "scorer": "jev:jev-latest",
+        "scoring_ms": 800.644041,
+        "total_ms": 812.86475
+      },
+      "scores": {
+        "old-call": {
+          "loss": {
+            "brief": 0.43,
+            "drop": 0.92,
+            "extract": 0.23,
+            "reference": 0.81
+          }
+        }
+      },
+      "protected_exact": true,
+      "evidence_retained": true,
+      "complete": [
+        true
+      ],
+      "actions": {},
+      "fixture": "eval/fixtures/exact-command.json",
+      "input_sha256": "b75c2313550dee26fcc186c203792b24b3890e939f543bf65c566f569bc35b77",
+      "expected_status": "budget_unmet",
+      "expectation_met": true,
+      "command_exact": true
+    },
+    {
+      "case": "middle-evidence",
+      "status": "compacted",
+      "applied": true,
+      "budget_met": true,
+      "stats": {
+        "input_tokens": 2619,
+        "output_tokens": 343,
+        "reduction_ratio": 0.8690339824360442,
+        "counter": "o200k_base+canonical-json+8/message",
+        "scorer": "jev:jev-latest",
+        "scoring_ms": 1025.839208,
+        "total_ms": 1039.854541
+      },
+      "scores": {
+        "old-call": {
+          "loss": {
+            "brief": 0.19,
+            "drop": 0.82,
+            "extract": 0.18,
+            "reference": 0.59
+          }
+        }
+      },
+      "protected_exact": true,
+      "evidence_retained": true,
+      "complete": [
+        true
+      ],
+      "actions": {
+        "rules": "keep",
+        "goal": "keep",
+        "old-call": "brief",
+        "test-call": "keep"
+      },
+      "fixture": "eval/fixtures/middle-evidence.json",
+      "input_sha256": "1d6802c02e86c01d9a696c3efa01d70dce0650c10b4fa592322153c276a43ea3",
+      "expected_status": "compacted",
+      "expectation_met": true,
+      "command_exact": true
+    },
+    {
+      "case": "partial-budget",
+      "status": "budget_unmet",
+      "applied": false,
+      "budget_met": false,
+      "stats": {
+        "input_tokens": 2580,
+        "output_tokens": 2580,
+        "reduction_ratio": 0,
+        "counter": "o200k_base+canonical-json+8/message",
+        "scorer": "jev:jev-latest",
+        "scoring_ms": 1087.788,
+        "total_ms": 1107.426792
+      },
+      "scores": {
+        "old-call": {
+          "loss": {
+            "brief": 0.24,
+            "drop": 0.45,
+            "extract": 0.3,
+            "reference": 0.44
+          }
+        }
+      },
+      "protected_exact": true,
+      "evidence_retained": true,
+      "complete": [
+        true
+      ],
+      "actions": {},
+      "fixture": "eval/fixtures/partial-budget.json",
+      "input_sha256": "ba536c0f89438076f853f386e2cb526700a8c60650ee0fac0504d870384036f3",
+      "expected_status": "partial",
+      "expectation_met": false,
+      "command_exact": true
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+go test ./compact -run '^$' -fuzz '^FuzzExcerpt$' -fuzztime=5s
+fuzz: elapsed: 0s, gathering baseline coverage: 0/2 completed
+fuzz: elapsed: 0s, gathering baseline coverage: 2/2 completed, now fuzzing with 10 workers
+fuzz: elapsed: 3s, execs: 49660 (16550/sec), new interesting: 21 (total: 23)
+fuzz: elapsed: 6s, execs: 262933 (71101/sec), new interesting: 24 (total: 26)
+fuzz: elapsed: 6s, execs: 262933 (0/sec), new interesting: 24 (total: 26)
+PASS
+ok  	github.com/muratmirgun/compact-engine/compact	6.334s
+go test ./compact -run '^$' -fuzz '^FuzzCompactionInvariants$' -fuzztime=5s
+fuzz: elapsed: 0s, gathering baseline coverage: 0/2 completed
+fuzz: elapsed: 0s, gathering baseline coverage: 2/2 completed, now fuzzing with 10 workers
+fuzz: elapsed: 3s, execs: 16405 (5466/sec), new interesting: 94 (total: 96)
+fuzz: elapsed: 6s, execs: 24747 (2781/sec), new interesting: 117 (total: 119)
+fuzz: elapsed: 6s, execs: 24747 (0/sec), new interesting: 117 (total: 119)
+PASS
+ok  	github.com/muratmirgun/compact-engine/compact	6.269s

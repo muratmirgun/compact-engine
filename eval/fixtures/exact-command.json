@@ -1,0 +1,37 @@
+{
+  "goal": "Return the exact rollback command from the log, including its checksum argument. Do not infer missing arguments.",
+  "target_tokens": 180,
+  "recent_messages": 0,
+  "messages": [
+    {
+      "id": "rules",
+      "role": "system",
+      "text": "Preserve the exact command and every argument."
+    },
+    {
+      "id": "goal",
+      "role": "user",
+      "text": "Return the exact rollback command from the log, including its checksum argument. Do not infer missing arguments."
+    },
+    {
+      "id": "old-call",
+      "role": "assistant",
+      "text": "",
+      "tool_calls": [
+        {
+          "id": "old",
+          "name": "read_build_log",
+          "arguments": {
+            "path": "logs/old-build.log"
+          }
+        }
+      ]
+    },
+    {
+      "id": "old-result",
+      "role": "tool",
+      "tool_call_id": "old",
+      "text": "ROLLBACK_COMMAND: ./rollback --exclude cache_part_0 --exclude cache_part_1 --exclude cache_part_2 --exclude cache_part_3 --exclude cache_part_4 --exclude cache_part_5 --exclude cache_part_6 --exclude cache_part_7 --exclude cache_part_8 --exclude cache_part_9 --exclude cache_part_10 --exclude cache_part_11 --exclude cache_part_12 --exclude cache_part_13 --exclude cache_part_14 --exclude cache_part_15 --exclude cache_part_16 --exclude cache_part_17 --exclude cache_part_18 --exclude cache_part_19 --exclude cache_part_20 --exclude cache_part_21 --exclude cache_part_22 --exclude cache_part_23 --exclude cache_part_24 --exclude cache_part_25 --exclude cache_part_26 --exclude cache_part_27 --exclude cache_part_28 --exclude cache_part_29 --exclude cache_part_30 --exclude cache_part_31 --exclude cache_part_32 --exclude cache_part_33 --exclude cache_part_34 --exclude cache_part_35 --exclude cache_part_36 --exclude cache_part_37 --exclude cache_part_38 --exclude cache_part_39 --exclude cache_part_40 --exclude cache_part_41 --exclude cache_part_42 --exclude cache_part_43 --exclude cache_part_44 --exclude cache_part_45 --exclude cache_part_46 --exclude cache_part_47 --exclude cache_part_48 --exclude cache_part_49 --exclude cache_part_50 --exclude cache_part_51 --exclude cache_part_52 --exclude cache_part_53 --exclude cache_part_54 --exclude cache_part_55 --exclude cache_part_56 --exclude cache_part_57 --exclude cache_part_58 --exclude cache_part_59 --exclude cache_part_60 --exclude cache_part_61 --exclude cache_part_62 --exclude cache_part_63 --exclude cache_part_64 --exclude cache_part_65 --exclude cache_part_66 --exclude cache_part_67 --exclude cache_part_68 --exclude cache_part_69 --exclude cache_part_70 --exclude cache_part_71 --exclude cache_part_72 --exclude cache_part_73 --exclude cache_part_74 --exclude cache_part_75 --exclude cache_part_76 --exclude cache_part_77 --exclude cache_part_78 --exclude cache_part_79 --exclude cache_part_80 --exclude cache_part_81 --exclude cache_part_82 --exclude cache_part_83 --exclude cache_part_84 --exclude cache_part_85 --exclude cache_part_86 --exclude cache_part_87 --exclude cache_part_88 --exclude cache_part_89 --exclude cache_part_90 --exclude cache_part_91 --exclude cache_part_92 --exclude cache_part_93 --exclude cache_part_94 --exclude cache_part_95 --exclude cache_part_96 --exclude cache_part_97 --exclude cache_part_98 --exclude cache_part_99 --exclude cache_part_100 --exclude cache_part_101 --exclude cache_part_102 --exclude cache_part_103 --exclude cache_part_104 --exclude cache_part_105 --exclude cache_part_106 --exclude cache_part_107 --exclude cache_part_108 --exclude cache_part_109 --exclude cache_part_110 --exclude cache_part_111 --exclude cache_part_112 --exclude cache_part_113 --exclude cache_part_114 --exclude cache_part_115 --exclude cache_part_116 --exclude cache_part_117 --exclude cache_part_118 --exclude cache_part_119 --exclude cache_part_120 --exclude cache_part_121 --exclude cache_part_122 --exclude cache_part_123 --exclude cache_part_124 --exclude cache_part_125 --exclude cache_part_126 --exclude cache_part_127 --exclude cache_part_128 --exclude cache_part_129 --exclude cache_part_130 --exclude cache_part_131 --exclude cache_part_132 --exclude cache_part_133 --exclude cache_part_134 --exclude cache_part_135 --exclude cache_part_136 --exclude cache_part_137 --exclude cache_part_138 --exclude cache_part_139 --exclude cache_part_140 --exclude cache_part_141 --exclude cache_part_142 --exclude cache_part_143 --exclude cache_part_144 --exclude cache_part_145 --exclude cache_part_146 --exclude cache_part_147 --exclude cache_part_148 --exclude cache_part_149 --checksum EXPECTED_DIGEST_731"
+    }
+  ]
+}

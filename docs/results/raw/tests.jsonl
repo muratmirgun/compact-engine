@@ -1,0 +1,682 @@
+{"Time":"2026-09-18T23:07:03.983739+03:00","Action":"start","Package":"github.com/muratmirgun/compact-engine/archive"}
+{"Time":"2026-09-18T23:07:04.259568+03:00","Action":"start","Package":"github.com/muratmirgun/compact-engine/cmd/compactd"}
+{"Time":"2026-09-18T23:07:04.259617+03:00","Action":"start","Package":"github.com/muratmirgun/compact-engine/compact"}
+{"Time":"2026-09-18T23:07:04.259693+03:00","Action":"start","Package":"github.com/muratmirgun/compact-engine/jev"}
+{"Time":"2026-09-18T23:07:04.26227+03:00","Action":"start","Package":"github.com/muratmirgun/compact-engine/server"}
+{"Time":"2026-09-18T23:07:04.262393+03:00","Action":"start","Package":"github.com/muratmirgun/compact-engine/token"}
+{"Time":"2026-09-18T23:07:04.319025+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/archive","Test":"TestStoreRoundTripAndIntegrity"}
+{"Time":"2026-09-18T23:07:04.319286+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/archive","Test":"TestStoreRoundTripAndIntegrity","Output":"=== RUN   TestStoreRoundTripAndIntegrity\n"}
+{"Time":"2026-09-18T23:07:04.319314+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/archive","Test":"TestStoreRoundTripAndIntegrity","Output":"=== PAUSE TestStoreRoundTripAndIntegrity\n"}
+{"Time":"2026-09-18T23:07:04.319318+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/archive","Test":"TestStoreRoundTripAndIntegrity"}
+{"Time":"2026-09-18T23:07:04.31932+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/archive","Test":"TestConcurrentSnapshotWrites"}
+{"Time":"2026-09-18T23:07:04.319321+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/archive","Test":"TestConcurrentSnapshotWrites","Output":"=== RUN   TestConcurrentSnapshotWrites\n"}
+{"Time":"2026-09-18T23:07:04.319323+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/archive","Test":"TestConcurrentSnapshotWrites","Output":"=== PAUSE TestConcurrentSnapshotWrites\n"}
+{"Time":"2026-09-18T23:07:04.319324+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/archive","Test":"TestConcurrentSnapshotWrites"}
+{"Time":"2026-09-18T23:07:04.319326+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/archive","Test":"TestConcurrentSnapshotWrites"}
+{"Time":"2026-09-18T23:07:04.319327+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/archive","Test":"TestConcurrentSnapshotWrites","Output":"=== CONT  TestConcurrentSnapshotWrites\n"}
+{"Time":"2026-09-18T23:07:04.319337+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/archive","Test":"TestStoreRoundTripAndIntegrity"}
+{"Time":"2026-09-18T23:07:04.319338+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/archive","Test":"TestStoreRoundTripAndIntegrity","Output":"=== CONT  TestStoreRoundTripAndIntegrity\n"}
+{"Time":"2026-09-18T23:07:04.369707+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/archive","Test":"TestStoreRoundTripAndIntegrity","Output":"--- PASS: TestStoreRoundTripAndIntegrity (0.05s)\n"}
+{"Time":"2026-09-18T23:07:04.388994+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/archive","Test":"TestStoreRoundTripAndIntegrity","Elapsed":0.05}
+{"Time":"2026-09-18T23:07:04.389244+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/archive","Test":"TestConcurrentSnapshotWrites","Output":"--- PASS: TestConcurrentSnapshotWrites (0.07s)\n"}
+{"Time":"2026-09-18T23:07:04.389251+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/archive","Test":"TestConcurrentSnapshotWrites","Elapsed":0.07}
+{"Time":"2026-09-18T23:07:04.389253+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/archive","Output":"PASS\n"}
+{"Time":"2026-09-18T23:07:04.390742+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/archive","Output":"coverage: 71.0% of statements\n"}
+{"Time":"2026-09-18T23:07:04.510077+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientBatchesAndSendsContent"}
+{"Time":"2026-09-18T23:07:04.510113+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientBatchesAndSendsContent","Output":"=== RUN   TestClientBatchesAndSendsContent\n"}
+{"Time":"2026-09-18T23:07:04.510119+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientBatchesAndSendsContent","Output":"=== PAUSE TestClientBatchesAndSendsContent\n"}
+{"Time":"2026-09-18T23:07:04.51012+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientBatchesAndSendsContent"}
+{"Time":"2026-09-18T23:07:04.510124+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses"}
+{"Time":"2026-09-18T23:07:04.510125+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses","Output":"=== RUN   TestClientRejectsMalformedResponses\n"}
+{"Time":"2026-09-18T23:07:04.510144+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses","Output":"=== PAUSE TestClientRejectsMalformedResponses\n"}
+{"Time":"2026-09-18T23:07:04.510146+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses"}
+{"Time":"2026-09-18T23:07:04.510173+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry"}
+{"Time":"2026-09-18T23:07:04.510174+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry","Output":"=== RUN   TestClientNoRedirectOrRetry\n"}
+{"Time":"2026-09-18T23:07:04.510193+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry","Output":"=== PAUSE TestClientNoRedirectOrRetry\n"}
+{"Time":"2026-09-18T23:07:04.510196+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry"}
+{"Time":"2026-09-18T23:07:04.510203+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientBudgetAndCancellation"}
+{"Time":"2026-09-18T23:07:04.510204+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientBudgetAndCancellation","Output":"=== RUN   TestClientBudgetAndCancellation\n"}
+{"Time":"2026-09-18T23:07:04.510216+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientBudgetAndCancellation","Output":"=== PAUSE TestClientBudgetAndCancellation\n"}
+{"Time":"2026-09-18T23:07:04.510218+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientBudgetAndCancellation"}
+{"Time":"2026-09-18T23:07:04.510329+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants"}
+{"Time":"2026-09-18T23:07:04.510346+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants","Output":"=== RUN   TestClientScoresConcreteVariants\n"}
+{"Time":"2026-09-18T23:07:04.510349+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants","Output":"=== PAUSE TestClientScoresConcreteVariants\n"}
+{"Time":"2026-09-18T23:07:04.510351+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants"}
+{"Time":"2026-09-18T23:07:04.510354+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants"}
+{"Time":"2026-09-18T23:07:04.510355+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants","Output":"=== CONT  TestClientScoresConcreteVariants\n"}
+{"Time":"2026-09-18T23:07:04.51047+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses"}
+{"Time":"2026-09-18T23:07:04.510475+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses","Output":"=== CONT  TestClientRejectsMalformedResponses\n"}
+{"Time":"2026-09-18T23:07:04.51059+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientBatchesAndSendsContent"}
+{"Time":"2026-09-18T23:07:04.510612+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientBatchesAndSendsContent","Output":"=== CONT  TestClientBatchesAndSendsContent\n"}
+{"Time":"2026-09-18T23:07:04.510794+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientBudgetAndCancellation"}
+{"Time":"2026-09-18T23:07:04.510807+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientBudgetAndCancellation","Output":"=== CONT  TestClientBudgetAndCancellation\n"}
+{"Time":"2026-09-18T23:07:04.510858+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry"}
+{"Time":"2026-09-18T23:07:04.510871+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry","Output":"=== CONT  TestClientNoRedirectOrRetry\n"}
+{"Time":"2026-09-18T23:07:04.51088+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/307"}
+{"Time":"2026-09-18T23:07:04.510883+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/307","Output":"=== RUN   TestClientNoRedirectOrRetry/307\n"}
+{"Time":"2026-09-18T23:07:04.51089+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/307","Output":"=== PAUSE TestClientNoRedirectOrRetry/307\n"}
+{"Time":"2026-09-18T23:07:04.510893+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/307"}
+{"Time":"2026-09-18T23:07:04.510943+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/429"}
+{"Time":"2026-09-18T23:07:04.510955+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/429","Output":"=== RUN   TestClientNoRedirectOrRetry/429\n"}
+{"Time":"2026-09-18T23:07:04.51096+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/429","Output":"=== PAUSE TestClientNoRedirectOrRetry/429\n"}
+{"Time":"2026-09-18T23:07:04.510963+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/429"}
+{"Time":"2026-09-18T23:07:04.510966+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants/complete"}
+{"Time":"2026-09-18T23:07:04.510973+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants/complete","Output":"=== RUN   TestClientScoresConcreteVariants/complete\n"}
+{"Time":"2026-09-18T23:07:04.510985+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants/complete","Output":"=== PAUSE TestClientScoresConcreteVariants/complete\n"}
+{"Time":"2026-09-18T23:07:04.510994+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants/complete"}
+{"Time":"2026-09-18T23:07:04.51122+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants/missing_variant"}
+{"Time":"2026-09-18T23:07:04.511225+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants/missing_variant","Output":"=== RUN   TestClientScoresConcreteVariants/missing_variant\n"}
+{"Time":"2026-09-18T23:07:04.511228+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/500"}
+{"Time":"2026-09-18T23:07:04.511229+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/500","Output":"=== RUN   TestClientNoRedirectOrRetry/500\n"}
+{"Time":"2026-09-18T23:07:04.511231+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants/missing_variant","Output":"=== PAUSE TestClientScoresConcreteVariants/missing_variant\n"}
+{"Time":"2026-09-18T23:07:04.511233+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants/missing_variant"}
+{"Time":"2026-09-18T23:07:04.511235+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants/missing_variant"}
+{"Time":"2026-09-18T23:07:04.511236+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants/missing_variant","Output":"=== CONT  TestClientScoresConcreteVariants/missing_variant\n"}
+{"Time":"2026-09-18T23:07:04.511239+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/500","Output":"=== PAUSE TestClientNoRedirectOrRetry/500\n"}
+{"Time":"2026-09-18T23:07:04.511241+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/500"}
+{"Time":"2026-09-18T23:07:04.511242+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/500"}
+{"Time":"2026-09-18T23:07:04.511244+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/500","Output":"=== CONT  TestClientNoRedirectOrRetry/500\n"}
+{"Time":"2026-09-18T23:07:04.511432+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/307"}
+{"Time":"2026-09-18T23:07:04.511435+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/307","Output":"=== CONT  TestClientNoRedirectOrRetry/307\n"}
+{"Time":"2026-09-18T23:07:04.511448+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/429"}
+{"Time":"2026-09-18T23:07:04.51145+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/429","Output":"=== CONT  TestClientNoRedirectOrRetry/429\n"}
+{"Time":"2026-09-18T23:07:04.511451+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants/complete"}
+{"Time":"2026-09-18T23:07:04.511454+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants/complete","Output":"=== CONT  TestClientScoresConcreteVariants/complete\n"}
+{"Time":"2026-09-18T23:07:04.511456+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=2"}
+{"Time":"2026-09-18T23:07:04.511457+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=2","Output":"=== RUN   TestClientRejectsMalformedResponses/bytes=2\n"}
+{"Time":"2026-09-18T23:07:04.511459+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=2","Output":"=== PAUSE TestClientRejectsMalformedResponses/bytes=2\n"}
+{"Time":"2026-09-18T23:07:04.51146+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=2"}
+{"Time":"2026-09-18T23:07:04.511461+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=45"}
+{"Time":"2026-09-18T23:07:04.511463+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=45","Output":"=== RUN   TestClientRejectsMalformedResponses/bytes=45\n"}
+{"Time":"2026-09-18T23:07:04.511464+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=45","Output":"=== PAUSE TestClientRejectsMalformedResponses/bytes=45\n"}
+{"Time":"2026-09-18T23:07:04.511465+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=45"}
+{"Time":"2026-09-18T23:07:04.511467+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=75"}
+{"Time":"2026-09-18T23:07:04.511468+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=75","Output":"=== RUN   TestClientRejectsMalformedResponses/bytes=75\n"}
+{"Time":"2026-09-18T23:07:04.51147+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=75","Output":"=== PAUSE TestClientRejectsMalformedResponses/bytes=75\n"}
+{"Time":"2026-09-18T23:07:04.511471+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=75"}
+{"Time":"2026-09-18T23:07:04.511476+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=79"}
+{"Time":"2026-09-18T23:07:04.511478+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=79","Output":"=== RUN   TestClientRejectsMalformedResponses/bytes=79\n"}
+{"Time":"2026-09-18T23:07:04.511479+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=79","Output":"=== PAUSE TestClientRejectsMalformedResponses/bytes=79\n"}
+{"Time":"2026-09-18T23:07:04.51148+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=79"}
+{"Time":"2026-09-18T23:07:04.511482+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=8"}
+{"Time":"2026-09-18T23:07:04.511484+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=8","Output":"=== RUN   TestClientRejectsMalformedResponses/bytes=8\n"}
+{"Time":"2026-09-18T23:07:04.511513+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=8","Output":"=== PAUSE TestClientRejectsMalformedResponses/bytes=8\n"}
+{"Time":"2026-09-18T23:07:04.511521+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=8"}
+{"Time":"2026-09-18T23:07:04.511527+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=1048577"}
+{"Time":"2026-09-18T23:07:04.511534+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=1048577","Output":"=== RUN   TestClientRejectsMalformedResponses/bytes=1048577\n"}
+{"Time":"2026-09-18T23:07:04.511549+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=1048577","Output":"=== PAUSE TestClientRejectsMalformedResponses/bytes=1048577\n"}
+{"Time":"2026-09-18T23:07:04.511553+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=1048577"}
+{"Time":"2026-09-18T23:07:04.511557+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=2"}
+{"Time":"2026-09-18T23:07:04.511561+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=2","Output":"=== CONT  TestClientRejectsMalformedResponses/bytes=2\n"}
+{"Time":"2026-09-18T23:07:04.511567+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=79"}
+{"Time":"2026-09-18T23:07:04.51157+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=79","Output":"=== CONT  TestClientRejectsMalformedResponses/bytes=79\n"}
+{"Time":"2026-09-18T23:07:04.511579+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=75"}
+{"Time":"2026-09-18T23:07:04.511582+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=75","Output":"=== CONT  TestClientRejectsMalformedResponses/bytes=75\n"}
+{"Time":"2026-09-18T23:07:04.51274+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientBudgetAndCancellation","Output":"--- PASS: TestClientBudgetAndCancellation (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.51275+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientBudgetAndCancellation","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.512753+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=1048577"}
+{"Time":"2026-09-18T23:07:04.512755+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=1048577","Output":"=== CONT  TestClientRejectsMalformedResponses/bytes=1048577\n"}
+{"Time":"2026-09-18T23:07:04.515247+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/307","Output":"--- PASS: TestClientNoRedirectOrRetry/307 (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.51526+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/307","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.515264+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=8"}
+{"Time":"2026-09-18T23:07:04.515265+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=8","Output":"=== CONT  TestClientRejectsMalformedResponses/bytes=8\n"}
+{"Time":"2026-09-18T23:07:04.515267+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=79","Output":"--- PASS: TestClientRejectsMalformedResponses/bytes=79 (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.515734+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=79","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.515742+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants/complete","Output":"--- PASS: TestClientScoresConcreteVariants/complete (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.5172+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants/complete","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.51721+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=45"}
+{"Time":"2026-09-18T23:07:04.517212+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=45","Output":"=== CONT  TestClientRejectsMalformedResponses/bytes=45\n"}
+{"Time":"2026-09-18T23:07:04.519027+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=75","Output":"--- PASS: TestClientRejectsMalformedResponses/bytes=75 (0.01s)\n"}
+{"Time":"2026-09-18T23:07:04.51904+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=75","Elapsed":0.01}
+{"Time":"2026-09-18T23:07:04.519044+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/429","Output":"--- PASS: TestClientNoRedirectOrRetry/429 (0.01s)\n"}
+{"Time":"2026-09-18T23:07:04.519381+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/429","Elapsed":0.01}
+{"Time":"2026-09-18T23:07:04.519386+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants/missing_variant","Output":"--- PASS: TestClientScoresConcreteVariants/missing_variant (0.01s)\n"}
+{"Time":"2026-09-18T23:07:04.519453+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants/missing_variant","Elapsed":0.01}
+{"Time":"2026-09-18T23:07:04.519457+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants","Output":"--- PASS: TestClientScoresConcreteVariants (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.519954+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientScoresConcreteVariants","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.519958+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/500","Output":"--- PASS: TestClientNoRedirectOrRetry/500 (0.01s)\n"}
+{"Time":"2026-09-18T23:07:04.51996+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry/500","Elapsed":0.01}
+{"Time":"2026-09-18T23:07:04.519962+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry","Output":"--- PASS: TestClientNoRedirectOrRetry (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.519963+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientNoRedirectOrRetry","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.519965+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=2","Output":"--- PASS: TestClientRejectsMalformedResponses/bytes=2 (0.01s)\n"}
+{"Time":"2026-09-18T23:07:04.519966+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=2","Elapsed":0.01}
+{"Time":"2026-09-18T23:07:04.519968+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=8","Output":"--- PASS: TestClientRejectsMalformedResponses/bytes=8 (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.521364+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=8","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.521372+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=45","Output":"--- PASS: TestClientRejectsMalformedResponses/bytes=45 (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.521894+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=45","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.521898+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientBatchesAndSendsContent","Output":"--- PASS: TestClientBatchesAndSendsContent (0.01s)\n"}
+{"Time":"2026-09-18T23:07:04.523125+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientBatchesAndSendsContent","Elapsed":0.01}
+{"Time":"2026-09-18T23:07:04.523133+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=1048577","Output":"--- PASS: TestClientRejectsMalformedResponses/bytes=1048577 (0.01s)\n"}
+{"Time":"2026-09-18T23:07:04.523147+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses/bytes=1048577","Elapsed":0.01}
+{"Time":"2026-09-18T23:07:04.523148+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses","Output":"--- PASS: TestClientRejectsMalformedResponses (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.523191+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/jev","Test":"TestClientRejectsMalformedResponses","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.523194+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Output":"PASS\n"}
+{"Time":"2026-09-18T23:07:04.525825+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Output":"coverage: 90.8% of statements\n"}
+{"Time":"2026-09-18T23:07:04.581821+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode"}
+{"Time":"2026-09-18T23:07:04.581854+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode","Output":"=== RUN   TestCountingIsAdditiveAndSupportsUnicode\n"}
+{"Time":"2026-09-18T23:07:04.581861+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode","Output":"=== PAUSE TestCountingIsAdditiveAndSupportsUnicode\n"}
+{"Time":"2026-09-18T23:07:04.581863+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode"}
+{"Time":"2026-09-18T23:07:04.581864+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode"}
+{"Time":"2026-09-18T23:07:04.581866+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode","Output":"=== CONT  TestCountingIsAdditiveAndSupportsUnicode\n"}
+{"Time":"2026-09-18T23:07:04.581867+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode/o200k_base"}
+{"Time":"2026-09-18T23:07:04.581868+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode/o200k_base","Output":"=== RUN   TestCountingIsAdditiveAndSupportsUnicode/o200k_base\n"}
+{"Time":"2026-09-18T23:07:04.58192+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode/o200k_base","Output":"=== PAUSE TestCountingIsAdditiveAndSupportsUnicode/o200k_base\n"}
+{"Time":"2026-09-18T23:07:04.581924+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode/o200k_base"}
+{"Time":"2026-09-18T23:07:04.581934+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode/cl100k_base"}
+{"Time":"2026-09-18T23:07:04.581941+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode/cl100k_base","Output":"=== RUN   TestCountingIsAdditiveAndSupportsUnicode/cl100k_base\n"}
+{"Time":"2026-09-18T23:07:04.581964+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode/cl100k_base","Output":"=== PAUSE TestCountingIsAdditiveAndSupportsUnicode/cl100k_base\n"}
+{"Time":"2026-09-18T23:07:04.581969+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode/cl100k_base"}
+{"Time":"2026-09-18T23:07:04.581973+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode/o200k_base"}
+{"Time":"2026-09-18T23:07:04.581974+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode/o200k_base","Output":"=== CONT  TestCountingIsAdditiveAndSupportsUnicode/o200k_base\n"}
+{"Time":"2026-09-18T23:07:04.582008+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode/cl100k_base"}
+{"Time":"2026-09-18T23:07:04.582021+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode/cl100k_base","Output":"=== CONT  TestCountingIsAdditiveAndSupportsUnicode/cl100k_base\n"}
+{"Time":"2026-09-18T23:07:04.583131+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactPreservesCriticalStateAndInput"}
+{"Time":"2026-09-18T23:07:04.583143+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactPreservesCriticalStateAndInput","Output":"=== RUN   TestCompactPreservesCriticalStateAndInput\n"}
+{"Time":"2026-09-18T23:07:04.583146+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactPreservesCriticalStateAndInput","Output":"=== PAUSE TestCompactPreservesCriticalStateAndInput\n"}
+{"Time":"2026-09-18T23:07:04.583147+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactPreservesCriticalStateAndInput"}
+{"Time":"2026-09-18T23:07:04.58315+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed"}
+{"Time":"2026-09-18T23:07:04.583152+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed","Output":"=== RUN   TestCompactFailsClosed\n"}
+{"Time":"2026-09-18T23:07:04.583154+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed","Output":"=== PAUSE TestCompactFailsClosed\n"}
+{"Time":"2026-09-18T23:07:04.583155+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed"}
+{"Time":"2026-09-18T23:07:04.583162+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactSkipsScoringUnderBudget"}
+{"Time":"2026-09-18T23:07:04.583168+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactSkipsScoringUnderBudget","Output":"=== RUN   TestCompactSkipsScoringUnderBudget\n"}
+{"Time":"2026-09-18T23:07:04.583231+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactSkipsScoringUnderBudget","Output":"=== PAUSE TestCompactSkipsScoringUnderBudget\n"}
+{"Time":"2026-09-18T23:07:04.583236+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactSkipsScoringUnderBudget"}
+{"Time":"2026-09-18T23:07:04.583248+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection"}
+{"Time":"2026-09-18T23:07:04.58325+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection","Output":"=== RUN   TestGroupProtection\n"}
+{"Time":"2026-09-18T23:07:04.583261+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection","Output":"=== PAUSE TestGroupProtection\n"}
+{"Time":"2026-09-18T23:07:04.583262+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection"}
+{"Time":"2026-09-18T23:07:04.583264+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts"}
+{"Time":"2026-09-18T23:07:04.583265+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts","Output":"=== RUN   TestInvalidTranscripts\n"}
+{"Time":"2026-09-18T23:07:04.583281+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts","Output":"=== PAUSE TestInvalidTranscripts\n"}
+{"Time":"2026-09-18T23:07:04.583284+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts"}
+{"Time":"2026-09-18T23:07:04.583305+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestScorerSeesActualResult"}
+{"Time":"2026-09-18T23:07:04.583313+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestScorerSeesActualResult","Output":"=== RUN   TestScorerSeesActualResult\n"}
+{"Time":"2026-09-18T23:07:04.583317+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestScorerSeesActualResult","Output":"=== PAUSE TestScorerSeesActualResult\n"}
+{"Time":"2026-09-18T23:07:04.583322+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestScorerSeesActualResult"}
+{"Time":"2026-09-18T23:07:04.583326+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCancellationAndArchiveFailure"}
+{"Time":"2026-09-18T23:07:04.583328+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCancellationAndArchiveFailure","Output":"=== RUN   TestCancellationAndArchiveFailure\n"}
+{"Time":"2026-09-18T23:07:04.583348+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCancellationAndArchiveFailure","Output":"=== PAUSE TestCancellationAndArchiveFailure\n"}
+{"Time":"2026-09-18T23:07:04.583352+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCancellationAndArchiveFailure"}
+{"Time":"2026-09-18T23:07:04.583354+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactUsesEvaluatedReplacement"}
+{"Time":"2026-09-18T23:07:04.583355+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactUsesEvaluatedReplacement","Output":"=== RUN   TestCompactUsesEvaluatedReplacement\n"}
+{"Time":"2026-09-18T23:07:04.583378+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactUsesEvaluatedReplacement","Output":"=== PAUSE TestCompactUsesEvaluatedReplacement\n"}
+{"Time":"2026-09-18T23:07:04.583383+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactUsesEvaluatedReplacement"}
+{"Time":"2026-09-18T23:07:04.583386+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn"}
+{"Time":"2026-09-18T23:07:04.583387+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn","Output":"=== RUN   TestPartialBudgetRequiresOptIn\n"}
+{"Time":"2026-09-18T23:07:04.583401+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn","Output":"=== PAUSE TestPartialBudgetRequiresOptIn\n"}
+{"Time":"2026-09-18T23:07:04.583406+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn"}
+{"Time":"2026-09-18T23:07:04.583418+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed"}
+{"Time":"2026-09-18T23:07:04.583421+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed","Output":"=== RUN   TestVariantScoresFailClosed\n"}
+{"Time":"2026-09-18T23:07:04.583437+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed","Output":"=== PAUSE TestVariantScoresFailClosed\n"}
+{"Time":"2026-09-18T23:07:04.583443+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed"}
+{"Time":"2026-09-18T23:07:04.583447+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestReplayCopiesLossMaps"}
+{"Time":"2026-09-18T23:07:04.583448+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestReplayCopiesLossMaps","Output":"=== RUN   TestReplayCopiesLossMaps\n"}
+{"Time":"2026-09-18T23:07:04.5835+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestReplayCopiesLossMaps","Output":"=== PAUSE TestReplayCopiesLossMaps\n"}
+{"Time":"2026-09-18T23:07:04.583503+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestReplayCopiesLossMaps"}
+{"Time":"2026-09-18T23:07:04.583598+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactPreservesCriticalStateAndInput"}
+{"Time":"2026-09-18T23:07:04.583612+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactPreservesCriticalStateAndInput","Output":"=== CONT  TestCompactPreservesCriticalStateAndInput\n"}
+{"Time":"2026-09-18T23:07:04.583617+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestScorerSeesActualResult"}
+{"Time":"2026-09-18T23:07:04.583618+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestScorerSeesActualResult","Output":"=== CONT  TestScorerSeesActualResult\n"}
+{"Time":"2026-09-18T23:07:04.583715+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactSkipsScoringUnderBudget"}
+{"Time":"2026-09-18T23:07:04.58372+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactSkipsScoringUnderBudget","Output":"=== CONT  TestCompactSkipsScoringUnderBudget\n"}
+{"Time":"2026-09-18T23:07:04.583842+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn"}
+{"Time":"2026-09-18T23:07:04.58385+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn","Output":"=== CONT  TestPartialBudgetRequiresOptIn\n"}
+{"Time":"2026-09-18T23:07:04.583878+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn/atomic"}
+{"Time":"2026-09-18T23:07:04.583888+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn/atomic","Output":"=== RUN   TestPartialBudgetRequiresOptIn/atomic\n"}
+{"Time":"2026-09-18T23:07:04.583935+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn/atomic","Output":"=== PAUSE TestPartialBudgetRequiresOptIn/atomic\n"}
+{"Time":"2026-09-18T23:07:04.583936+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn/atomic"}
+{"Time":"2026-09-18T23:07:04.584012+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection"}
+{"Time":"2026-09-18T23:07:04.584017+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection","Output":"=== CONT  TestGroupProtection\n"}
+{"Time":"2026-09-18T23:07:04.584019+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed"}
+{"Time":"2026-09-18T23:07:04.58402+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed","Output":"=== CONT  TestCompactFailsClosed\n"}
+{"Time":"2026-09-18T23:07:04.584095+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestReplayCopiesLossMaps"}
+{"Time":"2026-09-18T23:07:04.584099+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestReplayCopiesLossMaps","Output":"=== CONT  TestReplayCopiesLossMaps\n"}
+{"Time":"2026-09-18T23:07:04.584101+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/unavailable_scorer"}
+{"Time":"2026-09-18T23:07:04.584103+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/unavailable_scorer","Output":"=== RUN   TestCompactFailsClosed/unavailable_scorer\n"}
+{"Time":"2026-09-18T23:07:04.584143+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/unavailable_scorer","Output":"=== PAUSE TestCompactFailsClosed/unavailable_scorer\n"}
+{"Time":"2026-09-18T23:07:04.584146+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/unavailable_scorer"}
+{"Time":"2026-09-18T23:07:04.584149+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestReplayCopiesLossMaps","Output":"--- PASS: TestReplayCopiesLossMaps (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.584167+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestReplayCopiesLossMaps","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.584241+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/missing_answers"}
+{"Time":"2026-09-18T23:07:04.584279+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/missing_answers","Output":"=== RUN   TestCompactFailsClosed/missing_answers\n"}
+{"Time":"2026-09-18T23:07:04.584284+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/missing_answers","Output":"=== PAUSE TestCompactFailsClosed/missing_answers\n"}
+{"Time":"2026-09-18T23:07:04.584285+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/missing_answers"}
+{"Time":"2026-09-18T23:07:04.584288+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/nan_probability"}
+{"Time":"2026-09-18T23:07:04.58429+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/nan_probability","Output":"=== RUN   TestCompactFailsClosed/nan_probability\n"}
+{"Time":"2026-09-18T23:07:04.584299+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts"}
+{"Time":"2026-09-18T23:07:04.584301+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts","Output":"=== CONT  TestInvalidTranscripts\n"}
+{"Time":"2026-09-18T23:07:04.584302+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/duplicate_id"}
+{"Time":"2026-09-18T23:07:04.584304+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/duplicate_id","Output":"=== RUN   TestInvalidTranscripts/duplicate_id\n"}
+{"Time":"2026-09-18T23:07:04.584307+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed"}
+{"Time":"2026-09-18T23:07:04.584308+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed","Output":"=== CONT  TestVariantScoresFailClosed\n"}
+{"Time":"2026-09-18T23:07:04.584347+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn/partial"}
+{"Time":"2026-09-18T23:07:04.584349+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn/partial","Output":"=== RUN   TestPartialBudgetRequiresOptIn/partial\n"}
+{"Time":"2026-09-18T23:07:04.584351+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/side_effect"}
+{"Time":"2026-09-18T23:07:04.584352+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/side_effect","Output":"=== RUN   TestGroupProtection/side_effect\n"}
+{"Time":"2026-09-18T23:07:04.584354+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCancellationAndArchiveFailure"}
+{"Time":"2026-09-18T23:07:04.584355+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCancellationAndArchiveFailure","Output":"=== CONT  TestCancellationAndArchiveFailure\n"}
+{"Time":"2026-09-18T23:07:04.584818+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/duplicate_id","Output":"=== PAUSE TestInvalidTranscripts/duplicate_id\n"}
+{"Time":"2026-09-18T23:07:04.584823+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/duplicate_id"}
+{"Time":"2026-09-18T23:07:04.584825+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn/partial","Output":"=== PAUSE TestPartialBudgetRequiresOptIn/partial\n"}
+{"Time":"2026-09-18T23:07:04.584827+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn/partial"}
+{"Time":"2026-09-18T23:07:04.584828+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/orphan_result"}
+{"Time":"2026-09-18T23:07:04.584829+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/orphan_result","Output":"=== RUN   TestInvalidTranscripts/orphan_result\n"}
+{"Time":"2026-09-18T23:07:04.584831+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/orphan_result","Output":"=== PAUSE TestInvalidTranscripts/orphan_result\n"}
+{"Time":"2026-09-18T23:07:04.584832+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/orphan_result"}
+{"Time":"2026-09-18T23:07:04.584837+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn/partial"}
+{"Time":"2026-09-18T23:07:04.584838+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn/partial","Output":"=== CONT  TestPartialBudgetRequiresOptIn/partial\n"}
+{"Time":"2026-09-18T23:07:04.586468+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/duplicate_result"}
+{"Time":"2026-09-18T23:07:04.586475+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/duplicate_result","Output":"=== RUN   TestInvalidTranscripts/duplicate_result\n"}
+{"Time":"2026-09-18T23:07:04.586477+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/duplicate_result","Output":"=== PAUSE TestInvalidTranscripts/duplicate_result\n"}
+{"Time":"2026-09-18T23:07:04.586479+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/duplicate_result"}
+{"Time":"2026-09-18T23:07:04.58648+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/missing_dependency"}
+{"Time":"2026-09-18T23:07:04.586488+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/missing_dependency","Output":"=== RUN   TestInvalidTranscripts/missing_dependency\n"}
+{"Time":"2026-09-18T23:07:04.586489+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/missing_dependency","Output":"=== PAUSE TestInvalidTranscripts/missing_dependency\n"}
+{"Time":"2026-09-18T23:07:04.586491+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/missing_dependency"}
+{"Time":"2026-09-18T23:07:04.586492+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_role"}
+{"Time":"2026-09-18T23:07:04.586493+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_role","Output":"=== RUN   TestInvalidTranscripts/invalid_role\n"}
+{"Time":"2026-09-18T23:07:04.586495+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_role","Output":"=== PAUSE TestInvalidTranscripts/invalid_role\n"}
+{"Time":"2026-09-18T23:07:04.586496+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_role"}
+{"Time":"2026-09-18T23:07:04.586498+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_json"}
+{"Time":"2026-09-18T23:07:04.586499+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_json","Output":"=== RUN   TestInvalidTranscripts/invalid_json\n"}
+{"Time":"2026-09-18T23:07:04.5865+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_json","Output":"=== PAUSE TestInvalidTranscripts/invalid_json\n"}
+{"Time":"2026-09-18T23:07:04.586502+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_json"}
+{"Time":"2026-09-18T23:07:04.586503+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/future_call"}
+{"Time":"2026-09-18T23:07:04.586504+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/future_call","Output":"=== RUN   TestInvalidTranscripts/future_call\n"}
+{"Time":"2026-09-18T23:07:04.586506+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/future_call","Output":"=== PAUSE TestInvalidTranscripts/future_call\n"}
+{"Time":"2026-09-18T23:07:04.586507+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/future_call"}
+{"Time":"2026-09-18T23:07:04.586509+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/negative_recent"}
+{"Time":"2026-09-18T23:07:04.58651+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/negative_recent","Output":"=== RUN   TestInvalidTranscripts/negative_recent\n"}
+{"Time":"2026-09-18T23:07:04.586512+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/negative_recent","Output":"=== PAUSE TestInvalidTranscripts/negative_recent\n"}
+{"Time":"2026-09-18T23:07:04.586513+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/negative_recent"}
+{"Time":"2026-09-18T23:07:04.586514+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/unsafe_id"}
+{"Time":"2026-09-18T23:07:04.586515+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/unsafe_id","Output":"=== RUN   TestInvalidTranscripts/unsafe_id\n"}
+{"Time":"2026-09-18T23:07:04.586516+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/unsafe_id","Output":"=== PAUSE TestInvalidTranscripts/unsafe_id\n"}
+{"Time":"2026-09-18T23:07:04.586518+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/unsafe_id"}
+{"Time":"2026-09-18T23:07:04.586519+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_tool_utf8"}
+{"Time":"2026-09-18T23:07:04.58652+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_tool_utf8","Output":"=== RUN   TestInvalidTranscripts/invalid_tool_utf8\n"}
+{"Time":"2026-09-18T23:07:04.586522+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_tool_utf8","Output":"=== PAUSE TestInvalidTranscripts/invalid_tool_utf8\n"}
+{"Time":"2026-09-18T23:07:04.586523+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_tool_utf8"}
+{"Time":"2026-09-18T23:07:04.586524+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn/atomic"}
+{"Time":"2026-09-18T23:07:04.586526+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn/atomic","Output":"=== CONT  TestPartialBudgetRequiresOptIn/atomic\n"}
+{"Time":"2026-09-18T23:07:04.586529+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactSkipsScoringUnderBudget","Output":"--- PASS: TestCompactSkipsScoringUnderBudget (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.58653+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactSkipsScoringUnderBudget","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.586532+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/duplicate_id"}
+{"Time":"2026-09-18T23:07:04.586533+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/duplicate_id","Output":"=== CONT  TestInvalidTranscripts/duplicate_id\n"}
+{"Time":"2026-09-18T23:07:04.586535+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/duplicate_id","Output":"--- PASS: TestInvalidTranscripts/duplicate_id (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.586536+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/duplicate_id","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.586538+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_role"}
+{"Time":"2026-09-18T23:07:04.586539+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_role","Output":"=== CONT  TestInvalidTranscripts/invalid_role\n"}
+{"Time":"2026-09-18T23:07:04.586542+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_role","Output":"--- PASS: TestInvalidTranscripts/invalid_role (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.586544+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_role","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.586545+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/negative_recent"}
+{"Time":"2026-09-18T23:07:04.586546+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/negative_recent","Output":"=== CONT  TestInvalidTranscripts/negative_recent\n"}
+{"Time":"2026-09-18T23:07:04.586549+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/negative_recent","Output":"--- PASS: TestInvalidTranscripts/negative_recent (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.58655+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/negative_recent","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.586551+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_tool_utf8"}
+{"Time":"2026-09-18T23:07:04.586553+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_tool_utf8","Output":"=== CONT  TestInvalidTranscripts/invalid_tool_utf8\n"}
+{"Time":"2026-09-18T23:07:04.587052+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/unsafe_id"}
+{"Time":"2026-09-18T23:07:04.587058+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/unsafe_id","Output":"=== CONT  TestInvalidTranscripts/unsafe_id\n"}
+{"Time":"2026-09-18T23:07:04.587703+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/unsafe_id","Output":"--- PASS: TestInvalidTranscripts/unsafe_id (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.587708+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/unsafe_id","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.58771+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/duplicate_result"}
+{"Time":"2026-09-18T23:07:04.587711+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/duplicate_result","Output":"=== CONT  TestInvalidTranscripts/duplicate_result\n"}
+{"Time":"2026-09-18T23:07:04.587714+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/duplicate_result","Output":"--- PASS: TestInvalidTranscripts/duplicate_result (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.587716+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/duplicate_result","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.587718+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/future_call"}
+{"Time":"2026-09-18T23:07:04.587727+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/future_call","Output":"=== CONT  TestInvalidTranscripts/future_call\n"}
+{"Time":"2026-09-18T23:07:04.587729+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/future_call","Output":"--- PASS: TestInvalidTranscripts/future_call (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.587731+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/future_call","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.587732+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/missing_dependency"}
+{"Time":"2026-09-18T23:07:04.587734+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/missing_dependency","Output":"=== CONT  TestInvalidTranscripts/missing_dependency\n"}
+{"Time":"2026-09-18T23:07:04.587735+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/missing_dependency","Output":"--- PASS: TestInvalidTranscripts/missing_dependency (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.587737+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/missing_dependency","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.587738+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_json"}
+{"Time":"2026-09-18T23:07:04.58774+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_json","Output":"=== CONT  TestInvalidTranscripts/invalid_json\n"}
+{"Time":"2026-09-18T23:07:04.587742+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_json","Output":"--- PASS: TestInvalidTranscripts/invalid_json (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.587743+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_json","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.587744+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/orphan_result"}
+{"Time":"2026-09-18T23:07:04.587751+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/orphan_result","Output":"=== CONT  TestInvalidTranscripts/orphan_result\n"}
+{"Time":"2026-09-18T23:07:04.587815+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactUsesEvaluatedReplacement"}
+{"Time":"2026-09-18T23:07:04.587825+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactUsesEvaluatedReplacement","Output":"=== CONT  TestCompactUsesEvaluatedReplacement\n"}
+{"Time":"2026-09-18T23:07:04.589591+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/missing_actions"}
+{"Time":"2026-09-18T23:07:04.589597+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/missing_actions","Output":"=== RUN   TestVariantScoresFailClosed/missing_actions\n"}
+{"Time":"2026-09-18T23:07:04.589599+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/side_effect","Output":"=== PAUSE TestGroupProtection/side_effect\n"}
+{"Time":"2026-09-18T23:07:04.589601+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/side_effect"}
+{"Time":"2026-09-18T23:07:04.589603+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/missing_actions","Output":"=== PAUSE TestVariantScoresFailClosed/missing_actions\n"}
+{"Time":"2026-09-18T23:07:04.589604+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/missing_actions"}
+{"Time":"2026-09-18T23:07:04.58961+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/nan_probability","Output":"=== PAUSE TestCompactFailsClosed/nan_probability\n"}
+{"Time":"2026-09-18T23:07:04.589611+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/nan_probability"}
+{"Time":"2026-09-18T23:07:04.589613+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/nan"}
+{"Time":"2026-09-18T23:07:04.589614+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/nan","Output":"=== RUN   TestVariantScoresFailClosed/nan\n"}
+{"Time":"2026-09-18T23:07:04.589616+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/nan","Output":"=== PAUSE TestVariantScoresFailClosed/nan\n"}
+{"Time":"2026-09-18T23:07:04.589617+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/nan"}
+{"Time":"2026-09-18T23:07:04.589619+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/out_of_bounds"}
+{"Time":"2026-09-18T23:07:04.58962+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/out_of_bounds","Output":"=== RUN   TestVariantScoresFailClosed/out_of_bounds\n"}
+{"Time":"2026-09-18T23:07:04.589621+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/pending"}
+{"Time":"2026-09-18T23:07:04.589622+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/pending","Output":"=== RUN   TestGroupProtection/pending\n"}
+{"Time":"2026-09-18T23:07:04.589624+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/out_of_bounds","Output":"=== PAUSE TestVariantScoresFailClosed/out_of_bounds\n"}
+{"Time":"2026-09-18T23:07:04.589625+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/out_of_bounds"}
+{"Time":"2026-09-18T23:07:04.589626+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/ambiguous"}
+{"Time":"2026-09-18T23:07:04.589627+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/ambiguous","Output":"=== RUN   TestCompactFailsClosed/ambiguous\n"}
+{"Time":"2026-09-18T23:07:04.58963+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_tool_utf8","Output":"--- PASS: TestInvalidTranscripts/invalid_tool_utf8 (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.589633+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/invalid_tool_utf8","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.589635+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn/atomic","Output":"--- PASS: TestPartialBudgetRequiresOptIn/atomic (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.589636+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn/atomic","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.589637+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/pending","Output":"=== PAUSE TestGroupProtection/pending\n"}
+{"Time":"2026-09-18T23:07:04.589639+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/pending"}
+{"Time":"2026-09-18T23:07:04.58964+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCancellationAndArchiveFailure","Output":"--- PASS: TestCancellationAndArchiveFailure (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.589642+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCancellationAndArchiveFailure","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.589643+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn/partial","Output":"--- PASS: TestPartialBudgetRequiresOptIn/partial (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.589646+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn/partial","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.589648+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/dependency"}
+{"Time":"2026-09-18T23:07:04.589649+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/dependency","Output":"=== RUN   TestGroupProtection/dependency\n"}
+{"Time":"2026-09-18T23:07:04.589652+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/ambiguous"}
+{"Time":"2026-09-18T23:07:04.589653+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/ambiguous","Output":"=== RUN   TestVariantScoresFailClosed/ambiguous\n"}
+{"Time":"2026-09-18T23:07:04.590082+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/ambiguous","Output":"=== PAUSE TestVariantScoresFailClosed/ambiguous\n"}
+{"Time":"2026-09-18T23:07:04.590097+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/ambiguous"}
+{"Time":"2026-09-18T23:07:04.5901+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/ambiguous","Output":"=== PAUSE TestCompactFailsClosed/ambiguous\n"}
+{"Time":"2026-09-18T23:07:04.590102+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/ambiguous"}
+{"Time":"2026-09-18T23:07:04.590104+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/orphan_result","Output":"--- PASS: TestInvalidTranscripts/orphan_result (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.590106+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts/orphan_result","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.590108+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/nan"}
+{"Time":"2026-09-18T23:07:04.590109+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/nan","Output":"=== CONT  TestVariantScoresFailClosed/nan\n"}
+{"Time":"2026-09-18T23:07:04.59011+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/ambiguous"}
+{"Time":"2026-09-18T23:07:04.590112+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/ambiguous","Output":"=== CONT  TestVariantScoresFailClosed/ambiguous\n"}
+{"Time":"2026-09-18T23:07:04.590115+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/dependency","Output":"=== PAUSE TestGroupProtection/dependency\n"}
+{"Time":"2026-09-18T23:07:04.590117+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/dependency"}
+{"Time":"2026-09-18T23:07:04.59049+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/named_group"}
+{"Time":"2026-09-18T23:07:04.590496+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/named_group","Output":"=== RUN   TestGroupProtection/named_group\n"}
+{"Time":"2026-09-18T23:07:04.590499+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/named_group","Output":"=== PAUSE TestGroupProtection/named_group\n"}
+{"Time":"2026-09-18T23:07:04.5905+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/named_group"}
+{"Time":"2026-09-18T23:07:04.590502+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/missing_actions"}
+{"Time":"2026-09-18T23:07:04.590504+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/missing_actions","Output":"=== CONT  TestVariantScoresFailClosed/missing_actions\n"}
+{"Time":"2026-09-18T23:07:04.590506+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/recent"}
+{"Time":"2026-09-18T23:07:04.590515+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/recent","Output":"=== RUN   TestGroupProtection/recent\n"}
+{"Time":"2026-09-18T23:07:04.595084+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/out_of_bounds"}
+{"Time":"2026-09-18T23:07:04.595097+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/out_of_bounds","Output":"=== CONT  TestVariantScoresFailClosed/out_of_bounds\n"}
+{"Time":"2026-09-18T23:07:04.595305+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn","Output":"--- PASS: TestPartialBudgetRequiresOptIn (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.596768+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestPartialBudgetRequiresOptIn","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.596796+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts","Output":"--- PASS: TestInvalidTranscripts (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.596804+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestInvalidTranscripts","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.599247+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactPreservesCriticalStateAndInput","Output":"--- PASS: TestCompactPreservesCriticalStateAndInput (0.01s)\n"}
+{"Time":"2026-09-18T23:07:04.599263+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactPreservesCriticalStateAndInput","Elapsed":0.01}
+{"Time":"2026-09-18T23:07:04.599266+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/recent","Output":"=== PAUSE TestGroupProtection/recent\n"}
+{"Time":"2026-09-18T23:07:04.599285+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/recent"}
+{"Time":"2026-09-18T23:07:04.599287+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/full_details_needed"}
+{"Time":"2026-09-18T23:07:04.599289+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/full_details_needed","Output":"=== RUN   TestCompactFailsClosed/full_details_needed\n"}
+{"Time":"2026-09-18T23:07:04.599291+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/full_details_needed","Output":"=== PAUSE TestCompactFailsClosed/full_details_needed\n"}
+{"Time":"2026-09-18T23:07:04.599292+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/full_details_needed"}
+{"Time":"2026-09-18T23:07:04.599308+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/protected_overflow"}
+{"Time":"2026-09-18T23:07:04.599313+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/protected_overflow","Output":"=== RUN   TestCompactFailsClosed/protected_overflow\n"}
+{"Time":"2026-09-18T23:07:04.599316+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/side_effect"}
+{"Time":"2026-09-18T23:07:04.599318+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/side_effect","Output":"=== CONT  TestGroupProtection/side_effect\n"}
+{"Time":"2026-09-18T23:07:04.599322+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/side_effect","Output":"--- PASS: TestGroupProtection/side_effect (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.599324+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/side_effect","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.599326+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/protected_overflow","Output":"=== PAUSE TestCompactFailsClosed/protected_overflow\n"}
+{"Time":"2026-09-18T23:07:04.599328+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/protected_overflow"}
+{"Time":"2026-09-18T23:07:04.59933+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/named_group"}
+{"Time":"2026-09-18T23:07:04.599342+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/named_group","Output":"=== CONT  TestGroupProtection/named_group\n"}
+{"Time":"2026-09-18T23:07:04.599347+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/named_group","Output":"--- PASS: TestGroupProtection/named_group (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.599349+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/named_group","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.59935+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/recent"}
+{"Time":"2026-09-18T23:07:04.599351+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/recent","Output":"=== CONT  TestGroupProtection/recent\n"}
+{"Time":"2026-09-18T23:07:04.599353+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/pending"}
+{"Time":"2026-09-18T23:07:04.599354+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/pending","Output":"=== CONT  TestGroupProtection/pending\n"}
+{"Time":"2026-09-18T23:07:04.599358+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/recent","Output":"--- PASS: TestGroupProtection/recent (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.599411+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/recent","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.599423+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/unavailable_scorer"}
+{"Time":"2026-09-18T23:07:04.599425+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/unavailable_scorer","Output":"=== CONT  TestCompactFailsClosed/unavailable_scorer\n"}
+{"Time":"2026-09-18T23:07:04.599467+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/full_details_needed"}
+{"Time":"2026-09-18T23:07:04.599488+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/full_details_needed","Output":"=== CONT  TestCompactFailsClosed/full_details_needed\n"}
+{"Time":"2026-09-18T23:07:04.602277+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode/cl100k_base","Output":"--- PASS: TestCountingIsAdditiveAndSupportsUnicode/cl100k_base (0.02s)\n"}
+{"Time":"2026-09-18T23:07:04.602314+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/missing_answers"}
+{"Time":"2026-09-18T23:07:04.602317+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/missing_answers","Output":"=== CONT  TestCompactFailsClosed/missing_answers\n"}
+{"Time":"2026-09-18T23:07:04.602319+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/dependency"}
+{"Time":"2026-09-18T23:07:04.602321+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/dependency","Output":"=== CONT  TestGroupProtection/dependency\n"}
+{"Time":"2026-09-18T23:07:04.602323+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/pending","Output":"--- PASS: TestGroupProtection/pending (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.602324+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/pending","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.602327+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/dependency","Output":"--- PASS: TestGroupProtection/dependency (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.602328+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection/dependency","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.60233+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection","Output":"--- PASS: TestGroupProtection (0.01s)\n"}
+{"Time":"2026-09-18T23:07:04.602331+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestGroupProtection","Elapsed":0.01}
+{"Time":"2026-09-18T23:07:04.602333+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/nan_probability"}
+{"Time":"2026-09-18T23:07:04.602334+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/nan_probability","Output":"=== CONT  TestCompactFailsClosed/nan_probability\n"}
+{"Time":"2026-09-18T23:07:04.606068+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/full_details_needed","Output":"--- PASS: TestCompactFailsClosed/full_details_needed (0.01s)\n"}
+{"Time":"2026-09-18T23:07:04.606081+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/full_details_needed","Elapsed":0.01}
+{"Time":"2026-09-18T23:07:04.606085+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/ambiguous"}
+{"Time":"2026-09-18T23:07:04.606086+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/ambiguous","Output":"=== CONT  TestCompactFailsClosed/ambiguous\n"}
+{"Time":"2026-09-18T23:07:04.6075+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/ambiguous","Output":"--- PASS: TestVariantScoresFailClosed/ambiguous (0.02s)\n"}
+{"Time":"2026-09-18T23:07:04.607515+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/ambiguous","Elapsed":0.02}
+{"Time":"2026-09-18T23:07:04.607517+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/protected_overflow"}
+{"Time":"2026-09-18T23:07:04.607521+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/protected_overflow","Output":"=== CONT  TestCompactFailsClosed/protected_overflow\n"}
+{"Time":"2026-09-18T23:07:04.609214+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/protected_overflow","Output":"--- PASS: TestCompactFailsClosed/protected_overflow (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.610382+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/protected_overflow","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.610387+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/unavailable_scorer","Output":"--- PASS: TestCompactFailsClosed/unavailable_scorer (0.01s)\n"}
+{"Time":"2026-09-18T23:07:04.613474+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/unavailable_scorer","Elapsed":0.01}
+{"Time":"2026-09-18T23:07:04.613494+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/ambiguous","Output":"--- PASS: TestCompactFailsClosed/ambiguous (0.01s)\n"}
+{"Time":"2026-09-18T23:07:04.614661+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/ambiguous","Elapsed":0.01}
+{"Time":"2026-09-18T23:07:04.614695+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/nan","Output":"--- PASS: TestVariantScoresFailClosed/nan (0.02s)\n"}
+{"Time":"2026-09-18T23:07:04.618466+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/nan","Elapsed":0.02}
+{"Time":"2026-09-18T23:07:04.618493+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/missing_actions","Output":"--- PASS: TestVariantScoresFailClosed/missing_actions (0.03s)\n"}
+{"Time":"2026-09-18T23:07:04.619014+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/missing_actions","Elapsed":0.03}
+{"Time":"2026-09-18T23:07:04.619027+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/nan_probability","Output":"--- PASS: TestCompactFailsClosed/nan_probability (0.02s)\n"}
+{"Time":"2026-09-18T23:07:04.619479+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/nan_probability","Elapsed":0.02}
+{"Time":"2026-09-18T23:07:04.61949+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/out_of_bounds","Output":"--- PASS: TestVariantScoresFailClosed/out_of_bounds (0.03s)\n"}
+{"Time":"2026-09-18T23:07:04.619494+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed/out_of_bounds","Elapsed":0.03}
+{"Time":"2026-09-18T23:07:04.619496+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed","Output":"--- PASS: TestVariantScoresFailClosed (0.01s)\n"}
+{"Time":"2026-09-18T23:07:04.622222+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestVariantScoresFailClosed","Elapsed":0.01}
+{"Time":"2026-09-18T23:07:04.62225+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/missing_answers","Output":"--- PASS: TestCompactFailsClosed/missing_answers (0.02s)\n"}
+{"Time":"2026-09-18T23:07:04.622453+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed/missing_answers","Elapsed":0.02}
+{"Time":"2026-09-18T23:07:04.622467+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed","Output":"--- PASS: TestCompactFailsClosed (0.02s)\n"}
+{"Time":"2026-09-18T23:07:04.622711+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactFailsClosed","Elapsed":0.02}
+{"Time":"2026-09-18T23:07:04.622725+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactUsesEvaluatedReplacement","Output":"--- PASS: TestCompactUsesEvaluatedReplacement (0.03s)\n"}
+{"Time":"2026-09-18T23:07:04.624213+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode/cl100k_base","Elapsed":0.02}
+{"Time":"2026-09-18T23:07:04.62423+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode/o200k_base","Output":"--- PASS: TestCountingIsAdditiveAndSupportsUnicode/o200k_base (0.04s)\n"}
+{"Time":"2026-09-18T23:07:04.624264+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode/o200k_base","Elapsed":0.04}
+{"Time":"2026-09-18T23:07:04.624272+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode","Output":"--- PASS: TestCountingIsAdditiveAndSupportsUnicode (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.62429+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/token","Test":"TestCountingIsAdditiveAndSupportsUnicode","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.624296+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/token","Output":"PASS\n"}
+{"Time":"2026-09-18T23:07:04.626257+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/token","Output":"coverage: 75.0% of statements\n"}
+{"Time":"2026-09-18T23:07:04.626709+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract"}
+{"Time":"2026-09-18T23:07:04.626729+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract","Output":"=== RUN   TestHTTPErrorContract\n"}
+{"Time":"2026-09-18T23:07:04.62677+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract","Output":"=== PAUSE TestHTTPErrorContract\n"}
+{"Time":"2026-09-18T23:07:04.626777+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract"}
+{"Time":"2026-09-18T23:07:04.626779+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestSnapshotRoutesAndHealth"}
+{"Time":"2026-09-18T23:07:04.62678+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestSnapshotRoutesAndHealth","Output":"=== RUN   TestSnapshotRoutesAndHealth\n"}
+{"Time":"2026-09-18T23:07:04.626907+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestSnapshotRoutesAndHealth","Output":"=== PAUSE TestSnapshotRoutesAndHealth\n"}
+{"Time":"2026-09-18T23:07:04.626912+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestSnapshotRoutesAndHealth"}
+{"Time":"2026-09-18T23:07:04.626915+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPJevArchiveRoundTrip"}
+{"Time":"2026-09-18T23:07:04.626918+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPJevArchiveRoundTrip","Output":"=== RUN   TestHTTPJevArchiveRoundTrip\n"}
+{"Time":"2026-09-18T23:07:04.626989+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPJevArchiveRoundTrip","Output":"=== PAUSE TestHTTPJevArchiveRoundTrip\n"}
+{"Time":"2026-09-18T23:07:04.627012+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPJevArchiveRoundTrip"}
+{"Time":"2026-09-18T23:07:04.627021+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestAdmissionRejectsOverload"}
+{"Time":"2026-09-18T23:07:04.627023+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestAdmissionRejectsOverload","Output":"=== RUN   TestAdmissionRejectsOverload\n"}
+{"Time":"2026-09-18T23:07:04.627028+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestAdmissionRejectsOverload","Output":"=== PAUSE TestAdmissionRejectsOverload\n"}
+{"Time":"2026-09-18T23:07:04.62703+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestAdmissionRejectsOverload"}
+{"Time":"2026-09-18T23:07:04.627031+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries"}
+{"Time":"2026-09-18T23:07:04.627037+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries","Output":"=== RUN   TestHTTPBoundaries\n"}
+{"Time":"2026-09-18T23:07:04.627041+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries","Output":"=== PAUSE TestHTTPBoundaries\n"}
+{"Time":"2026-09-18T23:07:04.627042+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries"}
+{"Time":"2026-09-18T23:07:04.627113+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract"}
+{"Time":"2026-09-18T23:07:04.627115+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract","Output":"=== CONT  TestHTTPErrorContract\n"}
+{"Time":"2026-09-18T23:07:04.627117+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/invalid"}
+{"Time":"2026-09-18T23:07:04.627118+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/invalid","Output":"=== RUN   TestHTTPErrorContract/invalid\n"}
+{"Time":"2026-09-18T23:07:04.62712+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries"}
+{"Time":"2026-09-18T23:07:04.627121+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries","Output":"=== CONT  TestHTTPBoundaries\n"}
+{"Time":"2026-09-18T23:07:04.627211+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPJevArchiveRoundTrip"}
+{"Time":"2026-09-18T23:07:04.627215+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPJevArchiveRoundTrip","Output":"=== CONT  TestHTTPJevArchiveRoundTrip\n"}
+{"Time":"2026-09-18T23:07:04.627478+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestSnapshotRoutesAndHealth"}
+{"Time":"2026-09-18T23:07:04.627486+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestSnapshotRoutesAndHealth","Output":"=== CONT  TestSnapshotRoutesAndHealth\n"}
+{"Time":"2026-09-18T23:07:04.627495+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestAdmissionRejectsOverload"}
+{"Time":"2026-09-18T23:07:04.627497+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestAdmissionRejectsOverload","Output":"=== CONT  TestAdmissionRejectsOverload\n"}
+{"Time":"2026-09-18T23:07:04.627732+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/auth"}
+{"Time":"2026-09-18T23:07:04.62774+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/auth","Output":"=== RUN   TestHTTPBoundaries/auth\n"}
+{"Time":"2026-09-18T23:07:04.627742+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/auth","Output":"=== PAUSE TestHTTPBoundaries/auth\n"}
+{"Time":"2026-09-18T23:07:04.627743+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/auth"}
+{"Time":"2026-09-18T23:07:04.627745+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/unknown_field"}
+{"Time":"2026-09-18T23:07:04.627746+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/unknown_field","Output":"=== RUN   TestHTTPBoundaries/unknown_field\n"}
+{"Time":"2026-09-18T23:07:04.627748+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/unknown_field","Output":"=== PAUSE TestHTTPBoundaries/unknown_field\n"}
+{"Time":"2026-09-18T23:07:04.627749+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/unknown_field"}
+{"Time":"2026-09-18T23:07:04.627756+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/invalid","Output":"=== PAUSE TestHTTPErrorContract/invalid\n"}
+{"Time":"2026-09-18T23:07:04.627757+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/invalid"}
+{"Time":"2026-09-18T23:07:04.627949+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/multiple_objects"}
+{"Time":"2026-09-18T23:07:04.627954+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/multiple_objects","Output":"=== RUN   TestHTTPBoundaries/multiple_objects\n"}
+{"Time":"2026-09-18T23:07:04.627958+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/not_found"}
+{"Time":"2026-09-18T23:07:04.627959+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/not_found","Output":"=== RUN   TestHTTPErrorContract/not_found\n"}
+{"Time":"2026-09-18T23:07:04.627963+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/multiple_objects","Output":"=== PAUSE TestHTTPBoundaries/multiple_objects\n"}
+{"Time":"2026-09-18T23:07:04.627964+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/multiple_objects"}
+{"Time":"2026-09-18T23:07:04.628084+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/oversize"}
+{"Time":"2026-09-18T23:07:04.628087+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/oversize","Output":"=== RUN   TestHTTPBoundaries/oversize\n"}
+{"Time":"2026-09-18T23:07:04.628109+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/oversize","Output":"=== PAUSE TestHTTPBoundaries/oversize\n"}
+{"Time":"2026-09-18T23:07:04.628114+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/oversize"}
+{"Time":"2026-09-18T23:07:04.628116+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/wrong_media"}
+{"Time":"2026-09-18T23:07:04.628117+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/wrong_media","Output":"=== RUN   TestHTTPBoundaries/wrong_media\n"}
+{"Time":"2026-09-18T23:07:04.628119+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/not_found","Output":"=== PAUSE TestHTTPErrorContract/not_found\n"}
+{"Time":"2026-09-18T23:07:04.62812+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/not_found"}
+{"Time":"2026-09-18T23:07:04.628207+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/canceled"}
+{"Time":"2026-09-18T23:07:04.628242+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/canceled","Output":"=== RUN   TestHTTPErrorContract/canceled\n"}
+{"Time":"2026-09-18T23:07:04.628248+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/wrong_media","Output":"=== PAUSE TestHTTPBoundaries/wrong_media\n"}
+{"Time":"2026-09-18T23:07:04.628249+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/wrong_media"}
+{"Time":"2026-09-18T23:07:04.628252+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/canceled","Output":"=== PAUSE TestHTTPErrorContract/canceled\n"}
+{"Time":"2026-09-18T23:07:04.628253+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/canceled"}
+{"Time":"2026-09-18T23:07:04.628254+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/invalid_utf8"}
+{"Time":"2026-09-18T23:07:04.628255+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/invalid_utf8","Output":"=== RUN   TestHTTPBoundaries/invalid_utf8\n"}
+{"Time":"2026-09-18T23:07:04.628257+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/deadline"}
+{"Time":"2026-09-18T23:07:04.628259+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/deadline","Output":"=== RUN   TestHTTPErrorContract/deadline\n"}
+{"Time":"2026-09-18T23:07:04.628261+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/deadline","Output":"=== PAUSE TestHTTPErrorContract/deadline\n"}
+{"Time":"2026-09-18T23:07:04.628262+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/deadline"}
+{"Time":"2026-09-18T23:07:04.628263+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/invalid_utf8","Output":"=== PAUSE TestHTTPBoundaries/invalid_utf8\n"}
+{"Time":"2026-09-18T23:07:04.628265+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/invalid_utf8"}
+{"Time":"2026-09-18T23:07:04.628268+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/internal"}
+{"Time":"2026-09-18T23:07:04.628269+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/internal","Output":"=== RUN   TestHTTPErrorContract/internal\n"}
+{"Time":"2026-09-18T23:07:04.628271+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/auth"}
+{"Time":"2026-09-18T23:07:04.628272+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/auth","Output":"=== CONT  TestHTTPBoundaries/auth\n"}
+{"Time":"2026-09-18T23:07:04.628276+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/wrong_media"}
+{"Time":"2026-09-18T23:07:04.628277+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/wrong_media","Output":"=== CONT  TestHTTPBoundaries/wrong_media\n"}
+{"Time":"2026-09-18T23:07:04.628583+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/oversize"}
+{"Time":"2026-09-18T23:07:04.62859+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/oversize","Output":"=== CONT  TestHTTPBoundaries/oversize\n"}
+{"Time":"2026-09-18T23:07:04.628592+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/multiple_objects"}
+{"Time":"2026-09-18T23:07:04.628594+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/multiple_objects","Output":"=== CONT  TestHTTPBoundaries/multiple_objects\n"}
+{"Time":"2026-09-18T23:07:04.628885+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/wrong_media","Output":"--- PASS: TestHTTPBoundaries/wrong_media (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.628891+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/wrong_media","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.628894+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/unknown_field"}
+{"Time":"2026-09-18T23:07:04.628895+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/unknown_field","Output":"=== CONT  TestHTTPBoundaries/unknown_field\n"}
+{"Time":"2026-09-18T23:07:04.628897+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/invalid_utf8"}
+{"Time":"2026-09-18T23:07:04.628898+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/invalid_utf8","Output":"=== CONT  TestHTTPBoundaries/invalid_utf8\n"}
+{"Time":"2026-09-18T23:07:04.628906+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/auth","Output":"--- PASS: TestHTTPBoundaries/auth (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.629047+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/auth","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.629051+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/invalid_utf8","Output":"--- PASS: TestHTTPBoundaries/invalid_utf8 (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.629053+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/invalid_utf8","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.629054+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/unknown_field","Output":"--- PASS: TestHTTPBoundaries/unknown_field (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.629056+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/unknown_field","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.629057+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/internal","Output":"=== PAUSE TestHTTPErrorContract/internal\n"}
+{"Time":"2026-09-18T23:07:04.629059+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/internal"}
+{"Time":"2026-09-18T23:07:04.629162+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/oversize","Output":"--- PASS: TestHTTPBoundaries/oversize (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.629327+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/oversize","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.62933+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/deadline"}
+{"Time":"2026-09-18T23:07:04.629332+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/deadline","Output":"=== CONT  TestHTTPErrorContract/deadline\n"}
+{"Time":"2026-09-18T23:07:04.629333+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/canceled"}
+{"Time":"2026-09-18T23:07:04.629335+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/canceled","Output":"=== CONT  TestHTTPErrorContract/canceled\n"}
+{"Time":"2026-09-18T23:07:04.629337+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/not_found"}
+{"Time":"2026-09-18T23:07:04.629338+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/not_found","Output":"=== CONT  TestHTTPErrorContract/not_found\n"}
+{"Time":"2026-09-18T23:07:04.629341+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/invalid"}
+{"Time":"2026-09-18T23:07:04.629342+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/invalid","Output":"=== CONT  TestHTTPErrorContract/invalid\n"}
+{"Time":"2026-09-18T23:07:04.62939+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/internal"}
+{"Time":"2026-09-18T23:07:04.629393+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/internal","Output":"=== CONT  TestHTTPErrorContract/internal\n"}
+{"Time":"2026-09-18T23:07:04.631449+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestCLIReplayAndRecall"}
+{"Time":"2026-09-18T23:07:04.631473+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestCLIReplayAndRecall","Output":"=== RUN   TestCLIReplayAndRecall\n"}
+{"Time":"2026-09-18T23:07:04.6315+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestCLIReplayAndRecall","Output":"=== PAUSE TestCLIReplayAndRecall\n"}
+{"Time":"2026-09-18T23:07:04.631506+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestCLIReplayAndRecall"}
+{"Time":"2026-09-18T23:07:04.631528+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestListenRequiresTokenOutsideLoopback"}
+{"Time":"2026-09-18T23:07:04.63153+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestListenRequiresTokenOutsideLoopback","Output":"=== RUN   TestListenRequiresTokenOutsideLoopback\n"}
+{"Time":"2026-09-18T23:07:04.631556+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestListenRequiresTokenOutsideLoopback","Output":"=== PAUSE TestListenRequiresTokenOutsideLoopback\n"}
+{"Time":"2026-09-18T23:07:04.631567+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestListenRequiresTokenOutsideLoopback"}
+{"Time":"2026-09-18T23:07:04.63157+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestServeStopsOnCancellation"}
+{"Time":"2026-09-18T23:07:04.631571+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestServeStopsOnCancellation","Output":"=== RUN   TestServeStopsOnCancellation\n"}
+{"Time":"2026-09-18T23:07:04.631577+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestServeStopsOnCancellation","Output":"=== PAUSE TestServeStopsOnCancellation\n"}
+{"Time":"2026-09-18T23:07:04.631578+03:00","Action":"pause","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestServeStopsOnCancellation"}
+{"Time":"2026-09-18T23:07:04.631598+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestListenRequiresTokenOutsideLoopback"}
+{"Time":"2026-09-18T23:07:04.631605+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestListenRequiresTokenOutsideLoopback","Output":"=== CONT  TestListenRequiresTokenOutsideLoopback\n"}
+{"Time":"2026-09-18T23:07:04.631632+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestServeStopsOnCancellation"}
+{"Time":"2026-09-18T23:07:04.631672+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestServeStopsOnCancellation","Output":"=== CONT  TestServeStopsOnCancellation\n"}
+{"Time":"2026-09-18T23:07:04.631676+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestListenRequiresTokenOutsideLoopback","Output":"--- PASS: TestListenRequiresTokenOutsideLoopback (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.631679+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestListenRequiresTokenOutsideLoopback","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.631681+03:00","Action":"cont","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestCLIReplayAndRecall"}
+{"Time":"2026-09-18T23:07:04.631682+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestCLIReplayAndRecall","Output":"=== CONT  TestCLIReplayAndRecall\n"}
+{"Time":"2026-09-18T23:07:04.636501+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/invalid","Output":"--- PASS: TestHTTPErrorContract/invalid (0.01s)\n"}
+{"Time":"2026-09-18T23:07:04.636524+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/invalid","Elapsed":0.01}
+{"Time":"2026-09-18T23:07:04.636528+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/canceled","Output":"--- PASS: TestHTTPErrorContract/canceled (0.01s)\n"}
+{"Time":"2026-09-18T23:07:04.637135+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/canceled","Elapsed":0.01}
+{"Time":"2026-09-18T23:07:04.637141+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/not_found","Output":"--- PASS: TestHTTPErrorContract/not_found (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.637144+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/not_found","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.637145+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestAdmissionRejectsOverload","Output":"--- PASS: TestAdmissionRejectsOverload (0.01s)\n"}
+{"Time":"2026-09-18T23:07:04.637599+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestAdmissionRejectsOverload","Elapsed":0.01}
+{"Time":"2026-09-18T23:07:04.637621+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/deadline","Output":"--- PASS: TestHTTPErrorContract/deadline (0.01s)\n"}
+{"Time":"2026-09-18T23:07:04.637795+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/deadline","Elapsed":0.01}
+{"Time":"2026-09-18T23:07:04.637804+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/internal","Output":"--- PASS: TestHTTPErrorContract/internal (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.637807+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract/internal","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.637808+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract","Output":"--- PASS: TestHTTPErrorContract (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.638015+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestCompactUsesEvaluatedReplacement","Elapsed":0.03}
+{"Time":"2026-09-18T23:07:04.638023+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestScorerSeesActualResult","Output":"--- PASS: TestScorerSeesActualResult (0.05s)\n"}
+{"Time":"2026-09-18T23:07:04.638089+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"TestScorerSeesActualResult","Elapsed":0.05}
+{"Time":"2026-09-18T23:07:04.638093+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzExcerpt"}
+{"Time":"2026-09-18T23:07:04.638094+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzExcerpt","Output":"=== RUN   FuzzExcerpt\n"}
+{"Time":"2026-09-18T23:07:04.638266+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzExcerpt/seed#0"}
+{"Time":"2026-09-18T23:07:04.638271+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzExcerpt/seed#0","Output":"=== RUN   FuzzExcerpt/seed#0\n"}
+{"Time":"2026-09-18T23:07:04.638331+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzExcerpt/seed#0","Output":"--- PASS: FuzzExcerpt/seed#0 (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.638338+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzExcerpt/seed#0","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.638341+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzExcerpt/seed#1"}
+{"Time":"2026-09-18T23:07:04.638343+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzExcerpt/seed#1","Output":"=== RUN   FuzzExcerpt/seed#1\n"}
+{"Time":"2026-09-18T23:07:04.638425+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzExcerpt/seed#1","Output":"--- PASS: FuzzExcerpt/seed#1 (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.638468+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzExcerpt/seed#1","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.638473+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzExcerpt","Output":"--- PASS: FuzzExcerpt (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.638476+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzExcerpt","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.638477+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzCompactionInvariants"}
+{"Time":"2026-09-18T23:07:04.63848+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzCompactionInvariants","Output":"=== RUN   FuzzCompactionInvariants\n"}
+{"Time":"2026-09-18T23:07:04.638482+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzCompactionInvariants/seed#0"}
+{"Time":"2026-09-18T23:07:04.638483+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzCompactionInvariants/seed#0","Output":"=== RUN   FuzzCompactionInvariants/seed#0\n"}
+{"Time":"2026-09-18T23:07:04.642322+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzCompactionInvariants/seed#0","Output":"--- PASS: FuzzCompactionInvariants/seed#0 (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.642337+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzCompactionInvariants/seed#0","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.642341+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzCompactionInvariants/seed#1"}
+{"Time":"2026-09-18T23:07:04.642342+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzCompactionInvariants/seed#1","Output":"=== RUN   FuzzCompactionInvariants/seed#1\n"}
+{"Time":"2026-09-18T23:07:04.642924+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPErrorContract","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.642937+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/multiple_objects","Output":"--- PASS: TestHTTPBoundaries/multiple_objects (0.01s)\n"}
+{"Time":"2026-09-18T23:07:04.643303+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries/multiple_objects","Elapsed":0.01}
+{"Time":"2026-09-18T23:07:04.643312+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries","Output":"--- PASS: TestHTTPBoundaries (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.644251+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzCompactionInvariants/seed#1","Output":"--- PASS: FuzzCompactionInvariants/seed#1 (0.00s)\n"}
+{"Time":"2026-09-18T23:07:04.644259+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzCompactionInvariants/seed#1","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.644265+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPBoundaries","Elapsed":0}
+{"Time":"2026-09-18T23:07:04.644266+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestSnapshotRoutesAndHealth","Output":"--- PASS: TestSnapshotRoutesAndHealth (0.02s)\n"}
+{"Time":"2026-09-18T23:07:04.644286+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzCompactionInvariants","Output":"--- PASS: FuzzCompactionInvariants (0.01s)\n"}
+{"Time":"2026-09-18T23:07:04.644295+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"FuzzCompactionInvariants","Elapsed":0.01}
+{"Time":"2026-09-18T23:07:04.644303+03:00","Action":"run","Package":"github.com/muratmirgun/compact-engine/compact","Test":"ExampleEngine_Compact"}
+{"Time":"2026-09-18T23:07:04.644305+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"ExampleEngine_Compact","Output":"=== RUN   ExampleEngine_Compact\n"}
+{"Time":"2026-09-18T23:07:04.675943+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestServeStopsOnCancellation","Output":"--- PASS: TestServeStopsOnCancellation (0.04s)\n"}
+{"Time":"2026-09-18T23:07:04.688597+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Test":"ExampleEngine_Compact","Output":"--- PASS: ExampleEngine_Compact (0.04s)\n"}
+{"Time":"2026-09-18T23:07:04.688615+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Test":"ExampleEngine_Compact","Elapsed":0.04}
+{"Time":"2026-09-18T23:07:04.68862+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Output":"PASS\n"}
+{"Time":"2026-09-18T23:07:04.690963+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Output":"coverage: 92.8% of statements\n"}
+{"Time":"2026-09-18T23:07:04.73937+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestServeStopsOnCancellation","Elapsed":0.04}
+{"Time":"2026-09-18T23:07:04.739424+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestCLIReplayAndRecall","Output":"--- PASS: TestCLIReplayAndRecall (0.11s)\n"}
+{"Time":"2026-09-18T23:07:04.739474+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Test":"TestCLIReplayAndRecall","Elapsed":0.11}
+{"Time":"2026-09-18T23:07:04.739488+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Output":"PASS\n"}
+{"Time":"2026-09-18T23:07:04.742018+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Output":"coverage: 65.5% of statements\n"}
+{"Time":"2026-09-18T23:07:04.813393+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestSnapshotRoutesAndHealth","Elapsed":0.02}
+{"Time":"2026-09-18T23:07:04.813427+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPJevArchiveRoundTrip","Output":"--- PASS: TestHTTPJevArchiveRoundTrip (0.19s)\n"}
+{"Time":"2026-09-18T23:07:04.813431+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/server","Test":"TestHTTPJevArchiveRoundTrip","Elapsed":0.19}
+{"Time":"2026-09-18T23:07:04.813432+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Output":"PASS\n"}
+{"Time":"2026-09-18T23:07:04.815037+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Output":"coverage: 90.1% of statements\n"}
+{"Time":"2026-09-18T23:07:05.395184+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/archive","Output":"ok  \tgithub.com/muratmirgun/compact-engine/archive\t1.411s\tcoverage: 71.0% of statements\n"}
+{"Time":"2026-09-18T23:07:05.395205+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/archive","Elapsed":1.411}
+{"Time":"2026-09-18T23:07:05.534785+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/jev","Output":"ok  \tgithub.com/muratmirgun/compact-engine/jev\t1.275s\tcoverage: 90.8% of statements\n"}
+{"Time":"2026-09-18T23:07:05.534814+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/jev","Elapsed":1.275}
+{"Time":"2026-09-18T23:07:05.630729+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/token","Output":"ok  \tgithub.com/muratmirgun/compact-engine/token\t1.368s\tcoverage: 75.0% of statements\n"}
+{"Time":"2026-09-18T23:07:05.63075+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/token","Elapsed":1.3679999999999999}
+{"Time":"2026-09-18T23:07:05.705489+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/compact","Output":"ok  \tgithub.com/muratmirgun/compact-engine/compact\t1.445s\tcoverage: 92.8% of statements\n"}
+{"Time":"2026-09-18T23:07:05.705507+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/compact","Elapsed":1.446}
+{"Time":"2026-09-18T23:07:05.751633+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Output":"ok  \tgithub.com/muratmirgun/compact-engine/cmd/compactd\t1.492s\tcoverage: 65.5% of statements\n"}
+{"Time":"2026-09-18T23:07:05.751653+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/cmd/compactd","Elapsed":1.492}
+{"Time":"2026-09-18T23:07:05.824172+03:00","Action":"output","Package":"github.com/muratmirgun/compact-engine/server","Output":"ok  \tgithub.com/muratmirgun/compact-engine/server\t1.561s\tcoverage: 90.1% of statements\n"}
+{"Time":"2026-09-18T23:07:05.824191+03:00","Action":"pass","Package":"github.com/muratmirgun/compact-engine/server","Elapsed":1.562}

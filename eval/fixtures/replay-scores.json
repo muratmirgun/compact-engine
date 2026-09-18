@@ -1,0 +1,6 @@
+{
+  "original": {"old-call": {"loss": {"extract": 0.05, "brief": 0.05, "reference": 0.05, "drop": 0.05}}},
+  "middle-evidence": {"old-call": {"loss": {"extract": 0.18, "brief": 0.19, "reference": 0.59, "drop": 0.82}}},
+  "partial-budget": {"old-call": {"loss": {"extract": 0.05, "brief": 0.05, "reference": 0.05, "drop": 0.05}}},
+  "exact-command": {"old-call": {"loss": {"extract": 0.9, "brief": 0.9, "reference": 0.9, "drop": 0.9}}}
+}

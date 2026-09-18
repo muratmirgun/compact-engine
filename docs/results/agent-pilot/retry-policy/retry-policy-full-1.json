@@ -1,0 +1,61 @@
+{
+  "run_id": "retry-policy-full-1",
+  "case": "retry-policy",
+  "arm": "full",
+  "repeat": 1,
+  "model": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "elapsed_seconds": 47.90962779200345,
+  "exit_code": 0,
+  "timed_out": false,
+  "contract_tests": {
+    "passed": true,
+    "output": "test_backoff_and_final_exception (__main__.ContractTests.test_backoff_and_final_exception) ... ok\ntest_invalid_attempts (__main__.ContractTests.test_invalid_attempts) ... ok\ntest_recovers_after_failure (__main__.ContractTests.test_recovers_after_failure) ... ok\ntest_selective_errors (__main__.ContractTests.test_selective_errors) ... ok\ntest_success_and_no_sleep (__main__.ContractTests.test_success_and_no_sleep) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n"
+  },
+  "constraints_met": true,
+  "changed_files": [
+    "retry.py"
+  ],
+  "passed": true,
+  "history_tokens": 2648,
+  "compaction_applied": false,
+  "prompt_sha256": "6777f593c6122722e5a77c5a207b83a45b084e8d34df085222db8b2c7b552f78",
+  "usage": {
+    "input_tokens": 73726,
+    "cached_input_tokens": 60416,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 1020,
+    "reasoning_output_tokens": 27
+  },
+  "commands": [
+    {
+      "command": "/bin/zsh -lc 'rtk proxy cat retry.py'",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy git status --short'",
+      "exit_code": 128,
+      "status": "failed"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy python3 - <<'PY'\nfrom pathlib import Path\nPath('retry.py').write_text('''def retry(operation, attempts, sleep):\n    if attempts <= 0:\n        raise ValueError(\\\"attempts must be positive\\\")\n\n    delay = 0.1\n    for attempt in range(attempts):\n        try:\n            return operation()\n        except TimeoutError:\n            if attempt == attempts - 1:\n                raise\n            sleep(delay)\n            delay = min(delay * 2, 1.0)\n''')\nPY\"",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy python3 -B -m unittest test_visible.py'",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy python3 -B - <<'PY'\nimport unittest\nfrom unittest.mock import Mock\nfrom retry import retry\n\nclass RetryContractTests(unittest.TestCase):\n    def test_success(self):\n        value = object()\n        operation, sleep = Mock(return_value=value), Mock()\n        self.assertIs(retry(operation, 3, sleep), value)\n        operation.assert_called_once_with()\n        sleep.assert_not_called()\n\n    def test_invalid_attempts(self):\n        for attempts in (0, -1, -10):\n            with self.subTest(attempts=attempts):\n                operation, sleep = Mock(), Mock()\n                with self.assertRaises(ValueError):\n                    retry(operation, attempts, sleep)\n                operation.assert_not_called()\n                sleep.assert_not_called()\n\n    def test_other_exceptions(self):\n        for error in (ValueError('bad'), RuntimeError('bad'), KeyboardInterrupt()):\n            with self.subTest(error=type(error)):\n                operation, sleep = Mock(side_effect=error), Mock()\n                with self.assertRaises(type(error)) as caught:\n                    retry(operation, 3, sleep)\n                self.assertIs(caught.exception, error)\n                operation.assert_called_once_with()\n                sleep.assert_not_called()\n\n    def test_backoff_and_exhaustion(self):\n        errors = [TimeoutError(str(index)) for index in range(8)]\n        operation, sleep = Mock(side_effect=errors), Mock()\n        with self.assertRaises(TimeoutError) as caught:\n            retry(operation, 8, sleep)\n        self.assertIs(caught.exception, errors[-1])\n        self.assertEqual(operation.call_count, 8)\n        self.assertEqual([call.args[0] for call in sleep.call_args_list],\n                         [0.1, 0.2, 0.4, 0.8, 1.0, 1.0, 1.0])\n\n    def test_single_failure(self):\n        error = TimeoutError('last')\n        operation, sleep = Mock(side_effect=error), Mock()\n        with self.assertRaises(TimeoutError) as caught:\n            retry(operation, 1, sleep)\n        self.assertIs(caught.exception, error)\n        operation.assert_called_once_with()\n        sleep.assert_not_called()\n\n    def test_recovery(self):\n        operation = Mock(side_effect=[TimeoutError(), TimeoutError(), 'done'])\n        sleep = Mock()\n        self.assertEqual(retry(operation, 5, sleep), 'done')\n        self.assertEqual(operation.call_count, 3)\n        self.assertEqual([call.args[0] for call in sleep.call_args_list], [0.1, 0.2])\n\nunittest.main()\nPY\"",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "final_message": "Updated `retry.py` to match the contract:\n\n- Retry only `TimeoutError`.\n- Reject nonpositive attempts before calling the operation.\n- Double delays from 0.1 seconds, capped at 1.0 second.\n- Raise the final exception without another sleep.\n\nThe visible test and six additional contract tests passed. Only `retry.py` changed. Public signatures remain unchanged.",
+  "errors": [],
+  "recall_commands": 0,
+  "source_after": "def retry(operation, attempts, sleep):\n    if attempts <= 0:\n        raise ValueError(\"attempts must be positive\")\n\n    delay = 0.1\n    for attempt in range(attempts):\n        try:\n            return operation()\n        except TimeoutError:\n            if attempt == attempts - 1:\n                raise\n            sleep(delay)\n            delay = min(delay * 2, 1.0)\n"
+}

@@ -1,0 +1,10 @@
+{
+  "old-call": {
+    "loss": {
+      "brief": 0.19,
+      "drop": 0.82,
+      "extract": 0.18,
+      "reference": 0.59
+    }
+  }
+}

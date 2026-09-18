@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "mode": "replay",
+  "requested_model": null,
+  "cases": [
+    {
+      "case": "original",
+      "passed": true,
+      "expected_status": "compacted",
+      "status": "compacted",
+      "stats": {
+        "input_tokens": 2580,
+        "output_tokens": 120,
+        "reduction_ratio": 0.9534883720930233,
+        "counter": "o200k_base+canonical-json+8/message",
+        "scorer": "replay",
+        "scoring_ms": 0.002541,
+        "total_ms": 14.682542
+      },
+      "scores": {
+        "old-call": {
+          "loss": {
+            "brief": 0.05,
+            "drop": 0.05,
+            "extract": 0.05,
+            "reference": 0.05
+          }
+        }
+      },
+      "protected_exact": true,
+      "evidence_retained": true,
+      "command_exact": true,
+      "recall_exact": true,
+      "input_sha256": "3e0b896dc16cb50cac0e56e13b7d0afef4c7c366aaf2f28375fd8ad6083aef2f"
+    },
+    {
+      "case": "middle-evidence",
+      "passed": true,
+      "expected_status": "compacted",
+      "status": "compacted",
+      "stats": {
+        "input_tokens": 2619,
+        "output_tokens": 343,
+        "reduction_ratio": 0.8690339824360442,
+        "counter": "o200k_base+canonical-json+8/message",
+        "scorer": "replay",
+        "scoring_ms": 0.002875,
+        "total_ms": 12.936417
+      },
+      "scores": {
+        "old-call": {
+          "loss": {
+            "brief": 0.19,
+            "drop": 0.82,
+            "extract": 0.18,
+            "reference": 0.59
+          }
+        }
+      },
+      "protected_exact": true,
+      "evidence_retained": true,
+      "command_exact": true,
+      "recall_exact": true,
+      "input_sha256": "1d6802c02e86c01d9a696c3efa01d70dce0650c10b4fa592322153c276a43ea3"
+    },
+    {
+      "case": "partial-budget",
+      "passed": true,
+      "expected_status": "partial",
+      "status": "partial",
+      "stats": {
+        "input_tokens": 2580,
+        "output_tokens": 120,
+        "reduction_ratio": 0.9534883720930233,
+        "counter": "o200k_base+canonical-json+8/message",
+        "scorer": "replay",
+        "scoring_ms": 0.002,
+        "total_ms": 13.528833
+      },
+      "scores": {
+        "old-call": {
+          "loss": {
+            "brief": 0.05,
+            "drop": 0.05,
+            "extract": 0.05,
+            "reference": 0.05
+          }
+        }
+      },
+      "protected_exact": true,
+      "evidence_retained": true,
+      "command_exact": true,
+      "recall_exact": true,
+      "input_sha256": "ba536c0f89438076f853f386e2cb526700a8c60650ee0fac0504d870384036f3"
+    },
+    {
+      "case": "exact-command",
+      "passed": true,
+      "expected_status": "budget_unmet",
+      "status": "budget_unmet",
+      "stats": {
+        "input_tokens": 1037,
+        "output_tokens": 1037,
+        "reduction_ratio": 0,
+        "counter": "o200k_base+canonical-json+8/message",
+        "scorer": "replay",
+        "scoring_ms": 0.002375,
+        "total_ms": 14.667166
+      },
+      "scores": {
+        "old-call": {
+          "loss": {
+            "brief": 0.9,
+            "drop": 0.9,
+            "extract": 0.9,
+            "reference": 0.9
+          }
+        }
+      },
+      "protected_exact": true,
+      "evidence_retained": true,
+      "command_exact": true,
+      "recall_exact": true,
+      "input_sha256": "b75c2313550dee26fcc186c203792b24b3890e939f543bf65c566f569bc35b77"
+    }
+  ]
+}

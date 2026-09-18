@@ -1,0 +1,61 @@
+{
+  "run_id": "tenant-cache-full-1",
+  "case": "tenant-cache",
+  "arm": "full",
+  "repeat": 1,
+  "model": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "elapsed_seconds": 33.26105566600745,
+  "exit_code": 0,
+  "timed_out": false,
+  "contract_tests": {
+    "passed": true,
+    "output": "test_existing_and_missing_return (__main__.ContractTests.test_existing_and_missing_return) ... ok\ntest_literal_identifiers (__main__.ContractTests.test_literal_identifiers) ... ok\ntest_none_is_existing (__main__.ContractTests.test_none_is_existing) ... ok\ntest_other_keys (__main__.ContractTests.test_other_keys) ... ok\ntest_tenant_isolation (__main__.ContractTests.test_tenant_isolation) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n"
+  },
+  "constraints_met": true,
+  "changed_files": [
+    "cache.py"
+  ],
+  "passed": true,
+  "history_tokens": 2617,
+  "compaction_applied": false,
+  "prompt_sha256": "d914837793db41a6ee0d65e5179c718feea1350f2bca3eae205336c2769b2339",
+  "usage": {
+    "input_tokens": 55266,
+    "cached_input_tokens": 35840,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 786,
+    "reasoning_output_tokens": 34
+  },
+  "commands": [
+    {
+      "command": "/bin/zsh -lc 'rtk proxy cat cache.py'",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy git status --short'",
+      "exit_code": 128,
+      "status": "failed"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy cat test_visible.py'",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy python3 -B -m unittest test_visible.py'",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy python3 -B - <<'PY'\nimport unittest\nfrom cache import Cache\n\nclass ContractTests(unittest.TestCase):\n    def test_return_values(self):\n        for value in (None, False, 0, '', [], {}, object()):\n            with self.subTest(value=value):\n                cache = Cache()\n                self.assertIs(cache.invalidate('alpha', 'item'), False)\n                cache.put('alpha', 'item', value)\n                self.assertIs(cache.invalidate('alpha', 'item'), True)\n                self.assertNotIn('cache:alpha:item', cache._data)\n                self.assertIs(cache.invalidate('alpha', 'item'), False)\n\n    def test_exact_key_and_isolation(self):\n        cache = Cache()\n        entries = [\n            ('alpha', 'item', 1),\n            ('beta', 'item', 2),\n            ('alpha', 'other', 3),\n            (' alpha ', 'item', 4),\n            ('alpha', ' item ', 5),\n            (' alpha ', ' item ', 6),\n            ('', '', 7),\n        ]\n        for tenant, key, value in entries:\n            cache.put(tenant, key, value)\n        expected = dict(cache._data)\n        self.assertIs(cache.invalidate('alpha ', 'item'), False)\n        self.assertEqual(cache._data, expected)\n        for tenant, key, value in entries:\n            self.assertEqual(cache.get(tenant, key), value)\n            self.assertIs(cache.invalidate(tenant, key), True)\n            del expected[f'cache:{tenant}:{key}']\n            self.assertEqual(cache._data, expected)\n            self.assertIs(cache.invalidate(tenant, key), False)\n\nunittest.main()\nPY\"",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "final_message": "Changed only `cache.py`. Invalidation uses the exact tenant key and returns `True` only when it removes an entry.\n\nAll three local tests passed. Checks covered missing entries, false values, tenant isolation, other keys, and literal spaces.\n\nPublic signatures and generated files remain unchanged.",
+  "errors": [],
+  "recall_commands": 0,
+  "source_after": "class Cache:\n    def __init__(self):\n        self._data = {}\n\n    def put(self, tenant, key, value):\n        self._data[f\"cache:{tenant}:{key}\"] = value\n\n    def get(self, tenant, key):\n        return self._data.get(f\"cache:{tenant}:{key}\")\n\n    def invalidate(self, tenant, key):\n        missing = object()\n        return self._data.pop(f\"cache:{tenant}:{key}\", missing) is not missing\n"
+}

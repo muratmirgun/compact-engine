@@ -1,0 +1,13 @@
+bin/
+.compact-data/
+*.test
+*.prof
+.DS_Store
+/reports/
+.env
+.env.*
+*.pem
+*.key
+__pycache__/
+.codebase-memory/
+/compactd

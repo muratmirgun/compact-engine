@@ -1,0 +1,66 @@
+{
+  "run_id": "retry-policy-compacted-1",
+  "case": "retry-policy",
+  "arm": "compacted",
+  "repeat": 1,
+  "model": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "elapsed_seconds": 57.321495708005386,
+  "exit_code": 0,
+  "timed_out": false,
+  "contract_tests": {
+    "passed": true,
+    "output": "test_backoff_and_final_exception (__main__.ContractTests.test_backoff_and_final_exception) ... ok\ntest_invalid_attempts (__main__.ContractTests.test_invalid_attempts) ... ok\ntest_recovers_after_failure (__main__.ContractTests.test_recovers_after_failure) ... ok\ntest_selective_errors (__main__.ContractTests.test_selective_errors) ... ok\ntest_success_and_no_sleep (__main__.ContractTests.test_success_and_no_sleep) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n"
+  },
+  "constraints_met": true,
+  "changed_files": [
+    "retry.py"
+  ],
+  "passed": true,
+  "history_tokens": 657,
+  "compaction_applied": true,
+  "prompt_sha256": "45767768fe4c229af72d295cbec1cec531891b6a03b6ebe257d5cc5cb7715bcb",
+  "usage": {
+    "input_tokens": 83290,
+    "cached_input_tokens": 64640,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 1417,
+    "reasoning_output_tokens": 36
+  },
+  "commands": [
+    {
+      "command": "/bin/zsh -lc 'rtk proxy pwd'",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy ls -a'",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy cat test_visible.py'",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy cat retry.py'",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy python3 -B -m unittest test_visible.py'",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy python3 -B - <<'PY'\nimport unittest\nfrom retry import retry\n\nclass ContractTests(unittest.TestCase):\n    def test_invalid_attempts(self):\n        for attempts in (0, -1, -10):\n            calls, waits = [], []\n            with self.assertRaises(ValueError):\n                retry(lambda: calls.append(True), attempts, waits.append)\n            self.assertEqual(calls, [])\n            self.assertEqual(waits, [])\n\n    def test_immediate_success(self):\n        for result in (None, False, 0, object()):\n            calls, waits = [], []\n            def operation():\n                calls.append(True)\n                return result\n            self.assertIs(retry(operation, 3, waits.append), result)\n            self.assertEqual(len(calls), 1)\n            self.assertEqual(waits, [])\n\n    def test_other_exceptions(self):\n        for error in (ValueError('bad'), RuntimeError('bad'), KeyboardInterrupt()):\n            calls, waits = [], []\n            def operation():\n                calls.append(True)\n                raise error\n            with self.assertRaises(type(error)) as caught:\n                retry(operation, 3, waits.append)\n            self.assertIs(caught.exception, error)\n            self.assertEqual(len(calls), 1)\n            self.assertEqual(waits, [])\n\n    def test_exhaustion_and_capped_delays(self):\n        for attempts in (1, 2, 8, 1100):\n            errors = [TimeoutError(str(i)) for i in range(attempts)]\n            calls, waits = [], []\n            def operation():\n                error = errors[len(calls)]\n                calls.append(True)\n                raise error\n            with self.assertRaises(TimeoutError) as caught:\n                retry(operation, attempts, waits.append)\n            self.assertIs(caught.exception, errors[-1])\n            self.assertEqual(len(calls), attempts)\n            self.assertEqual(waits, [0.1, 0.2, 0.4, 0.8][:attempts - 1] + [1.0] * max(0, attempts - 5))\n\n    def test_eventual_success(self):\n        calls, waits = [], []\n        result = object()\n        def operation():\n            calls.append(True)\n            if len(calls) < 3:\n                raise TimeoutError('temporary')\n            return result\n        self.assertIs(retry(operation, 5, waits.append), result)\n        self.assertEqual(len(calls), 3)\n        self.assertEqual(waits, [0.1, 0.2])\n\n    def test_other_exception_after_timeout(self):\n        calls, waits = [], []\n        error = ValueError('stop')\n        def operation():\n            calls.append(True)\n            if len(calls) == 1:\n                raise TimeoutError('temporary')\n            raise error\n        with self.assertRaises(ValueError) as caught:\n            retry(operation, 5, waits.append)\n        self.assertIs(caught.exception, error)\n        self.assertEqual(len(calls), 2)\n        self.assertEqual(waits, [0.1])\n\n    def test_sleep_failure(self):\n        calls, waits = [], []\n        error = TimeoutError('sleep failed')\n        def operation():\n            calls.append(True)\n            raise TimeoutError('operation failed')\n        def sleep(delay):\n            waits.append(delay)\n            raise error\n        with self.assertRaises(TimeoutError) as caught:\n            retry(operation, 3, sleep)\n        self.assertIs(caught.exception, error)\n        self.assertEqual(len(calls), 1)\n        self.assertEqual(waits, [0.1])\n\nunittest.main()\nPY\"",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "final_message": "Updated only `retry.py`. It now retries only `TimeoutError`, rejects nonpositive attempts, caps exponential delays at one second, and raises the final exception.\n\nPublic signatures and generated files remain unchanged. The visible test and seven additional contract tests passed.",
+  "errors": [],
+  "recall_commands": 0,
+  "source_after": "def retry(operation, attempts, sleep):\n    if attempts <= 0:\n        raise ValueError('attempts must be positive')\n\n    delay = 0.1\n    for attempt in range(attempts):\n        try:\n            return operation()\n        except TimeoutError:\n            if attempt == attempts - 1:\n                raise\n            sleep(delay)\n            delay = min(delay * 2, 1.0)\n"
+}

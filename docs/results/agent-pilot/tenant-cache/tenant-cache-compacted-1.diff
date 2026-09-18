@@ -1,0 +1,9 @@
+--- a/cache.py
++++ b/cache.py
+@@ -9,4 +9,5 @@
+         return self._data.get(f"cache:{tenant}:{key}")
+ 
+     def invalidate(self, tenant, key):
+-        self._data.pop(f"cache:{key}", None)
++        missing = object()
++        return self._data.pop(f"cache:{tenant}:{key}", missing) is not missing

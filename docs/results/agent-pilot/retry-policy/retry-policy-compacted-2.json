@@ -1,0 +1,71 @@
+{
+  "run_id": "retry-policy-compacted-2",
+  "case": "retry-policy",
+  "arm": "compacted",
+  "repeat": 2,
+  "model": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "elapsed_seconds": 40.024120792004396,
+  "exit_code": 0,
+  "timed_out": false,
+  "contract_tests": {
+    "passed": true,
+    "output": "test_backoff_and_final_exception (__main__.ContractTests.test_backoff_and_final_exception) ... ok\ntest_invalid_attempts (__main__.ContractTests.test_invalid_attempts) ... ok\ntest_recovers_after_failure (__main__.ContractTests.test_recovers_after_failure) ... ok\ntest_selective_errors (__main__.ContractTests.test_selective_errors) ... ok\ntest_success_and_no_sleep (__main__.ContractTests.test_success_and_no_sleep) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n"
+  },
+  "constraints_met": true,
+  "changed_files": [
+    "retry.py"
+  ],
+  "passed": true,
+  "history_tokens": 657,
+  "compaction_applied": true,
+  "prompt_sha256": "45767768fe4c229af72d295cbec1cec531891b6a03b6ebe257d5cc5cb7715bcb",
+  "usage": {
+    "input_tokens": 66120,
+    "cached_input_tokens": 54528,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 1013,
+    "reasoning_output_tokens": 37
+  },
+  "commands": [
+    {
+      "command": "/bin/zsh -lc 'rtk proxy pwd'",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy rg --files -g retry.py -g test_visible.py -g AGENTS.md'",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy cat retry.py'",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy python3 -B -m unittest test_visible.py'",
+      "exit_code": 1,
+      "status": "failed"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy python3 -B - <<'PY'\nfrom pathlib import Path\npath = Path('retry.py')\npath.write_text('''def retry(operation, attempts, sleep):\n    if attempts <= 0:\n        raise ValueError(\\\"attempts must be greater than zero\\\")\n\n    delay = 0.1\n    for attempt in range(attempts):\n        try:\n            return operation()\n        except TimeoutError:\n            if attempt == attempts - 1:\n                raise\n            sleep(delay)\n            delay = min(delay * 2, 1.0)\n''')\nPY\"",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy python3 -B -m unittest test_visible.py'",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy python3 -B - <<'PY'\nfrom retry import retry\n\nfor attempts in (0, -1, -10):\n    calls = []\n    waits = []\n    try:\n        retry(lambda: calls.append(True), attempts, waits.append)\n    except ValueError:\n        pass\n    else:\n        raise AssertionError('Nonpositive attempts must raise ValueError')\n    assert calls == [] and waits == []\n\nresult = object()\nwaits = []\nassert retry(lambda: result, 3, waits.append) is result\nassert waits == []\n\nfor error in (RuntimeError('stop'), ValueError('stop'), KeyboardInterrupt()):\n    calls = []\n    waits = []\n    def fail():\n        calls.append(True)\n        raise error\n    try:\n        retry(fail, 3, waits.append)\n    except BaseException as caught:\n        assert caught is error\n    else:\n        raise AssertionError('Non-timeout errors must propagate')\n    assert len(calls) == 1 and waits == []\n\nfor attempts in (1, 2, 8, 1100):\n    errors = [TimeoutError(str(i)) for i in range(attempts)]\n    calls = []\n    waits = []\n    def timeout():\n        error = errors[len(calls)]\n        calls.append(True)\n        raise error\n    try:\n        retry(timeout, attempts, waits.append)\n    except TimeoutError as caught:\n        assert caught is errors[-1]\n    else:\n        raise AssertionError('Final timeout must propagate')\n    assert len(calls) == attempts\n    assert waits == [0.1 * 2 ** min(i, 4) if i < 4 else 1.0\n                     for i in range(attempts - 1)]\n\ncalls = []\nwaits = []\ndef recover():\n    calls.append(True)\n    if len(calls) < 3:\n        raise TimeoutError('retry')\n    return result\nassert retry(recover, 5, waits.append) is result\nassert len(calls) == 3 and waits == [0.1, 0.2]\nprint('All retry contract checks passed.')\nPY\"",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "final_message": "Updated `retry.py` to match the recorded contract:\n\n- Retry only `TimeoutError`.\n- Reject nonpositive attempts before calling the operation.\n- Double delays from 0.1 seconds, capped at 1.0 second.\n- Raise the final exception without another sleep.\n\nThe visible test and additional contract checks passed. Only `retry.py` changed.",
+  "errors": [],
+  "recall_commands": 0,
+  "source_after": "def retry(operation, attempts, sleep):\n    if attempts <= 0:\n        raise ValueError(\"attempts must be greater than zero\")\n\n    delay = 0.1\n    for attempt in range(attempts):\n        try:\n            return operation()\n        except TimeoutError:\n            if attempt == attempts - 1:\n                raise\n            sleep(delay)\n            delay = min(delay * 2, 1.0)\n"
+}

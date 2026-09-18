@@ -1,0 +1,908 @@
+{
+  "schema_version": 1,
+  "completed_at": "2026-09-18T19:46:42.940171+00:00",
+  "benchmark_type": "real-agent pilot on authored synthetic tasks",
+  "continuation_method": "checkpoint JSON in a fresh Codex prompt; not native session compaction",
+  "model": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "seed": 731,
+  "repeats_per_arm": 2,
+  "timeout_seconds": 180,
+  "codex_version": "codex-cli 0.155.0-alpha.2.6",
+  "runs": [
+    {
+      "run_id": "retry-policy-full-1",
+      "case": "retry-policy",
+      "arm": "full",
+      "repeat": 1,
+      "model": "gpt-6-astra",
+      "reasoning_effort": "high",
+      "elapsed_seconds": 47.90962779200345,
+      "exit_code": 0,
+      "timed_out": false,
+      "contract_tests": {
+        "passed": true,
+        "output": "test_backoff_and_final_exception (__main__.ContractTests.test_backoff_and_final_exception) ... ok\ntest_invalid_attempts (__main__.ContractTests.test_invalid_attempts) ... ok\ntest_recovers_after_failure (__main__.ContractTests.test_recovers_after_failure) ... ok\ntest_selective_errors (__main__.ContractTests.test_selective_errors) ... ok\ntest_success_and_no_sleep (__main__.ContractTests.test_success_and_no_sleep) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n"
+      },
+      "constraints_met": true,
+      "changed_files": [
+        "retry.py"
+      ],
+      "passed": true,
+      "history_tokens": 2648,
+      "compaction_applied": false,
+      "prompt_sha256": "6777f593c6122722e5a77c5a207b83a45b084e8d34df085222db8b2c7b552f78",
+      "usage": {
+        "input_tokens": 73726,
+        "cached_input_tokens": 60416,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1020,
+        "reasoning_output_tokens": 27
+      },
+      "commands": [
+        {
+          "command": "/bin/zsh -lc 'rtk proxy cat retry.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy git status --short'",
+          "exit_code": 128,
+          "status": "failed"
+        },
+        {
+          "command": "/bin/zsh -lc \"rtk proxy python3 - <<'PY'\nfrom pathlib import Path\nPath('retry.py').write_text('''def retry(operation, attempts, sleep):\n    if attempts <= 0:\n        raise ValueError(\\\"attempts must be positive\\\")\n\n    delay = 0.1\n    for attempt in range(attempts):\n        try:\n            return operation()\n        except TimeoutError:\n            if attempt == attempts - 1:\n                raise\n            sleep(delay)\n            delay = min(delay * 2, 1.0)\n''')\nPY\"",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy python3 -B -m unittest test_visible.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc \"rtk proxy python3 -B - <<'PY'\nimport unittest\nfrom unittest.mock import Mock\nfrom retry import retry\n\nclass RetryContractTests(unittest.TestCase):\n    def test_success(self):\n        value = object()\n        operation, sleep = Mock(return_value=value), Mock()\n        self.assertIs(retry(operation, 3, sleep), value)\n        operation.assert_called_once_with()\n        sleep.assert_not_called()\n\n    def test_invalid_attempts(self):\n        for attempts in (0, -1, -10):\n            with self.subTest(attempts=attempts):\n                operation, sleep = Mock(), Mock()\n                with self.assertRaises(ValueError):\n                    retry(operation, attempts, sleep)\n                operation.assert_not_called()\n                sleep.assert_not_called()\n\n    def test_other_exceptions(self):\n        for error in (ValueError('bad'), RuntimeError('bad'), KeyboardInterrupt()):\n            with self.subTest(error=type(error)):\n                operation, sleep = Mock(side_effect=error), Mock()\n                with self.assertRaises(type(error)) as caught:\n                    retry(operation, 3, sleep)\n                self.assertIs(caught.exception, error)\n                operation.assert_called_once_with()\n                sleep.assert_not_called()\n\n    def test_backoff_and_exhaustion(self):\n        errors = [TimeoutError(str(index)) for index in range(8)]\n        operation, sleep = Mock(side_effect=errors), Mock()\n        with self.assertRaises(TimeoutError) as caught:\n            retry(operation, 8, sleep)\n        self.assertIs(caught.exception, errors[-1])\n        self.assertEqual(operation.call_count, 8)\n        self.assertEqual([call.args[0] for call in sleep.call_args_list],\n                         [0.1, 0.2, 0.4, 0.8, 1.0, 1.0, 1.0])\n\n    def test_single_failure(self):\n        error = TimeoutError('last')\n        operation, sleep = Mock(side_effect=error), Mock()\n        with self.assertRaises(TimeoutError) as caught:\n            retry(operation, 1, sleep)\n        self.assertIs(caught.exception, error)\n        operation.assert_called_once_with()\n        sleep.assert_not_called()\n\n    def test_recovery(self):\n        operation = Mock(side_effect=[TimeoutError(), TimeoutError(), 'done'])\n        sleep = Mock()\n        self.assertEqual(retry(operation, 5, sleep), 'done')\n        self.assertEqual(operation.call_count, 3)\n        self.assertEqual([call.args[0] for call in sleep.call_args_list], [0.1, 0.2])\n\nunittest.main()\nPY\"",
+          "exit_code": 0,
+          "status": "completed"
+        }
+      ],
+      "final_message": "Updated `retry.py` to match the contract:\n\n- Retry only `TimeoutError`.\n- Reject nonpositive attempts before calling the operation.\n- Double delays from 0.1 seconds, capped at 1.0 second.\n- Raise the final exception without another sleep.\n\nThe visible test and six additional contract tests passed. Only `retry.py` changed. Public signatures remain unchanged.",
+      "errors": [],
+      "recall_commands": 0,
+      "source_after": "def retry(operation, attempts, sleep):\n    if attempts <= 0:\n        raise ValueError(\"attempts must be positive\")\n\n    delay = 0.1\n    for attempt in range(attempts):\n        try:\n            return operation()\n        except TimeoutError:\n            if attempt == attempts - 1:\n                raise\n            sleep(delay)\n            delay = min(delay * 2, 1.0)\n"
+    },
+    {
+      "run_id": "cursor-pagination-compacted-1",
+      "case": "cursor-pagination",
+      "arm": "compacted",
+      "repeat": 1,
+      "model": "gpt-6-astra",
+      "reasoning_effort": "high",
+      "elapsed_seconds": 47.24987600000168,
+      "exit_code": 0,
+      "timed_out": false,
+      "contract_tests": {
+        "passed": true,
+        "output": "test_cycle (__main__.ContractTests.test_cycle) ... ok\ntest_empty_and_zero_cursors (__main__.ContractTests.test_empty_and_zero_cursors) ... ok\ntest_empty_terminal (__main__.ContractTests.test_empty_terminal) ... ok\ntest_fetch_error (__main__.ContractTests.test_fetch_error) ... ok\ntest_first_duplicate_wins (__main__.ContractTests.test_first_duplicate_wins) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n"
+      },
+      "constraints_met": true,
+      "changed_files": [
+        "pagination.py"
+      ],
+      "passed": true,
+      "history_tokens": 637,
+      "compaction_applied": true,
+      "prompt_sha256": "4af528c23c64ba698ce5c27eeeeca3b6a44ffd38d4dd2c4d8ccd83064fe9852d",
+      "usage": {
+        "input_tokens": 82848,
+        "cached_input_tokens": 64640,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1124,
+        "reasoning_output_tokens": 56
+      },
+      "commands": [
+        {
+          "command": "/bin/zsh -lc 'rtk proxy cat pagination.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc \"rtk proxy rg --files -g 'test_visible.py' -g 'AGENTS.md' -g 'README*' -g 'pyproject.toml'\"",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy cat test_visible.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy git status --short'",
+          "exit_code": 128,
+          "status": "failed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy python3 -B -m unittest test_visible.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc \"rtk proxy python3 -B - <<'PY'\nimport unittest\nfrom pagination import collect_pages\n\nclass BoundaryTests(unittest.TestCase):\n    def test_valid_false_cursors_empty_pages_and_duplicates(self):\n        first = {'id': 0, 'value': 'first'}\n        second = {'id': 2}\n        third = {'id': 3}\n        pages = {\n            None: {'items': [first, second, {'id': 0}], 'next': ''},\n            '': {'items': [], 'next': 0},\n            0: {'items': [{'id': 2}, third, {'id': 0}], 'next': None},\n        }\n        calls = []\n        def fetch(cursor):\n            calls.append(cursor)\n            return pages[cursor]\n        result = collect_pages(fetch)\n        self.assertEqual(calls, [None, '', 0])\n        self.assertEqual(result, [first, second, third])\n        self.assertIs(result[0], first)\n\n    def test_cycles_fail_before_refetch(self):\n        for cursors in [('', ''), (0, 0), ('a', 'b', 'a')]:\n            with self.subTest(cursors=cursors):\n                calls = []\n                def fetch(cursor):\n                    calls.append(cursor)\n                    return {'items': [], 'next': cursors[len(calls) - 1]}\n                with self.assertRaises(ValueError):\n                    collect_pages(fetch)\n                self.assertEqual(calls, [None] + list(cursors[:-1]))\n\n    def test_fetch_exception_identity(self):\n        error = RuntimeError('fetch failed')\n        def fetch(cursor):\n            if cursor is None:\n                return {'items': [], 'next': ''}\n            raise error\n        with self.assertRaises(RuntimeError) as caught:\n            collect_pages(fetch)\n        self.assertIs(caught.exception, error)\n\n    def test_none_ends_pagination(self):\n        calls = []\n        def fetch(cursor):\n            calls.append(cursor)\n            return {'items': [], 'next': None}\n        self.assertEqual(collect_pages(fetch), [])\n        self.assertEqual(calls, [None])\n\nunittest.main()\nPY\"",
+          "exit_code": 0,
+          "status": "completed"
+        }
+      ],
+      "final_message": "Changed only `pagination.py`.\n\n- Only `None` ends pagination.\n- Duplicate IDs retain the first item and its position, including ID zero.\n- Repeated cursors raise `ValueError` before another fetch.\n- Empty pages continue. Fetch exceptions propagate unchanged.\n\nAll five local tests passed. Public signatures and generated files remain unchanged.",
+      "errors": [],
+      "recall_commands": 0,
+      "source_after": "def collect_pages(fetch):\n    cursor = None\n    items = []\n    seen_cursors = set()\n    seen_ids = set()\n    while True:\n        if cursor in seen_cursors:\n            raise ValueError('Repeated pagination cursor')\n        seen_cursors.add(cursor)\n        page = fetch(cursor)\n        for item in page['items']:\n            item_id = item['id']\n            if item_id not in seen_ids:\n                seen_ids.add(item_id)\n                items.append(item)\n        cursor = page['next']\n        if cursor is None:\n            return items\n"
+    },
+    {
+      "run_id": "tenant-cache-full-2",
+      "case": "tenant-cache",
+      "arm": "full",
+      "repeat": 2,
+      "model": "gpt-6-astra",
+      "reasoning_effort": "high",
+      "elapsed_seconds": 38.546373042001505,
+      "exit_code": 0,
+      "timed_out": false,
+      "contract_tests": {
+        "passed": true,
+        "output": "test_existing_and_missing_return (__main__.ContractTests.test_existing_and_missing_return) ... ok\ntest_literal_identifiers (__main__.ContractTests.test_literal_identifiers) ... ok\ntest_none_is_existing (__main__.ContractTests.test_none_is_existing) ... ok\ntest_other_keys (__main__.ContractTests.test_other_keys) ... ok\ntest_tenant_isolation (__main__.ContractTests.test_tenant_isolation) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n"
+      },
+      "constraints_met": true,
+      "changed_files": [
+        "cache.py"
+      ],
+      "passed": true,
+      "history_tokens": 2617,
+      "compaction_applied": false,
+      "prompt_sha256": "d914837793db41a6ee0d65e5179c718feea1350f2bca3eae205336c2769b2339",
+      "usage": {
+        "input_tokens": 75687,
+        "cached_input_tokens": 42112,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 859,
+        "reasoning_output_tokens": 85
+      },
+      "commands": [
+        {
+          "command": "/bin/zsh -lc \"rtk proxy python3 -c 'from pathlib import Path; print(\\\"CACHE.PY\\\"); print(Path(\\\"cache.py\\\").read_text()); print(\\\"TEST_VISIBLE.PY\\\"); print(Path(\\\"test_visible.py\\\").read_text())'\"",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy python3 -B -m unittest test_visible.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc \"rtk proxy python3 -B - <<'PY'\nimport unittest\nfrom cache import Cache\n\nclass ContractTests(unittest.TestCase):\n    def test_return_contract(self):\n        for value in (None, False, 0, '', [], {}, 7):\n            with self.subTest(value=value):\n                cache = Cache()\n                self.assertIs(cache.invalidate('alpha', 'item'), False)\n                cache.put('alpha', 'item', value)\n                self.assertIs(cache.invalidate('alpha', 'item'), True)\n                self.assertIs(cache.get('alpha', 'item'), None)\n                self.assertIs(cache.invalidate('alpha', 'item'), False)\n\n    def test_exact_identifiers_and_isolation(self):\n        cache = Cache()\n        entries = [\n            ('alpha', 'item', 1),\n            ('beta', 'item', 2),\n            ('alpha', 'other', 3),\n            (' alpha ', ' item ', 4),\n            ('alpha', ' item ', 5),\n            (' alpha ', 'item', 6),\n            ('', '', 7),\n        ]\n        for tenant, key, value in entries:\n            cache.put(tenant, key, value)\n        for tenant, key, value in entries:\n            self.assertIs(cache.invalidate(tenant, key), True)\n            self.assertIs(cache.invalidate(tenant, key), False)\n            for remaining_tenant, remaining_key, remaining_value in entries[value:]:\n                self.assertEqual(cache.get(remaining_tenant, remaining_key), remaining_value)\n\nunittest.main()\nPY\"",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy git diff -- cache.py'",
+          "exit_code": 129,
+          "status": "failed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy git status --short'",
+          "exit_code": 128,
+          "status": "failed"
+        }
+      ],
+      "final_message": "Changed only `cache.py`. Invalidation now uses `cache:{tenant}:{key}` and returns `True` only when it removes an existing entry.\n\nAll three tests passed. Checks covered missing entries, false values, tenant isolation, other keys, and literal spaces.\n\nPublic signatures and generated files remain unchanged.",
+      "errors": [],
+      "recall_commands": 0,
+      "source_after": "class Cache:\n    def __init__(self):\n        self._data = {}\n\n    def put(self, tenant, key, value):\n        self._data[f\"cache:{tenant}:{key}\"] = value\n\n    def get(self, tenant, key):\n        return self._data.get(f\"cache:{tenant}:{key}\")\n\n    def invalidate(self, tenant, key):\n        missing = object()\n        return self._data.pop(f\"cache:{tenant}:{key}\", missing) is not missing\n"
+    },
+    {
+      "run_id": "retry-policy-compacted-1",
+      "case": "retry-policy",
+      "arm": "compacted",
+      "repeat": 1,
+      "model": "gpt-6-astra",
+      "reasoning_effort": "high",
+      "elapsed_seconds": 57.321495708005386,
+      "exit_code": 0,
+      "timed_out": false,
+      "contract_tests": {
+        "passed": true,
+        "output": "test_backoff_and_final_exception (__main__.ContractTests.test_backoff_and_final_exception) ... ok\ntest_invalid_attempts (__main__.ContractTests.test_invalid_attempts) ... ok\ntest_recovers_after_failure (__main__.ContractTests.test_recovers_after_failure) ... ok\ntest_selective_errors (__main__.ContractTests.test_selective_errors) ... ok\ntest_success_and_no_sleep (__main__.ContractTests.test_success_and_no_sleep) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n"
+      },
+      "constraints_met": true,
+      "changed_files": [
+        "retry.py"
+      ],
+      "passed": true,
+      "history_tokens": 657,
+      "compaction_applied": true,
+      "prompt_sha256": "45767768fe4c229af72d295cbec1cec531891b6a03b6ebe257d5cc5cb7715bcb",
+      "usage": {
+        "input_tokens": 83290,
+        "cached_input_tokens": 64640,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1417,
+        "reasoning_output_tokens": 36
+      },
+      "commands": [
+        {
+          "command": "/bin/zsh -lc 'rtk proxy pwd'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy ls -a'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy cat test_visible.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy cat retry.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy python3 -B -m unittest test_visible.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc \"rtk proxy python3 -B - <<'PY'\nimport unittest\nfrom retry import retry\n\nclass ContractTests(unittest.TestCase):\n    def test_invalid_attempts(self):\n        for attempts in (0, -1, -10):\n            calls, waits = [], []\n            with self.assertRaises(ValueError):\n                retry(lambda: calls.append(True), attempts, waits.append)\n            self.assertEqual(calls, [])\n            self.assertEqual(waits, [])\n\n    def test_immediate_success(self):\n        for result in (None, False, 0, object()):\n            calls, waits = [], []\n            def operation():\n                calls.append(True)\n                return result\n            self.assertIs(retry(operation, 3, waits.append), result)\n            self.assertEqual(len(calls), 1)\n            self.assertEqual(waits, [])\n\n    def test_other_exceptions(self):\n        for error in (ValueError('bad'), RuntimeError('bad'), KeyboardInterrupt()):\n            calls, waits = [], []\n            def operation():\n                calls.append(True)\n                raise error\n            with self.assertRaises(type(error)) as caught:\n                retry(operation, 3, waits.append)\n            self.assertIs(caught.exception, error)\n            self.assertEqual(len(calls), 1)\n            self.assertEqual(waits, [])\n\n    def test_exhaustion_and_capped_delays(self):\n        for attempts in (1, 2, 8, 1100):\n            errors = [TimeoutError(str(i)) for i in range(attempts)]\n            calls, waits = [], []\n            def operation():\n                error = errors[len(calls)]\n                calls.append(True)\n                raise error\n            with self.assertRaises(TimeoutError) as caught:\n                retry(operation, attempts, waits.append)\n            self.assertIs(caught.exception, errors[-1])\n            self.assertEqual(len(calls), attempts)\n            self.assertEqual(waits, [0.1, 0.2, 0.4, 0.8][:attempts - 1] + [1.0] * max(0, attempts - 5))\n\n    def test_eventual_success(self):\n        calls, waits = [], []\n        result = object()\n        def operation():\n            calls.append(True)\n            if len(calls) < 3:\n                raise TimeoutError('temporary')\n            return result\n        self.assertIs(retry(operation, 5, waits.append), result)\n        self.assertEqual(len(calls), 3)\n        self.assertEqual(waits, [0.1, 0.2])\n\n    def test_other_exception_after_timeout(self):\n        calls, waits = [], []\n        error = ValueError('stop')\n        def operation():\n            calls.append(True)\n            if len(calls) == 1:\n                raise TimeoutError('temporary')\n            raise error\n        with self.assertRaises(ValueError) as caught:\n            retry(operation, 5, waits.append)\n        self.assertIs(caught.exception, error)\n        self.assertEqual(len(calls), 2)\n        self.assertEqual(waits, [0.1])\n\n    def test_sleep_failure(self):\n        calls, waits = [], []\n        error = TimeoutError('sleep failed')\n        def operation():\n            calls.append(True)\n            raise TimeoutError('operation failed')\n        def sleep(delay):\n            waits.append(delay)\n            raise error\n        with self.assertRaises(TimeoutError) as caught:\n            retry(operation, 3, sleep)\n        self.assertIs(caught.exception, error)\n        self.assertEqual(len(calls), 1)\n        self.assertEqual(waits, [0.1])\n\nunittest.main()\nPY\"",
+          "exit_code": 0,
+          "status": "completed"
+        }
+      ],
+      "final_message": "Updated only `retry.py`. It now retries only `TimeoutError`, rejects nonpositive attempts, caps exponential delays at one second, and raises the final exception.\n\nPublic signatures and generated files remain unchanged. The visible test and seven additional contract tests passed.",
+      "errors": [],
+      "recall_commands": 0,
+      "source_after": "def retry(operation, attempts, sleep):\n    if attempts <= 0:\n        raise ValueError('attempts must be positive')\n\n    delay = 0.1\n    for attempt in range(attempts):\n        try:\n            return operation()\n        except TimeoutError:\n            if attempt == attempts - 1:\n                raise\n            sleep(delay)\n            delay = min(delay * 2, 1.0)\n"
+    },
+    {
+      "run_id": "retry-policy-compacted-2",
+      "case": "retry-policy",
+      "arm": "compacted",
+      "repeat": 2,
+      "model": "gpt-6-astra",
+      "reasoning_effort": "high",
+      "elapsed_seconds": 40.024120792004396,
+      "exit_code": 0,
+      "timed_out": false,
+      "contract_tests": {
+        "passed": true,
+        "output": "test_backoff_and_final_exception (__main__.ContractTests.test_backoff_and_final_exception) ... ok\ntest_invalid_attempts (__main__.ContractTests.test_invalid_attempts) ... ok\ntest_recovers_after_failure (__main__.ContractTests.test_recovers_after_failure) ... ok\ntest_selective_errors (__main__.ContractTests.test_selective_errors) ... ok\ntest_success_and_no_sleep (__main__.ContractTests.test_success_and_no_sleep) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n"
+      },
+      "constraints_met": true,
+      "changed_files": [
+        "retry.py"
+      ],
+      "passed": true,
+      "history_tokens": 657,
+      "compaction_applied": true,
+      "prompt_sha256": "45767768fe4c229af72d295cbec1cec531891b6a03b6ebe257d5cc5cb7715bcb",
+      "usage": {
+        "input_tokens": 66120,
+        "cached_input_tokens": 54528,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1013,
+        "reasoning_output_tokens": 37
+      },
+      "commands": [
+        {
+          "command": "/bin/zsh -lc 'rtk proxy pwd'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy rg --files -g retry.py -g test_visible.py -g AGENTS.md'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy cat retry.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy python3 -B -m unittest test_visible.py'",
+          "exit_code": 1,
+          "status": "failed"
+        },
+        {
+          "command": "/bin/zsh -lc \"rtk proxy python3 -B - <<'PY'\nfrom pathlib import Path\npath = Path('retry.py')\npath.write_text('''def retry(operation, attempts, sleep):\n    if attempts <= 0:\n        raise ValueError(\\\"attempts must be greater than zero\\\")\n\n    delay = 0.1\n    for attempt in range(attempts):\n        try:\n            return operation()\n        except TimeoutError:\n            if attempt == attempts - 1:\n                raise\n            sleep(delay)\n            delay = min(delay * 2, 1.0)\n''')\nPY\"",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy python3 -B -m unittest test_visible.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc \"rtk proxy python3 -B - <<'PY'\nfrom retry import retry\n\nfor attempts in (0, -1, -10):\n    calls = []\n    waits = []\n    try:\n        retry(lambda: calls.append(True), attempts, waits.append)\n    except ValueError:\n        pass\n    else:\n        raise AssertionError('Nonpositive attempts must raise ValueError')\n    assert calls == [] and waits == []\n\nresult = object()\nwaits = []\nassert retry(lambda: result, 3, waits.append) is result\nassert waits == []\n\nfor error in (RuntimeError('stop'), ValueError('stop'), KeyboardInterrupt()):\n    calls = []\n    waits = []\n    def fail():\n        calls.append(True)\n        raise error\n    try:\n        retry(fail, 3, waits.append)\n    except BaseException as caught:\n        assert caught is error\n    else:\n        raise AssertionError('Non-timeout errors must propagate')\n    assert len(calls) == 1 and waits == []\n\nfor attempts in (1, 2, 8, 1100):\n    errors = [TimeoutError(str(i)) for i in range(attempts)]\n    calls = []\n    waits = []\n    def timeout():\n        error = errors[len(calls)]\n        calls.append(True)\n        raise error\n    try:\n        retry(timeout, attempts, waits.append)\n    except TimeoutError as caught:\n        assert caught is errors[-1]\n    else:\n        raise AssertionError('Final timeout must propagate')\n    assert len(calls) == attempts\n    assert waits == [0.1 * 2 ** min(i, 4) if i < 4 else 1.0\n                     for i in range(attempts - 1)]\n\ncalls = []\nwaits = []\ndef recover():\n    calls.append(True)\n    if len(calls) < 3:\n        raise TimeoutError('retry')\n    return result\nassert retry(recover, 5, waits.append) is result\nassert len(calls) == 3 and waits == [0.1, 0.2]\nprint('All retry contract checks passed.')\nPY\"",
+          "exit_code": 0,
+          "status": "completed"
+        }
+      ],
+      "final_message": "Updated `retry.py` to match the recorded contract:\n\n- Retry only `TimeoutError`.\n- Reject nonpositive attempts before calling the operation.\n- Double delays from 0.1 seconds, capped at 1.0 second.\n- Raise the final exception without another sleep.\n\nThe visible test and additional contract checks passed. Only `retry.py` changed.",
+      "errors": [],
+      "recall_commands": 0,
+      "source_after": "def retry(operation, attempts, sleep):\n    if attempts <= 0:\n        raise ValueError(\"attempts must be greater than zero\")\n\n    delay = 0.1\n    for attempt in range(attempts):\n        try:\n            return operation()\n        except TimeoutError:\n            if attempt == attempts - 1:\n                raise\n            sleep(delay)\n            delay = min(delay * 2, 1.0)\n"
+    },
+    {
+      "run_id": "retry-policy-full-2",
+      "case": "retry-policy",
+      "arm": "full",
+      "repeat": 2,
+      "model": "gpt-6-astra",
+      "reasoning_effort": "high",
+      "elapsed_seconds": 42.46934620800312,
+      "exit_code": 0,
+      "timed_out": false,
+      "contract_tests": {
+        "passed": true,
+        "output": "test_backoff_and_final_exception (__main__.ContractTests.test_backoff_and_final_exception) ... ok\ntest_invalid_attempts (__main__.ContractTests.test_invalid_attempts) ... ok\ntest_recovers_after_failure (__main__.ContractTests.test_recovers_after_failure) ... ok\ntest_selective_errors (__main__.ContractTests.test_selective_errors) ... ok\ntest_success_and_no_sleep (__main__.ContractTests.test_success_and_no_sleep) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n"
+      },
+      "constraints_met": true,
+      "changed_files": [
+        "retry.py"
+      ],
+      "passed": true,
+      "history_tokens": 2648,
+      "compaction_applied": false,
+      "prompt_sha256": "6777f593c6122722e5a77c5a207b83a45b084e8d34df085222db8b2c7b552f78",
+      "usage": {
+        "input_tokens": 55312,
+        "cached_input_tokens": 35840,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1034,
+        "reasoning_output_tokens": 41
+      },
+      "commands": [
+        {
+          "command": "/bin/zsh -lc 'rtk proxy cat retry.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy cat test_visible.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc \"rtk proxy python3 - <<'PY'\nfrom pathlib import Path\npath = Path('retry.py')\npath.write_text('''def retry(operation, attempts, sleep):\n    if attempts <= 0:\n        raise ValueError(\\\"attempts must be positive\\\")\n\n    delay = 0.1\n    for attempt in range(attempts):\n        try:\n            return operation()\n        except TimeoutError:\n            if attempt == attempts - 1:\n                raise\n            sleep(delay)\n            delay = min(delay * 2, 1.0)\n''')\nPY\"",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy python3 -B -m unittest test_visible.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc \"rtk proxy python3 -B - <<'PY'\nimport unittest\nfrom unittest.mock import Mock, call\nfrom retry import retry\n\nclass RetryContractTests(unittest.TestCase):\n    def test_invalid_attempts(self):\n        for attempts in (0, -1, -10):\n            operation, sleep = Mock(), Mock()\n            with self.assertRaises(ValueError):\n                retry(operation, attempts, sleep)\n            operation.assert_not_called()\n            sleep.assert_not_called()\n\n    def test_immediate_success(self):\n        result = object()\n        operation, sleep = Mock(return_value=result), Mock()\n        self.assertIs(retry(operation, 3, sleep), result)\n        operation.assert_called_once_with()\n        sleep.assert_not_called()\n\n    def test_other_exceptions(self):\n        for error in (ValueError('bad'), RuntimeError('bad'), KeyboardInterrupt()):\n            operation, sleep = Mock(side_effect=error), Mock()\n            with self.assertRaises(type(error)) as caught:\n                retry(operation, 3, sleep)\n            self.assertIs(caught.exception, error)\n            operation.assert_called_once_with()\n            sleep.assert_not_called()\n\n    def test_success_after_timeouts(self):\n        operation = Mock(side_effect=[TimeoutError(), TimeoutError(), None])\n        sleep = Mock()\n        self.assertIsNone(retry(operation, 5, sleep))\n        self.assertEqual(operation.call_count, 3)\n        self.assertEqual(sleep.call_args_list, [call(0.1), call(0.2)])\n\n    def test_exhaustion_and_backoff(self):\n        for attempts in (1, 2, 8, 1100):\n            errors = [TimeoutError(str(i)) for i in range(attempts)]\n            operation, sleep = Mock(side_effect=errors), Mock()\n            with self.assertRaises(TimeoutError) as caught:\n                retry(operation, attempts, sleep)\n            self.assertIs(caught.exception, errors[-1])\n            self.assertEqual(operation.call_count, attempts)\n            expected = [0.1, 0.2, 0.4, 0.8] + [1.0] * attempts\n            self.assertEqual(sleep.call_args_list,\n                             [call(delay) for delay in expected[:attempts - 1]])\n\n    def test_sleep_failure_propagates(self):\n        error = RuntimeError('sleep failed')\n        operation, sleep = Mock(side_effect=TimeoutError()), Mock(side_effect=error)\n        with self.assertRaises(RuntimeError) as caught:\n            retry(operation, 3, sleep)\n        self.assertIs(caught.exception, error)\n        operation.assert_called_once_with()\n        sleep.assert_called_once_with(0.1)\n\nunittest.main()\nPY\"",
+          "exit_code": 0,
+          "status": "completed"
+        }
+      ],
+      "final_message": "Updated `retry.py` to match the recorded contract:\n\n- Retry only `TimeoutError`.\n- Reject nonpositive attempt counts.\n- Double delays from 0.1 seconds, capped at 1.0 second.\n- Raise the final exception without another sleep.\n\nAll seven local tests passed. Public signatures and generated files remain unchanged.",
+      "errors": [],
+      "recall_commands": 0,
+      "source_after": "def retry(operation, attempts, sleep):\n    if attempts <= 0:\n        raise ValueError(\"attempts must be positive\")\n\n    delay = 0.1\n    for attempt in range(attempts):\n        try:\n            return operation()\n        except TimeoutError:\n            if attempt == attempts - 1:\n                raise\n            sleep(delay)\n            delay = min(delay * 2, 1.0)\n"
+    },
+    {
+      "run_id": "tenant-cache-compacted-2",
+      "case": "tenant-cache",
+      "arm": "compacted",
+      "repeat": 2,
+      "model": "gpt-6-astra",
+      "reasoning_effort": "high",
+      "elapsed_seconds": 36.67087458400056,
+      "exit_code": 0,
+      "timed_out": false,
+      "contract_tests": {
+        "passed": true,
+        "output": "test_existing_and_missing_return (__main__.ContractTests.test_existing_and_missing_return) ... ok\ntest_literal_identifiers (__main__.ContractTests.test_literal_identifiers) ... ok\ntest_none_is_existing (__main__.ContractTests.test_none_is_existing) ... ok\ntest_other_keys (__main__.ContractTests.test_other_keys) ... ok\ntest_tenant_isolation (__main__.ContractTests.test_tenant_isolation) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n"
+      },
+      "constraints_met": true,
+      "changed_files": [
+        "cache.py"
+      ],
+      "passed": true,
+      "history_tokens": 634,
+      "compaction_applied": true,
+      "prompt_sha256": "0adb6057fcefa837160d587251e0d12a9451f2d14c2b9430391e87acd5f8c311",
+      "usage": {
+        "input_tokens": 66009,
+        "cached_input_tokens": 48128,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 879,
+        "reasoning_output_tokens": 29
+      },
+      "commands": [
+        {
+          "command": "/bin/zsh -lc 'rtk proxy pwd'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc \"rtk proxy rg --files -g 'cache.py' -g 'test*.py' -g 'AGENTS.md' -g '\"'!**/evaluator/**'\"' -g '\"'!**/evaluation/**'\"'\"",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy cat cache.py test_visible.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy git status --short'",
+          "exit_code": 128,
+          "status": "failed"
+        },
+        {
+          "command": "/bin/zsh -lc \"rtk proxy python3 -B - <<'PY'\nfrom pathlib import Path\npath = Path('cache.py')\nsource = path.read_text()\nold = '        self._data.pop(f\\\"cache:{key}\\\", None)\\\\n'\nnew = '''        try:\n            del self._data[f\\\"cache:{tenant}:{key}\\\"]\n        except KeyError:\n            return False\n        return True\n'''\nassert old in source\npath.write_text(source.replace(old, new, 1))\nPY\"",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy python3 -B -m unittest test_visible.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc \"rtk proxy python3 -B - <<'PY'\nimport unittest\nfrom cache import Cache\n\nclass ContractTests(unittest.TestCase):\n    def test_existing_values_and_repeat(self):\n        for value in (None, False, 0, '', 7):\n            with self.subTest(value=value):\n                cache = Cache()\n                cache.put('alpha', 'item', value)\n                self.assertIs(cache.invalidate('alpha', 'item'), True)\n                self.assertIsNone(cache.get('alpha', 'item'))\n                self.assertIs(cache.invalidate('alpha', 'item'), False)\n\n    def test_missing_and_isolation(self):\n        cache = Cache()\n        cache.put('alpha', 'item', 1)\n        cache.put('beta', 'item', 2)\n        cache.put('alpha', 'other', 3)\n        self.assertIs(cache.invalidate('missing', 'item'), False)\n        self.assertEqual(cache.get('alpha', 'item'), 1)\n        self.assertIs(cache.invalidate('alpha', 'item'), True)\n        self.assertEqual(cache.get('beta', 'item'), 2)\n        self.assertEqual(cache.get('alpha', 'other'), 3)\n\n    def test_literal_spaces(self):\n        cache = Cache()\n        cache.put(' alpha ', ' item ', 1)\n        cache.put('alpha', ' item ', 2)\n        cache.put(' alpha ', 'item', 3)\n        self.assertIs(cache.invalidate(' alpha ', ' item '), True)\n        self.assertIsNone(cache.get(' alpha ', ' item '))\n        self.assertEqual(cache.get('alpha', ' item '), 2)\n        self.assertEqual(cache.get(' alpha ', 'item'), 3)\n\nunittest.main()\nPY\"",
+          "exit_code": 0,
+          "status": "completed"
+        }
+      ],
+      "final_message": "Changed only `cache.py`. Invalidation now uses `cache:{tenant}:{key}` and returns `True` only when it removes an existing entry.\n\nPublic signatures and generated files remain unchanged.\n\nAll four local tests passed, covering return values, tenant isolation, other keys, and literal spaces.",
+      "errors": [],
+      "recall_commands": 0,
+      "source_after": "class Cache:\n    def __init__(self):\n        self._data = {}\n\n    def put(self, tenant, key, value):\n        self._data[f\"cache:{tenant}:{key}\"] = value\n\n    def get(self, tenant, key):\n        return self._data.get(f\"cache:{tenant}:{key}\")\n\n    def invalidate(self, tenant, key):\n        try:\n            del self._data[f\"cache:{tenant}:{key}\"]\n        except KeyError:\n            return False\n        return True\n"
+    },
+    {
+      "run_id": "tenant-cache-full-1",
+      "case": "tenant-cache",
+      "arm": "full",
+      "repeat": 1,
+      "model": "gpt-6-astra",
+      "reasoning_effort": "high",
+      "elapsed_seconds": 33.26105566600745,
+      "exit_code": 0,
+      "timed_out": false,
+      "contract_tests": {
+        "passed": true,
+        "output": "test_existing_and_missing_return (__main__.ContractTests.test_existing_and_missing_return) ... ok\ntest_literal_identifiers (__main__.ContractTests.test_literal_identifiers) ... ok\ntest_none_is_existing (__main__.ContractTests.test_none_is_existing) ... ok\ntest_other_keys (__main__.ContractTests.test_other_keys) ... ok\ntest_tenant_isolation (__main__.ContractTests.test_tenant_isolation) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n"
+      },
+      "constraints_met": true,
+      "changed_files": [
+        "cache.py"
+      ],
+      "passed": true,
+      "history_tokens": 2617,
+      "compaction_applied": false,
+      "prompt_sha256": "d914837793db41a6ee0d65e5179c718feea1350f2bca3eae205336c2769b2339",
+      "usage": {
+        "input_tokens": 55266,
+        "cached_input_tokens": 35840,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 786,
+        "reasoning_output_tokens": 34
+      },
+      "commands": [
+        {
+          "command": "/bin/zsh -lc 'rtk proxy cat cache.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy git status --short'",
+          "exit_code": 128,
+          "status": "failed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy cat test_visible.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy python3 -B -m unittest test_visible.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc \"rtk proxy python3 -B - <<'PY'\nimport unittest\nfrom cache import Cache\n\nclass ContractTests(unittest.TestCase):\n    def test_return_values(self):\n        for value in (None, False, 0, '', [], {}, object()):\n            with self.subTest(value=value):\n                cache = Cache()\n                self.assertIs(cache.invalidate('alpha', 'item'), False)\n                cache.put('alpha', 'item', value)\n                self.assertIs(cache.invalidate('alpha', 'item'), True)\n                self.assertNotIn('cache:alpha:item', cache._data)\n                self.assertIs(cache.invalidate('alpha', 'item'), False)\n\n    def test_exact_key_and_isolation(self):\n        cache = Cache()\n        entries = [\n            ('alpha', 'item', 1),\n            ('beta', 'item', 2),\n            ('alpha', 'other', 3),\n            (' alpha ', 'item', 4),\n            ('alpha', ' item ', 5),\n            (' alpha ', ' item ', 6),\n            ('', '', 7),\n        ]\n        for tenant, key, value in entries:\n            cache.put(tenant, key, value)\n        expected = dict(cache._data)\n        self.assertIs(cache.invalidate('alpha ', 'item'), False)\n        self.assertEqual(cache._data, expected)\n        for tenant, key, value in entries:\n            self.assertEqual(cache.get(tenant, key), value)\n            self.assertIs(cache.invalidate(tenant, key), True)\n            del expected[f'cache:{tenant}:{key}']\n            self.assertEqual(cache._data, expected)\n            self.assertIs(cache.invalidate(tenant, key), False)\n\nunittest.main()\nPY\"",
+          "exit_code": 0,
+          "status": "completed"
+        }
+      ],
+      "final_message": "Changed only `cache.py`. Invalidation uses the exact tenant key and returns `True` only when it removes an entry.\n\nAll three local tests passed. Checks covered missing entries, false values, tenant isolation, other keys, and literal spaces.\n\nPublic signatures and generated files remain unchanged.",
+      "errors": [],
+      "recall_commands": 0,
+      "source_after": "class Cache:\n    def __init__(self):\n        self._data = {}\n\n    def put(self, tenant, key, value):\n        self._data[f\"cache:{tenant}:{key}\"] = value\n\n    def get(self, tenant, key):\n        return self._data.get(f\"cache:{tenant}:{key}\")\n\n    def invalidate(self, tenant, key):\n        missing = object()\n        return self._data.pop(f\"cache:{tenant}:{key}\", missing) is not missing\n"
+    },
+    {
+      "run_id": "cursor-pagination-full-2",
+      "case": "cursor-pagination",
+      "arm": "full",
+      "repeat": 2,
+      "model": "gpt-6-astra",
+      "reasoning_effort": "high",
+      "elapsed_seconds": 48.704873583003064,
+      "exit_code": 0,
+      "timed_out": false,
+      "contract_tests": {
+        "passed": true,
+        "output": "test_cycle (__main__.ContractTests.test_cycle) ... ok\ntest_empty_and_zero_cursors (__main__.ContractTests.test_empty_and_zero_cursors) ... ok\ntest_empty_terminal (__main__.ContractTests.test_empty_terminal) ... ok\ntest_fetch_error (__main__.ContractTests.test_fetch_error) ... ok\ntest_first_duplicate_wins (__main__.ContractTests.test_first_duplicate_wins) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n"
+      },
+      "constraints_met": true,
+      "changed_files": [
+        "pagination.py"
+      ],
+      "passed": true,
+      "history_tokens": 2641,
+      "compaction_applied": false,
+      "prompt_sha256": "7771c65168881d3b8a30d6030847369166a48d68d562371a13655d626675f646",
+      "usage": {
+        "input_tokens": 93152,
+        "cached_input_tokens": 84992,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1087,
+        "reasoning_output_tokens": 17
+      },
+      "commands": [
+        {
+          "command": "/bin/zsh -lc 'rtk proxy cat pagination.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy ls -a'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy cat test_visible.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy python3 -B -m unittest test_visible.py'",
+          "exit_code": 1,
+          "status": "failed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy python3 -B -m unittest test_visible.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc \"rtk proxy python3 -B - <<'PY'\nimport unittest\nfrom pagination import collect_pages\n\nclass PaginationChecks(unittest.TestCase):\n    def test_false_cursors_empty_pages_and_duplicates(self):\n        first = {'id': 0, 'value': 'first'}\n        second = {'id': 2}\n        pages = {\n            None: {'items': [first, second, {'id': 0, 'value': 'duplicate'}], 'next': ''},\n            '': {'items': [], 'next': 0},\n            0: {'items': [{'id': 2}, {'id': 3}], 'next': None},\n        }\n        calls = []\n        def fetch(cursor):\n            calls.append(cursor)\n            return pages[cursor]\n        result = collect_pages(fetch)\n        self.assertEqual(calls, [None, '', 0])\n        self.assertEqual(result, [first, second, {'id': 3}])\n        self.assertIs(result[0], first)\n        self.assertIs(result[1], second)\n\n    def test_repeated_cursors(self):\n        for path in [('', ''), (0, 0), ('a', 'b', 'a')]:\n            with self.subTest(path=path):\n                calls = []\n                def fetch(cursor):\n                    calls.append(cursor)\n                    self.assertLessEqual(len(calls), len(path))\n                    return {'items': [], 'next': path[len(calls) - 1]}\n                with self.assertRaises(ValueError):\n                    collect_pages(fetch)\n                self.assertEqual(calls, [None, *path[:-1]])\n\n    def test_exception_identity(self):\n        error = RuntimeError('fetch failed')\n        calls = []\n        def fetch(cursor):\n            calls.append(cursor)\n            if cursor is None:\n                return {'items': [], 'next': 0}\n            raise error\n        with self.assertRaises(RuntimeError) as caught:\n            collect_pages(fetch)\n        self.assertIs(caught.exception, error)\n        self.assertEqual(calls, [None, 0])\n\n    def test_none_ends_pagination(self):\n        calls = []\n        def fetch(cursor):\n            calls.append(cursor)\n            return {'items': [], 'next': None}\n        self.assertEqual(collect_pages(fetch), [])\n        self.assertEqual(calls, [None])\n\nunittest.main()\nPY\"",
+          "exit_code": 0,
+          "status": "completed"
+        }
+      ],
+      "final_message": "Updated `pagination.py`:\n\n- Only `None` ends pagination.\n- Duplicate IDs retain the first item and its position, including ID zero.\n- Repeated cursors raise `ValueError` before another fetch.\n- Empty pages continue. Fetch exceptions propagate unchanged.\n\nAll five local tests passed. Public signatures and generated files remain unchanged.",
+      "errors": [],
+      "recall_commands": 0,
+      "source_after": "def collect_pages(fetch):\n    cursor = None\n    items = []\n    seen_cursors = set()\n    seen_ids = set()\n    while True:\n        if cursor in seen_cursors:\n            raise ValueError('Repeated pagination cursor')\n        seen_cursors.add(cursor)\n        page = fetch(cursor)\n        for item in page['items']:\n            item_id = item['id']\n            if item_id not in seen_ids:\n                seen_ids.add(item_id)\n                items.append(item)\n        cursor = page['next']\n        if cursor is None:\n            return items\n"
+    },
+    {
+      "run_id": "cursor-pagination-full-1",
+      "case": "cursor-pagination",
+      "arm": "full",
+      "repeat": 1,
+      "model": "gpt-6-astra",
+      "reasoning_effort": "high",
+      "elapsed_seconds": 49.7509244170069,
+      "exit_code": 0,
+      "timed_out": false,
+      "contract_tests": {
+        "passed": true,
+        "output": "test_cycle (__main__.ContractTests.test_cycle) ... ok\ntest_empty_and_zero_cursors (__main__.ContractTests.test_empty_and_zero_cursors) ... ok\ntest_empty_terminal (__main__.ContractTests.test_empty_terminal) ... ok\ntest_fetch_error (__main__.ContractTests.test_fetch_error) ... ok\ntest_first_duplicate_wins (__main__.ContractTests.test_first_duplicate_wins) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n"
+      },
+      "constraints_met": true,
+      "changed_files": [
+        "pagination.py"
+      ],
+      "passed": true,
+      "history_tokens": 2641,
+      "compaction_applied": false,
+      "prompt_sha256": "7771c65168881d3b8a30d6030847369166a48d68d562371a13655d626675f646",
+      "usage": {
+        "input_tokens": 74048,
+        "cached_input_tokens": 66304,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1228,
+        "reasoning_output_tokens": 122
+      },
+      "commands": [
+        {
+          "command": "/bin/zsh -lc 'rtk proxy cat pagination.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy git status --short'",
+          "exit_code": 128,
+          "status": "failed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy python3 -B -m unittest test_visible.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc \"rtk proxy python3 -B - <<'PY'\nimport unittest\nfrom pagination import collect_pages\n\n\nclass PaginationTests(unittest.TestCase):\n    def test_falsey_cursors_and_empty_pages(self):\n        calls = []\n        pages = {\n            None: {'items': [], 'next': ''},\n            '': {'items': [], 'next': 0},\n            0: {'items': [{'id': 1}], 'next': None},\n        }\n        def fetch(cursor):\n            calls.append(cursor)\n            return pages[cursor]\n        self.assertEqual(collect_pages(fetch), [{'id': 1}])\n        self.assertEqual(calls, [None, '', 0])\n\n    def test_duplicates_keep_first_item_and_position(self):\n        first = {'id': 0, 'value': 'first'}\n        second = {'id': 2}\n        third = {'id': 1}\n        pages = {\n            None: {'items': [first, second, {'id': 0}], 'next': 'a'},\n            'a': {'items': [{'id': 2}, third, {'id': 0}], 'next': None},\n        }\n        result = collect_pages(pages.__getitem__)\n        self.assertEqual(result, [first, second, third])\n        self.assertIs(result[0], first)\n\n    def test_repeated_cursors_raise_before_fetch(self):\n        for cursors in [('a', 'a'), ('a', 'b', 'a'), ('', ''), (0, 0)]:\n            with self.subTest(cursors=cursors):\n                calls = []\n                next_cursors = iter(cursors)\n                def fetch(cursor):\n                    calls.append(cursor)\n                    return {'items': [], 'next': next(next_cursors)}\n                with self.assertRaises(ValueError):\n                    collect_pages(fetch)\n                self.assertEqual(calls, [None] + list(cursors[:-1]))\n\n    def test_fetch_exception_propagates_unchanged(self):\n        failure = RuntimeError('fetch failed')\n        calls = []\n        def fetch(cursor):\n            calls.append(cursor)\n            if cursor is None:\n                return {'items': [{'id': 0}], 'next': 'a'}\n            raise failure\n        with self.assertRaises(RuntimeError) as caught:\n            collect_pages(fetch)\n        self.assertIs(caught.exception, failure)\n        self.assertEqual(calls, [None, 'a'])\n\n    def test_none_ends_pagination(self):\n        calls = []\n        def fetch(cursor):\n            calls.append(cursor)\n            return {'items': [], 'next': None}\n        self.assertEqual(collect_pages(fetch), [])\n        self.assertEqual(calls, [None])\n\n\nunittest.main()\nPY\"",
+          "exit_code": 0,
+          "status": "completed"
+        }
+      ],
+      "final_message": "Updated `pagination.py` to:\n- Stop only when the next cursor is `None`.\n- Keep the first item for each ID, including zero.\n- Reject repeated cursors before fetching again.\n- Continue through empty pages and propagate fetch exceptions unchanged.\n\nThe visible test and five additional local tests passed. Public signatures and generated files remain unchanged.",
+      "errors": [],
+      "recall_commands": 0,
+      "source_after": "def collect_pages(fetch):\n    cursor = None\n    items = []\n    seen_cursors = set()\n    seen_ids = set()\n    while True:\n        if cursor in seen_cursors:\n            raise ValueError('Repeated pagination cursor')\n        seen_cursors.add(cursor)\n        page = fetch(cursor)\n        for item in page['items']:\n            item_id = item['id']\n            if item_id not in seen_ids:\n                seen_ids.add(item_id)\n                items.append(item)\n        cursor = page['next']\n        if cursor is None:\n            return items\n"
+    },
+    {
+      "run_id": "tenant-cache-compacted-1",
+      "case": "tenant-cache",
+      "arm": "compacted",
+      "repeat": 1,
+      "model": "gpt-6-astra",
+      "reasoning_effort": "high",
+      "elapsed_seconds": 32.715700417000335,
+      "exit_code": 0,
+      "timed_out": false,
+      "contract_tests": {
+        "passed": true,
+        "output": "test_existing_and_missing_return (__main__.ContractTests.test_existing_and_missing_return) ... ok\ntest_literal_identifiers (__main__.ContractTests.test_literal_identifiers) ... ok\ntest_none_is_existing (__main__.ContractTests.test_none_is_existing) ... ok\ntest_other_keys (__main__.ContractTests.test_other_keys) ... ok\ntest_tenant_isolation (__main__.ContractTests.test_tenant_isolation) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n"
+      },
+      "constraints_met": true,
+      "changed_files": [
+        "cache.py"
+      ],
+      "passed": true,
+      "history_tokens": 634,
+      "compaction_applied": true,
+      "prompt_sha256": "0adb6057fcefa837160d587251e0d12a9451f2d14c2b9430391e87acd5f8c311",
+      "usage": {
+        "input_tokens": 50874,
+        "cached_input_tokens": 31744,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 750,
+        "reasoning_output_tokens": 60
+      },
+      "commands": [
+        {
+          "command": "/bin/zsh -lc 'rtk proxy cat cache.py test_visible.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc \"rtk proxy python3 - <<'PY'\nfrom pathlib import Path\npath = Path('cache.py')\nsource = path.read_text()\nold = '        self._data.pop(f\\\"cache:{key}\\\", None)\\\\n'\nnew = '        missing = object()\\\\n        return self._data.pop(f\\\"cache:{tenant}:{key}\\\", missing) is not missing\\\\n'\nassert source.count(old) == 1\npath.write_text(source.replace(old, new))\nPY\"",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy python3 -B -m unittest test_visible.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc \"rtk proxy python3 -B - <<'PY'\nimport unittest\nfrom cache import Cache\n\nclass CacheContractTests(unittest.TestCase):\n    def test_return_contract(self):\n        cache = Cache()\n        self.assertIs(cache.invalidate('alpha', 'item'), False)\n        for value in (None, False, 0, '', 7):\n            cache.put('alpha', 'item', value)\n            self.assertIs(cache.invalidate('alpha', 'item'), True)\n            self.assertNotIn('cache:alpha:item', cache._data)\n            self.assertIs(cache.invalidate('alpha', 'item'), False)\n\n    def test_isolation_and_literal_spaces(self):\n        cache = Cache()\n        entries = [\n            ('alpha', 'item', 1),\n            ('beta', 'item', 2),\n            ('alpha', 'other', 3),\n            (' alpha ', 'item', 4),\n            ('alpha', ' item ', 5),\n        ]\n        for tenant, key, value in entries:\n            cache.put(tenant, key, value)\n        self.assertIs(cache.invalidate('alpha', 'item'), True)\n        for tenant, key, value in entries[1:]:\n            self.assertEqual(cache.get(tenant, key), value)\n        self.assertIs(cache.invalidate(' alpha ', 'item'), True)\n        self.assertIs(cache.invalidate('alpha', ' item '), True)\n        self.assertEqual(cache.get('beta', 'item'), 2)\n        self.assertEqual(cache.get('alpha', 'other'), 3)\n\nunittest.main()\nPY\"",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy git diff -- cache.py'",
+          "exit_code": 129,
+          "status": "failed"
+        }
+      ],
+      "final_message": "Changed only `cache.py`. Invalidation now uses `cache:{tenant}:{key}` and returns `True` only when it removes an existing entry.\n\nAll three local tests passed, including return values, tenant isolation, and literal spaces. Public signatures and generated files remain unchanged.",
+      "errors": [],
+      "recall_commands": 0,
+      "source_after": "class Cache:\n    def __init__(self):\n        self._data = {}\n\n    def put(self, tenant, key, value):\n        self._data[f\"cache:{tenant}:{key}\"] = value\n\n    def get(self, tenant, key):\n        return self._data.get(f\"cache:{tenant}:{key}\")\n\n    def invalidate(self, tenant, key):\n        missing = object()\n        return self._data.pop(f\"cache:{tenant}:{key}\", missing) is not missing\n"
+    },
+    {
+      "run_id": "cursor-pagination-compacted-2",
+      "case": "cursor-pagination",
+      "arm": "compacted",
+      "repeat": 2,
+      "model": "gpt-6-astra",
+      "reasoning_effort": "high",
+      "elapsed_seconds": 47.51383591600461,
+      "exit_code": 0,
+      "timed_out": false,
+      "contract_tests": {
+        "passed": true,
+        "output": "test_cycle (__main__.ContractTests.test_cycle) ... ok\ntest_empty_and_zero_cursors (__main__.ContractTests.test_empty_and_zero_cursors) ... ok\ntest_empty_terminal (__main__.ContractTests.test_empty_terminal) ... ok\ntest_fetch_error (__main__.ContractTests.test_fetch_error) ... ok\ntest_first_duplicate_wins (__main__.ContractTests.test_first_duplicate_wins) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n"
+      },
+      "constraints_met": true,
+      "changed_files": [
+        "pagination.py"
+      ],
+      "passed": true,
+      "history_tokens": 637,
+      "compaction_applied": true,
+      "prompt_sha256": "4af528c23c64ba698ce5c27eeeeca3b6a44ffd38d4dd2c4d8ccd83064fe9852d",
+      "usage": {
+        "input_tokens": 84513,
+        "cached_input_tokens": 64640,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1144,
+        "reasoning_output_tokens": 48
+      },
+      "commands": [
+        {
+          "command": "/bin/zsh -lc 'rtk proxy pwd'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc \"rtk proxy rg --files -g 'pagination.py' -g 'test*.py' -g 'AGENTS.md'\"",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy cat pagination.py test_visible.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc \"rtk proxy python3 - <<'PY'\nfrom pathlib import Path\npath = Path('pagination.py')\npath.write_text('''def collect_pages(fetch):\n    cursor = None\n    items = []\n    seen_cursors = set()\n    seen_ids = set()\n    while True:\n        if cursor in seen_cursors:\n            raise ValueError('Repeated pagination cursor')\n        seen_cursors.add(cursor)\n        page = fetch(cursor)\n        for item in page['items']:\n            item_id = item['id']\n            if item_id not in seen_ids:\n                seen_ids.add(item_id)\n                items.append(item)\n        cursor = page['next']\n        if cursor is None:\n            return items\n''')\nPY\"",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy python3 -m unittest test_visible.py'",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc \"rtk proxy python3 -B - <<'PY'\nimport unittest\nfrom pagination import collect_pages\n\nclass PaginationChecks(unittest.TestCase):\n    def test_cursor_boundaries_and_empty_pages(self):\n        calls = []\n        pages = {\n            None: {'items': [], 'next': ''},\n            '': {'items': [], 'next': 0},\n            0: {'items': [{'id': 1}], 'next': None},\n        }\n        def fetch(cursor):\n            calls.append(cursor)\n            return pages[cursor]\n        self.assertEqual(collect_pages(fetch), [{'id': 1}])\n        self.assertEqual(calls, [None, '', 0])\n\n    def test_duplicates_keep_first_item_and_order(self):\n        first = {'id': 0, 'value': 'first'}\n        second = {'id': 2}\n        third = {'id': 1}\n        pages = {\n            None: {'items': [first, {'id': 0}, second], 'next': 'a'},\n            'a': {'items': [{'id': 2}, third, {'id': 0}], 'next': None},\n        }\n        result = collect_pages(pages.__getitem__)\n        self.assertEqual(result, [first, second, third])\n        self.assertIs(result[0], first)\n\n    def test_cycles_stop_before_repeat_fetch(self):\n        for cycle in [['a', 'a'], ['', 0, '', 0], [0, 0], ['a', 'b', 'a']]:\n            with self.subTest(cycle=cycle):\n                calls = []\n                def fetch(cursor):\n                    calls.append(cursor)\n                    return {'items': [], 'next': cycle[len(calls) - 1]}\n                with self.assertRaises(ValueError):\n                    collect_pages(fetch)\n                self.assertEqual(calls, [None] + cycle[:len(set(cycle))])\n\n    def test_exception_propagates_unchanged(self):\n        error = RuntimeError('fetch failed')\n        def fetch(cursor):\n            if cursor is None:\n                return {'items': [], 'next': 0}\n            raise error\n        with self.assertRaises(RuntimeError) as raised:\n            collect_pages(fetch)\n        self.assertIs(raised.exception, error)\n\n    def test_none_ends_pagination(self):\n        calls = []\n        def fetch(cursor):\n            calls.append(cursor)\n            return {'items': [], 'next': None}\n        self.assertEqual(collect_pages(fetch), [])\n        self.assertEqual(calls, [None])\n\nunittest.main()\nPY\"",
+          "exit_code": 0,
+          "status": "completed"
+        },
+        {
+          "command": "/bin/zsh -lc 'rtk proxy git diff -- pagination.py'",
+          "exit_code": 129,
+          "status": "failed"
+        }
+      ],
+      "final_message": "Updated `pagination.py`:\n\n- Only `None` ends pagination.\n- Duplicate IDs keep the first item and its position, including ID zero.\n- Repeated cursors raise `ValueError` before another fetch.\n- Empty pages continue. Fetch exceptions propagate unchanged.\n\nAll six local tests passed. Public signatures and generated source files remain unchanged.",
+      "errors": [],
+      "recall_commands": 0,
+      "source_after": "def collect_pages(fetch):\n    cursor = None\n    items = []\n    seen_cursors = set()\n    seen_ids = set()\n    while True:\n        if cursor in seen_cursors:\n            raise ValueError('Repeated pagination cursor')\n        seen_cursors.add(cursor)\n        page = fetch(cursor)\n        for item in page['items']:\n            item_id = item['id']\n            if item_id not in seen_ids:\n                seen_ids.add(item_id)\n                items.append(item)\n        cursor = page['next']\n        if cursor is None:\n            return items\n"
+    }
+  ],
+  "metrics": {
+    "full": {
+      "passed": 6,
+      "runs": 6,
+      "median_seconds": 45.18948700000328,
+      "total_seconds": 260.6422007080255,
+      "input_tokens": 427191,
+      "cached_input_tokens": 325504,
+      "output_tokens": 6014,
+      "recall_related_commands": 0
+    },
+    "compacted": {
+      "passed": 6,
+      "runs": 6,
+      "median_seconds": 43.63699839600304,
+      "total_seconds": 261.49590341701696,
+      "input_tokens": 433654,
+      "cached_input_tokens": 328320,
+      "output_tokens": 6327,
+      "recall_related_commands": 0
+    }
+  },
+  "preparation": {
+    "schema_version": 1,
+    "scoring_mode": "live",
+    "cases": [
+      {
+        "case": "tenant-cache",
+        "status": "compacted",
+        "applied": true,
+        "budget_met": true,
+        "stats": {
+          "input_tokens": 2617,
+          "output_tokens": 634,
+          "reduction_ratio": 0.757737867787543,
+          "counter": "o200k_base+canonical-json+8/message",
+          "scorer": "jev:jev-latest",
+          "scoring_ms": 1058.266208,
+          "total_ms": 1081.380583
+        },
+        "scores": {
+          "investigation-call": {
+            "loss": {
+              "brief": 0.23,
+              "drop": 0.85,
+              "extract": 0.17,
+              "reference": 0.72
+            }
+          }
+        },
+        "preparation_seconds": 1.4097805409983266,
+        "initial_tests_passed": false,
+        "fixture_sha256": "3db6a696f14bb0040ad9e189d6434d1d7d5035f4fa167cf8138e57846ba452d9"
+      },
+      {
+        "case": "retry-policy",
+        "status": "compacted",
+        "applied": true,
+        "budget_met": true,
+        "stats": {
+          "input_tokens": 2648,
+          "output_tokens": 657,
+          "reduction_ratio": 0.7518882175226587,
+          "counter": "o200k_base+canonical-json+8/message",
+          "scorer": "jev:jev-latest",
+          "scoring_ms": 1233.019208,
+          "total_ms": 1250.928542
+        },
+        "scores": {
+          "investigation-call": {
+            "loss": {
+              "brief": 0.18,
+              "drop": 0.85,
+              "extract": 0.14,
+              "reference": 0.57
+            }
+          }
+        },
+        "preparation_seconds": 1.3678431250009453,
+        "initial_tests_passed": false,
+        "fixture_sha256": "0c6abb438b05498c8373297c20e944788e89a0300ae66d79f4e29a4b0b037812"
+      },
+      {
+        "case": "cursor-pagination",
+        "status": "compacted",
+        "applied": true,
+        "budget_met": true,
+        "stats": {
+          "input_tokens": 2641,
+          "output_tokens": 637,
+          "reduction_ratio": 0.7588034835289663,
+          "counter": "o200k_base+canonical-json+8/message",
+          "scorer": "jev:jev-latest",
+          "scoring_ms": 983.541209,
+          "total_ms": 1010.165584
+        },
+        "scores": {
+          "investigation-call": {
+            "loss": {
+              "brief": 0.23,
+              "drop": 0.83,
+              "extract": 0.16,
+              "reference": 0.74
+            }
+          }
+        },
+        "preparation_seconds": 1.1622157919919118,
+        "initial_tests_passed": false,
+        "fixture_sha256": "3c457a171b0e3232660c105cd191d84aa76ce3123803adb07f52f151b8b55de6"
+      }
+    ]
+  },
+  "billed_cost_measured": false,
+  "limitations": [
+    "Three authored Python tasks with two repetitions per arm; no statistical generalization.",
+    "Fresh Codex prompts receive serialized checkpoint messages; this does not replace native Codex session compaction.",
+    "Jev compaction was prepared once per task and reused across continuations.",
+    "Agent latency excludes the separately reported compaction pass.",
+    "CLI token usage includes system instructions, tool calls, caching, and multiple inference steps.",
+    "The scorer resolved model version was not recorded; the requested alias was jev-latest.",
+    "No hidden-test file was placed inside agent workspaces; filesystem access isolation was not an adversarial containment test."
+  ]
+}

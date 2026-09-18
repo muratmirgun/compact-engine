@@ -1,0 +1,13 @@
+go test ./server -run '^$' -bench BenchmarkHTTPReplay -benchmem -count=6 -benchtime=200ms
+goos: darwin
+goarch: arm64
+pkg: github.com/muratmirgun/compact-engine/server
+cpu: Apple M1 Pro
+BenchmarkHTTPReplay-10    	      15	  13912061 ns/op	 5551492 B/op	   65898 allocs/op
+BenchmarkHTTPReplay-10    	      18	  13691588 ns/op	 5547520 B/op	   65859 allocs/op
+BenchmarkHTTPReplay-10    	      19	  14223502 ns/op	 5531634 B/op	   65855 allocs/op
+BenchmarkHTTPReplay-10    	      18	  13966238 ns/op	 5532680 B/op	   65857 allocs/op
+BenchmarkHTTPReplay-10    	      16	  14214859 ns/op	 5524827 B/op	   65856 allocs/op
+BenchmarkHTTPReplay-10    	      16	  14405846 ns/op	 5535249 B/op	   65856 allocs/op
+PASS
+ok  	github.com/muratmirgun/compact-engine/server	1.816s

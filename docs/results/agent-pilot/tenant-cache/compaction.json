@@ -1,0 +1,124 @@
+{
+  "version": "1",
+  "status": "compacted",
+  "applied": true,
+  "budget_met": true,
+  "snapshot_id": "9dad7f8711f845d8b6253e93c34593e22c83320487306487c1896d542f94045b",
+  "messages": [
+    {
+      "id": "rules",
+      "role": "system",
+      "text": "Keep generated_schema.py unchanged. Preserve public signatures. Use standard-library Python only."
+    },
+    {
+      "id": "goal",
+      "role": "user",
+      "text": "Fix tenant cache invalidation and its return contract. Follow the recorded cache findings. Preserve public signatures and generated files."
+    },
+    {
+      "id": "investigation-call",
+      "role": "assistant",
+      "text": "",
+      "tool_calls": [
+        {
+          "id": "investigation",
+          "name": "read_investigation_log",
+          "arguments": {
+            "path": "historical-investigation.log"
+          }
+        }
+      ]
+    },
+    {
+      "id": "investigation-result",
+      "role": "tool",
+      "text": "[literal excerpts; other text omitted]\nL1: INFO completed historical build step 000; no failure reported.\nL2: INFO completed historical build step 001; no failure reported.\nL3: INFO completed historical build step 002; no failure reported.\nL4: INFO completed historical build step 003; no failure reported.\nL5: INFO completed historical build step 004; no failure reported.\nL6: INFO completed historical build step 005; no failure reported.\nL7: INFO completed historical build step 006; no failure reported.\nL8: INFO completed historical build step 007; no failure reported.\nL9: INFO completed historical build step 008; no failure reported.\nL10: INFO completed historical build step 009; no failure reported.\nL11: INFO completed historical build step 010; no failure reported.\nL12: INFO completed historical build step 011; no failure reported.\nL13: INFO completed historical build step 012; no failure reported.\nL14: INFO completed historical build step 013; no failure reported.\nL15: INFO completed historical build step 014; no failure reported.\nL16: INFO completed historical build step 015; no failure reported.\nL86: CACHE FINDING: storage keys are cache:{tenant}:{key}; invalidate must use that exact tenant key.\nL87: CACHE FINDING: invalidate returns True only when it removed an existing key; otherwise False.\nL88: CACHE FINDING: preserve other tenants, other keys, and literal spaces in identifiers.\nL182: INFO completed historical build step 178; no failure reported.\nL183: INFO completed historical build step 179; no failure reported.\n\n[archived original: snapshot=9dad7f8711f845d8b6253e93c34593e22c83320487306487c1896d542f94045b message=investigation-result]",
+      "tool_call_id": "investigation"
+    },
+    {
+      "id": "failure-call",
+      "role": "assistant",
+      "text": "",
+      "tool_calls": [
+        {
+          "id": "failure",
+          "name": "run_tests",
+          "arguments": {
+            "command": "python3 -m unittest test_visible.py"
+          }
+        }
+      ]
+    },
+    {
+      "id": "failure-result",
+      "role": "tool",
+      "text": "FAIL test_invalidation: cached value remains after invalidation. The return contract is also unverified.",
+      "tool_call_id": "failure",
+      "unresolved": true
+    }
+  ],
+  "decisions": [
+    {
+      "group_id": "rules",
+      "message_ids": [
+        "rules"
+      ],
+      "action": "keep",
+      "reason": "instruction or user message"
+    },
+    {
+      "group_id": "goal",
+      "message_ids": [
+        "goal"
+      ],
+      "action": "keep",
+      "reason": "instruction or user message"
+    },
+    {
+      "group_id": "investigation-call",
+      "message_ids": [
+        "investigation-call",
+        "investigation-result"
+      ],
+      "action": "extract",
+      "reason": "budget selection using per-action loss estimates",
+      "score": {
+        "loss": {
+          "brief": 0.23,
+          "drop": 0.85,
+          "extract": 0.17,
+          "reference": 0.72
+        }
+      }
+    },
+    {
+      "group_id": "failure-call",
+      "message_ids": [
+        "failure-call",
+        "failure-result"
+      ],
+      "action": "keep",
+      "reason": "unresolved work"
+    }
+  ],
+  "scores": {
+    "investigation-call": {
+      "loss": {
+        "brief": 0.23,
+        "drop": 0.85,
+        "extract": 0.17,
+        "reference": 0.72
+      }
+    }
+  },
+  "warnings": [],
+  "stats": {
+    "input_tokens": 2617,
+    "output_tokens": 634,
+    "reduction_ratio": 0.757737867787543,
+    "counter": "o200k_base+canonical-json+8/message",
+    "scorer": "jev:jev-latest",
+    "scoring_ms": 1058.266208,
+    "total_ms": 1081.380583
+  }
+}
