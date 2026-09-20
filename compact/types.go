@@ -108,13 +108,17 @@ type Decision struct {
 
 // Stats separates local work from scoring latency. Durations are milliseconds.
 type Stats struct {
-	InputTokens   int     `json:"input_tokens"`
-	OutputTokens  int     `json:"output_tokens"`
-	Reduction     float64 `json:"reduction_ratio"`
-	Counter       string  `json:"counter"`
-	Scorer        string  `json:"scorer"`
-	ScoringMillis float64 `json:"scoring_ms"`
-	TotalMillis   float64 `json:"total_ms"`
+	// ProtectedTokens counts groups that must remain verbatim.
+	ProtectedTokens int `json:"protected_tokens"`
+	// CandidateOutputTokens reports the evaluated output even if not applied.
+	CandidateOutputTokens int     `json:"candidate_output_tokens"`
+	InputTokens           int     `json:"input_tokens"`
+	OutputTokens          int     `json:"output_tokens"`
+	Reduction             float64 `json:"reduction_ratio"`
+	Counter               string  `json:"counter"`
+	Scorer                string  `json:"scorer"`
+	ScoringMillis         float64 `json:"scoring_ms"`
+	TotalMillis           float64 `json:"total_ms"`
 }
 
 // Result reports whether a reduction was applied and whether the budget was met.

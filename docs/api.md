@@ -157,3 +157,13 @@ else:
 Expose snapshot recovery as an agent tool when the model needs archived content.
 Do not change call IDs or arguments when converting between message formats.
 Reject unsupported reasoning blocks, images, or audio instead of silently deleting them.
+
+### Budget diagnostics
+
+`stats.protected_tokens` counts dependency groups that must remain verbatim.
+`stats.candidate_output_tokens` reports the evaluated output size, even when the engine retains the original history.
+A `budget_unmet` result includes a warning that distinguishes protected context from rejected reductions.
+
+Assistant narration remains verbatim. It no longer blocks shortening a completed read-only tool result in the same group.
+The engine never proposes removing a group that contains assistant narration.
+Pinned messages, unresolved work, recent messages, and calls with side effects still protect their entire groups.

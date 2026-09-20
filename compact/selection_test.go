@@ -127,3 +127,58 @@ func TestReplayCopiesLossMaps(t *testing.T) {
 		t.Error("Replay.Score() aliases previous result")
 	}
 }
+
+func TestAssistantNarrationDoesNotPinReadOnlyResult(t *testing.T) {
+	t.Parallel()
+	req := fixture()
+	req.Messages[2].Text = "I will inspect the previous output. Keep the cache decision."
+	scorer := scorerFunc(func(_ context.Context, evaluation Evaluation) (map[string]Score, error) {
+		scores := make(map[string]Score)
+		for _, candidate := range evaluation.Candidates {
+			loss := make(map[string]float64)
+			for _, variant := range candidate.Variants {
+				if variant.Action == "drop" {
+					t.Error("assistant narration must prevent group removal")
+				}
+				if !reflect.DeepEqual(variant.Messages[0], req.Messages[2]) {
+					t.Error("proposal changed assistant text or tool call")
+				}
+				loss[variant.Action] = .01
+			}
+			scores[candidate.ID] = Score{Loss: loss}
+		}
+		return scores, nil
+	})
+	result, err := newTestEngine(t, scorer, &memoryStore{}).Compact(t.Context(), req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !result.Applied || !result.BudgetMet {
+		t.Fatalf("expected reduction, got %s", result.Status)
+	}
+	if !reflect.DeepEqual(result.Messages[2], req.Messages[2]) {
+		t.Error("assistant message changed")
+	}
+	if result.Stats.ProtectedTokens == 0 || result.Stats.CandidateOutputTokens != result.Stats.OutputTokens {
+		t.Fatalf("incorrect diagnostics: %+v", result.Stats)
+	}
+}
+
+func TestTextOnlyBudgetSkipsScorer(t *testing.T) {
+	t.Parallel()
+	req := Request{Goal: "continue", TargetTokens: 1, AllowPartial: true, Messages: []Message{{ID: "u", Role: "user", Text: "preserve instructions"}, {ID: "a", Role: "assistant", Text: "preserve decisions"}}}
+	scorer := scorerFunc(func(context.Context, Evaluation) (map[string]Score, error) {
+		t.Error("no candidates must not contact scorer")
+		return nil, nil
+	})
+	result, err := newTestEngine(t, scorer, &memoryStore{}).Compact(t.Context(), req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if result.Status != "budget_unmet" || result.Applied || !reflect.DeepEqual(result.Messages, req.Messages) {
+		t.Fatalf("unexpected result: %+v", result)
+	}
+	if result.Stats.ProtectedTokens != result.Stats.InputTokens {
+		t.Error("missing protected budget diagnosis")
+	}
+}

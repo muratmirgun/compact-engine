@@ -109,6 +109,7 @@ func collectGroups(req Request) ([]group, error) {
 			g.reason = reason
 		}
 	}
+	protectConversationGroups(groups, req.Messages)
 	return groups, nil
 }
 
@@ -120,8 +121,6 @@ func protection(m Message, isRecent bool, results map[string]int) string {
 		return "unresolved work"
 	case m.Role == "system" || m.Role == "developer" || m.Role == "user":
 		return "instruction or user message"
-	case m.Role == "assistant" && strings.TrimSpace(m.Text) != "":
-		return "assistant text is protected in v1"
 	case isRecent:
 		return "recent message"
 	}
@@ -160,4 +159,19 @@ func validMessageID(id string) bool {
 		}
 	}
 	return true
+}
+
+func protectConversationGroups(groups []group, messages []Message) {
+	// Assistant narration must stay verbatim, but must not prevent reduction
+	// of a completed read-only tool result in the same protocol group.
+	for i := range groups {
+		g := &groups[i]
+		hasToolResult := false
+		for _, index := range g.indices {
+			hasToolResult = hasToolResult || messages[index].Role == "tool"
+		}
+		if !g.protected && !hasToolResult {
+			g.protected, g.reason = true, "conversation text preserved"
+		}
+	}
 }

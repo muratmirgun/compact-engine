@@ -5,8 +5,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"net/http"
 	"net/http/httptest"
+	"reflect"
 	"strconv"
 	"strings"
 	"sync/atomic"
@@ -131,5 +133,81 @@ func TestClientBudgetAndCancellation(t *testing.T) {
 	c.config.MaxRequestBytes = 24000
 	if _, err := c.Score(ctx, compact.Evaluation{Goal: "test", Candidates: []compact.Candidate{{ID: "one"}}}); !errors.Is(err, context.Canceled) {
 		t.Errorf("Score(canceled)=%v", err)
+	}
+}
+
+func TestOversizedCandidateSplitsExactVariants(t *testing.T) {
+	t.Parallel()
+	for _, incomplete := range []bool{false, true} {
+		t.Run(fmt.Sprint(incomplete), func(t *testing.T) {
+			var calls atomic.Int32
+			variants := []compact.Variant{}
+			for _, action := range []string{"extract", "brief", "reference"} {
+				variants = append(variants, compact.Variant{Action: action, Messages: []compact.Message{{ID: "t", Role: "tool", ToolCallID: "call", Text: strings.Repeat(action+" evidence ", 35)}}})
+			}
+			eval := compact.Evaluation{Goal: "fix cache", Candidates: []compact.Candidate{{ID: "group", Preview: strings.Repeat("証拠", 3000), Complete: true, Variants: variants}}}
+			before, _ := json.Marshal(eval)
+			srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				calls.Add(1)
+				body, _ := io.ReadAll(r.Body)
+				if len(body) > 2400 {
+					t.Error("request exceeded configured byte limit")
+				}
+				var req request
+				if err := json.Unmarshal(body, &req); err != nil {
+					t.Error(err)
+					return
+				}
+				var state compact.Evaluation
+				if err := json.Unmarshal([]byte(req.State), &state); err != nil {
+					t.Error(err)
+					return
+				}
+				candidate := state.Candidates[0]
+				if candidate.Complete {
+					t.Error("truncated evidence marked complete")
+				}
+				if len(candidate.Variants) != 1 {
+					t.Error("expected one exact variant per request")
+					return
+				}
+				v := candidate.Variants[0]
+				for _, original := range variants {
+					if original.Action == v.Action && !reflect.DeepEqual(original, v) {
+						t.Error("replacement text was truncated")
+					}
+				}
+				answers := map[string]any{}
+				if !incomplete || v.Action != "reference" {
+					answers[lossKey(0, 0)] = map[string]any{"type": "noul", "noul": .01}
+				}
+				_ = json.NewEncoder(w).Encode(map[string]any{"answers": answers})
+			}))
+			defer srv.Close()
+			client, err := New(Config{APIKey: "test", Endpoint: srv.URL, MaxRequestBytes: 2400})
+			if err != nil {
+				t.Fatal(err)
+			}
+			scores, err := client.Score(t.Context(), eval)
+			if incomplete {
+				if err == nil || scores != nil {
+					t.Error("incomplete scores must fail closed")
+				}
+			} else {
+				if err != nil {
+					t.Fatal(err)
+				}
+				if len(scores["group"].Loss) != 3 {
+					t.Fatalf("lost split scores: %+v", scores)
+				}
+			}
+			if calls.Load() != 3 {
+				t.Errorf("requests=%d, want 3", calls.Load())
+			}
+			after, _ := json.Marshal(eval)
+			if string(before) != string(after) {
+				t.Error("input evaluation changed")
+			}
+		})
 	}
 }

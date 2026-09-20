@@ -92,3 +92,8 @@ go test ./compact -run ExampleEngine_Compact -v
 
 When embedding `server.Handler`, the caller owns listening, TLS, and shutdown.
 The handler cannot determine whether its listener is public; configure authentication explicitly.
+
+Oversized scoring candidates split into separate requests for each replacement action.
+Every replacement stays complete and exact. The original preview may shrink to meet the byte cap.
+Such previews carry `complete: false`. Missing scores fail the entire pass.
+The request byte limit and total batch limit remain unchanged.

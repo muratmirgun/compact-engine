@@ -13,6 +13,7 @@ import (
 	"net/url"
 	"strconv"
 	"time"
+	"unicode/utf8"
 
 	"github.com/muratmirgun/compact-engine/compact"
 )
@@ -115,7 +116,14 @@ func (c *Client) Score(ctx context.Context, eval compact.Evaluation) (map[string
 			return nil, err
 		}
 		for id, s := range part {
-			scores[id] = s
+			if previous, exists := scores[id]; exists && previous.Loss != nil && s.Loss != nil {
+				for action, loss := range s.Loss {
+					previous.Loss[action] = loss
+				}
+				scores[id] = previous
+			} else {
+				scores[id] = s
+			}
 		}
 	}
 	return scores, nil
@@ -138,9 +146,15 @@ func (c *Client) batches(eval compact.Evaluation) ([]batch, error) {
 			end++
 		}
 		if end == start {
-			return nil, errors.New("jev: one candidate exceeds request budget")
+			parts, err := c.splitCandidate(eval, eval.Candidates[start])
+			if err != nil {
+				return nil, err
+			}
+			batches = append(batches, parts...)
+			end++
+		} else {
+			batches = append(batches, batch{body: accepted, candidates: eval.Candidates[start:end]})
 		}
-		batches = append(batches, batch{body: accepted, candidates: eval.Candidates[start:end]})
 		if len(batches) > c.config.MaxBatches {
 			return nil, errors.New("jev: batch limit exceeded")
 		}
@@ -236,4 +250,36 @@ func probability(answers map[string]answer, key string) (float64, error) {
 		return 0, errors.New("jev: invalid probability")
 	}
 	return v, nil
+}
+
+// splitCandidate scores exact replacement variants separately. Only the original
+// preview may shrink; Complete=false tells the scorer that evidence is sampled.
+func (c *Client) splitCandidate(eval compact.Evaluation, candidate compact.Candidate) ([]batch, error) {
+	if len(candidate.Variants) == 0 {
+		return nil, errors.New("jev: one candidate exceeds request budget")
+	}
+	parts := make([]batch, 0, len(candidate.Variants))
+	for _, variant := range candidate.Variants {
+		part := candidate
+		part.Variants = []compact.Variant{variant}
+		for {
+			body, err := c.body(eval, []compact.Candidate{part})
+			if err != nil {
+				return nil, err
+			}
+			if len(body) <= c.config.MaxRequestBytes {
+				parts = append(parts, batch{body: body, candidates: []compact.Candidate{part}})
+				break
+			}
+			if len(part.Preview) == 0 {
+				return nil, errors.New("jev: one replacement exceeds request budget")
+			}
+			end := len(part.Preview) / 2
+			for end > 0 && !utf8.RuneStart(part.Preview[end]) {
+				end--
+			}
+			part.Preview, part.Complete = part.Preview[:end], false
+		}
+	}
+	return parts, nil
 }

@@ -51,7 +51,7 @@ func (e *Engine) Compact(ctx context.Context, req Request) (Result, error) {
 	result := Result{
 		Version: "1", Status: "unchanged", SnapshotID: snapshot,
 		Messages: req.Messages, Decisions: []Decision{}, Warnings: []string{},
-		Stats: Stats{InputTokens: before, OutputTokens: before, Counter: e.counter.Name(), Scorer: e.scorer.Name()},
+		Stats: Stats{InputTokens: before, OutputTokens: before, CandidateOutputTokens: before, Counter: e.counter.Name(), Scorer: e.scorer.Name()},
 	}
 	finish := func() Result {
 		result.Stats.TotalMillis = float64(time.Since(start)) / float64(time.Millisecond)
@@ -71,6 +71,7 @@ func (e *Engine) Compact(ctx context.Context, req Request) (Result, error) {
 	if err != nil {
 		return Result{}, err
 	}
+	result.Stats.ProtectedTokens = minimum
 	if minimum > req.TargetTokens && !req.AllowPartial {
 		result.Status = "budget_unmet"
 		result.Warnings = append(result.Warnings, "protected messages exceed target; original history retained")
@@ -79,6 +80,11 @@ func (e *Engine) Compact(ctx context.Context, req Request) (Result, error) {
 	evaluation, err := e.evaluate(req, groups, snapshot)
 	if err != nil {
 		return Result{}, err
+	}
+	if len(evaluation.Candidates) == 0 {
+		result.Status = "budget_unmet"
+		result.Warnings = append(result.Warnings, "no reducible tool outputs; protected conversation retained")
+		return finish(), nil
 	}
 	scoreStart := time.Now()
 	scores, scoreErr := e.scorer.Score(ctx, evaluation)
@@ -106,9 +112,14 @@ func (e *Engine) Compact(ctx context.Context, req Request) (Result, error) {
 	if err := ctx.Err(); err != nil {
 		return Result{}, err
 	}
+	result.Stats.CandidateOutputTokens = after
 	if after > req.TargetTokens && (!req.AllowPartial || after >= before) {
 		result.Status = "budget_unmet"
-		result.Warnings = append(result.Warnings, "safe reductions cannot meet target; original history retained")
+		reason := "safe reductions cannot meet target; original history retained"
+		if after >= before {
+			reason = "no proposed reduction passed the loss limit; original history retained"
+		}
+		result.Warnings = append(result.Warnings, reason)
 		return finish(), nil
 	}
 	result.Status, result.Applied, result.BudgetMet = "compacted", true, after <= req.TargetTokens

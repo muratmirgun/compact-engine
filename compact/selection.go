@@ -13,6 +13,9 @@ const maxLoss = 0.2
 func (e *Engine) variants(messages []Message, goal, snapshot string, originalTokens int) ([]Variant, error) {
 	variants := make([]Variant, 0, 4)
 	for _, action := range []string{"extract", "brief", "reference", "drop"} {
+		if action == "drop" && containsAssistantText(messages) {
+			continue
+		}
 		replacement := represent(messages, action, goal, snapshot)
 		count, err := e.counter.Count(replacement)
 		if err != nil {
@@ -158,4 +161,13 @@ func represent(messages []Message, action, goal, snapshot string) []Message {
 		}
 	}
 	return output
+}
+
+func containsAssistantText(messages []Message) bool {
+	for _, m := range messages {
+		if m.Role == "assistant" && strings.TrimSpace(m.Text) != "" {
+			return true
+		}
+	}
+	return false
 }
