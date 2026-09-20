@@ -97,3 +97,27 @@ Oversized scoring candidates split into separate requests for each replacement a
 Every replacement stays complete and exact. The original preview may shrink to meet the byte cap.
 Such previews carry `complete: false`. Missing scores fail the entire pass.
 The request byte limit and total batch limit remain unchanged.
+
+## Call/result retention scoring
+
+Go callers can set `jev.Config{KeepScoring: true}` to ask separate questions
+about retaining tool calls and retaining full tool results. The default remains
+per-replacement loss scoring for existing clients.
+
+A `compact.Score` with `Keep: &compact.KeepScore{Call: ..., Result: ...}` uses
+a 0.5 threshold. Results at or above 0.5 remain verbatim. Below 0.5, the engine
+can use `brief` (literal excerpts plus an archive reference). It can also drop
+a whole group if the call score is below 0.5 and the group has no assistant text.
+Protected groups never change. Dependency groups containing several calls use
+retention questions about any member, so one needed result retains the group.
+
+This policy judges whether exact results must stay available in context when
+read-only tools can run again or archived originals can be retrieved. It does
+not estimate per-replacement information loss. Do not combine `Keep` and `Loss`.
+Missing or invalid scores retain the original history.
+
+This is an adaptation of fast-jev-compaction, not an identical implementation.
+The engine keeps its dependency groups, token budget, archive, and literal
+excerpts. It uses bounded sampled context and output previews. OwnCode supplies
+the latest three user requests as the goal unless an explicit focus is given.
+OwnCode also retains all call records to preserve attachments and opaque state.

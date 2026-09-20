@@ -14,6 +14,10 @@ func NewReplay(scores map[string]Score) *Replay {
 	copyScores := make(map[string]Score, len(scores))
 	for id, score := range scores {
 		score.Loss = maps.Clone(score.Loss)
+		if score.Keep != nil {
+			keep := *score.Keep
+			score.Keep = &keep
+		}
 		copyScores[id] = score
 	}
 	return &Replay{scores: copyScores}
@@ -31,6 +35,10 @@ func (r *Replay) Score(ctx context.Context, eval Evaluation) (map[string]Score, 
 	for _, c := range eval.Candidates {
 		if score, ok := r.scores[c.ID]; ok {
 			score.Loss = maps.Clone(score.Loss)
+			if score.Keep != nil {
+				keep := *score.Keep
+				score.Keep = &keep
+			}
 			out[c.ID] = score
 		}
 	}

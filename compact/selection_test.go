@@ -182,3 +182,82 @@ func TestTextOnlyBudgetSkipsScorer(t *testing.T) {
 		t.Error("missing protected budget diagnosis")
 	}
 }
+
+func TestKeepScoringPolicy(t *testing.T) {
+	t.Parallel()
+	for _, tc := range []struct {
+		name         string
+		call, result float64
+		action       string
+	}{
+		{"result at threshold", .1, .5, "keep"},
+		{"call at threshold", .5, .49, "brief"},
+		{"stale pair", .1, .1, "drop"},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+			req := fixture()
+			req.AllowPartial = true
+			req.TargetTokens = 1
+			scorer := NewReplay(map[string]Score{"call-old": {Keep: &KeepScore{Call: tc.call, Result: tc.result}}})
+			r, err := newTestEngine(t, scorer, &memoryStore{}).Compact(t.Context(), req)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if tc.action == "keep" {
+				if r.Applied || !reflect.DeepEqual(r.Messages, req.Messages) {
+					t.Fatal("high result retention must keep original history")
+				}
+				return
+			}
+			if !r.Applied {
+				t.Fatalf("Compact(%s) status=%s, want applied", tc.name, r.Status)
+			}
+			found := false
+			for _, d := range r.Decisions {
+				if d.GroupID == "call-old" {
+					found = true
+					if d.Action != tc.action {
+						t.Errorf("action=%s, want %s", d.Action, tc.action)
+					}
+				}
+			}
+			if !found {
+				t.Fatal("missing decision")
+			}
+			if tc.action == "brief" {
+				if !reflect.DeepEqual(r.Messages[2], req.Messages[2]) || !strings.Contains(r.Messages[3].Text, "archived original:") {
+					t.Fatal("brief lost call or recovery reference")
+				}
+			}
+		})
+	}
+}
+
+func TestKeepScoreValidationAndCopies(t *testing.T) {
+	t.Parallel()
+	for _, score := range []Score{{Keep: &KeepScore{Call: math.NaN()}}, {Keep: &KeepScore{Result: 1.1}}, {Keep: &KeepScore{}, Loss: map[string]float64{}}} {
+		if err := validateScores([]Candidate{{ID: "a"}}, map[string]Score{"a": score}); err == nil {
+			t.Fatal("invalid or ambiguous keep score accepted")
+		}
+	}
+	original := &KeepScore{Call: .3, Result: .4}
+	replay := NewReplay(map[string]Score{"a": {Keep: original}})
+	original.Call = 1
+	eval := Evaluation{Candidates: []Candidate{{ID: "a"}}}
+	scores, err := replay.Score(t.Context(), eval)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if scores["a"].Keep.Call != .3 {
+		t.Fatal("replay retained input pointer")
+	}
+	scores["a"].Keep.Call = 1
+	again, err := replay.Score(t.Context(), eval)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if again["a"].Keep.Call != .3 {
+		t.Fatal("replay returned internal pointer")
+	}
+}

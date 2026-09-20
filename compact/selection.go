@@ -85,6 +85,19 @@ func (e *Engine) selectMessages(ctx context.Context, req Request, groups []group
 }
 
 func actionLoss(score Score, action string) (float64, bool) {
+	if score.Keep != nil {
+		if score.Keep.Result >= 0.5 {
+			return 0, false
+		}
+		switch action {
+		case "brief":
+			return score.Keep.Result, true
+		case "drop":
+			return math.Max(score.Keep.Call, score.Keep.Result), score.Keep.Call < 0.5
+		default:
+			return 0, false
+		}
+	}
 	if score.Loss != nil {
 		loss, ok := score.Loss[action]
 		return loss, ok && loss < maxLoss
@@ -120,7 +133,10 @@ func assemble(req Request, groups []group, selected []selection, scores map[stri
 			s := scores[g.id]
 			d.Score = &s
 			d.Reason = "budget selection using per-action loss estimates"
-			if s.Loss == nil {
+			if s.Keep != nil {
+				d.Reason = "call/result retention scores with 0.5 threshold"
+			}
+			if s.Loss == nil && s.Keep == nil {
 				d.Reason = "budget selection using legacy probability gates"
 			}
 		}

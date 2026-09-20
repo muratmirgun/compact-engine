@@ -72,11 +72,22 @@ type Evaluation struct {
 
 // Score contains estimated loss for each proposed action. Lower means less loss.
 // Loss must cover all proposals when non-nil. These estimates are not guarantees.
-// Relevance and Detail support legacy scorers only when Loss is nil.
+// Keep selects the call/result retention policy with a 0.5 threshold.
+// Keep and Loss are mutually exclusive.
+// Relevance and Detail support legacy scorers only when Keep and Loss are nil.
 type Score struct {
+	Keep      *KeepScore         `json:"keep,omitempty"`
 	Relevance float64            `json:"relevance,omitempty"`
 	Detail    float64            `json:"detail,omitempty"`
 	Loss      map[string]float64 `json:"loss,omitempty"`
+}
+
+// KeepScore estimates whether a group still needs its calls or full results.
+// A score of 0.5 or higher retains that information. Full results imply calls.
+// Groups with multiple calls use the probability that any member needs retention.
+type KeepScore struct {
+	Call   float64 `json:"call"`
+	Result float64 `json:"result"`
 }
 
 // Scorer ranks dependency groups. It must return every requested candidate ID.

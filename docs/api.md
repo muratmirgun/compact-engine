@@ -167,3 +167,14 @@ A `budget_unmet` result includes a warning that distinguishes protected context 
 Assistant narration remains verbatim. It no longer blocks shortening a completed read-only tool result in the same group.
 The engine never proposes removing a group that contains assistant narration.
 Pinned messages, unresolved work, recent messages, and calls with side effects still protect their entire groups.
+
+### Retention scores
+
+A scorer can return `{"keep":{"call":0.7,"result":0.3}}` for a candidate.
+Both numbers must be finite probabilities in `[0,1]`. `keep` and `loss` cannot
+appear together. The 0.5 retention threshold permits a literal brief when the
+full result is unnecessary; it permits whole-group removal only when the call
+is also unnecessary and conversation protection allows removal.
+
+The Jev Go adapter enables this policy with `KeepScoring: true`. Existing loss
+scores and legacy replay scores retain their original interpretation.

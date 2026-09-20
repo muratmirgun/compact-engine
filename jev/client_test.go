@@ -211,3 +211,91 @@ func TestOversizedCandidateSplitsExactVariants(t *testing.T) {
 		})
 	}
 }
+
+func TestKeepScoringUsesTwoQuestions(t *testing.T) {
+	t.Parallel()
+	for _, missing := range []bool{false, true} {
+		t.Run(fmt.Sprint(missing), func(t *testing.T) {
+			t.Parallel()
+			srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				var req request
+				if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+					t.Error(err)
+					w.WriteHeader(400)
+					return
+				}
+				if len(req.Questions) != 2 || req.Questions["r0"].Type != "noul" || req.Questions["d0"].Type != "noul" {
+					t.Error("expected separate call/result questions")
+				}
+				var state compact.Evaluation
+				if err := json.Unmarshal([]byte(req.State), &state); err != nil {
+					t.Error(err)
+					w.WriteHeader(400)
+					return
+				}
+				if state.Goal != "fix cache" || len(state.Candidates) != 1 {
+					t.Error("missing goal or candidate")
+				} else if len(state.Candidates[0].Variants) != 0 {
+					t.Error("keep scoring sent replacement payloads")
+				}
+				answers := map[string]any{"r0": map[string]any{"type": "noul", "noul": .7}}
+				if !missing {
+					answers["d0"] = map[string]any{"type": "noul", "noul": .3}
+				}
+				if err := json.NewEncoder(w).Encode(map[string]any{"answers": answers}); err != nil {
+					t.Error(err)
+				}
+			}))
+			defer srv.Close()
+			client, err := New(Config{APIKey: "test", Endpoint: srv.URL, KeepScoring: true})
+			if err != nil {
+				t.Fatal(err)
+			}
+			defer client.Close()
+			eval := compact.Evaluation{Goal: "fix cache", Candidates: []compact.Candidate{{ID: "a", Preview: "completed read", Variants: []compact.Variant{{Action: "brief"}}}}}
+			scores, err := client.Score(t.Context(), eval)
+			if missing {
+				if err == nil {
+					t.Fatal("missing result score accepted")
+				}
+				return
+			}
+			if err != nil {
+				t.Fatal(err)
+			}
+			if scores["a"].Keep == nil || *scores["a"].Keep != (compact.KeepScore{Call: .7, Result: .3}) || scores["a"].Loss != nil {
+				t.Fatalf("unexpected score: %+v", scores["a"])
+			}
+			if len(eval.Candidates[0].Variants) != 1 {
+				t.Fatal("input mutated")
+			}
+		})
+	}
+}
+
+func TestKeepScoringBoundsOversizedPreview(t *testing.T) {
+	t.Parallel()
+	client, err := New(Config{APIKey: "test", KeepScoring: true, MaxRequestBytes: 1600})
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer client.Close()
+	eval := compact.Evaluation{Goal: "fix", Candidates: []compact.Candidate{{ID: "a", Preview: strings.Repeat("界", 10000), Complete: true}}}
+	batches, err := client.batches(eval)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(batches) != 1 || len(batches[0].body) > 1600 {
+		t.Fatal("oversized keep request")
+	}
+	if batches[0].candidates[0].Complete {
+		t.Fatal("sampled preview claims completeness")
+	}
+	if len(eval.Candidates[0].Preview) != 30000 || !eval.Candidates[0].Complete {
+		t.Fatal("caller input changed")
+	}
+	eval.Context = strings.Repeat("x", 5000)
+	if _, err := client.batches(eval); err == nil {
+		t.Fatal("oversized context accepted")
+	}
+}

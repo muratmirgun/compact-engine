@@ -117,7 +117,7 @@ func (e *Engine) Compact(ctx context.Context, req Request) (Result, error) {
 		result.Status = "budget_unmet"
 		reason := "safe reductions cannot meet target; original history retained"
 		if after >= before {
-			reason = "no proposed reduction passed the loss limit; original history retained"
+			reason = "no proposed reduction passed the scoring policy; original history retained"
 		}
 		result.Warnings = append(result.Warnings, reason)
 		return finish(), nil
@@ -185,7 +185,13 @@ func validateScores(candidates []Candidate, scores map[string]Score) error {
 		if !ok {
 			return fmt.Errorf("missing score for %q", c.ID)
 		}
+		if s.Keep != nil && s.Loss != nil {
+			return fmt.Errorf("ambiguous scoring policy for %q", c.ID)
+		}
 		probabilities := []float64{s.Relevance, s.Detail}
+		if s.Keep != nil {
+			probabilities = []float64{s.Keep.Call, s.Keep.Result}
+		}
 		if s.Loss != nil {
 			probabilities = make([]float64, 0, len(c.Variants))
 			for _, v := range c.Variants {
