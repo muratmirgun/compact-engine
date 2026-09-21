@@ -224,3 +224,5 @@ Third-party notices are included in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES
 Inspired by [fast-jev-compaction](https://github.com/tamaratran/fast-jev-compaction).
 The provider adapter follows the [TypeSafe API](https://docs.typesafe.ai/introduction/quickstart).
 Token accounting uses [tiktoken-go/tokenizer](https://github.com/tiktoken-go/tokenizer).
+
+See [v0.3 scoring controls](docs/scoring-v0.3.md) for bounded parallel requests, token budgets, and independent result reduction.

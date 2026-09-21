@@ -178,3 +178,7 @@ is also unnecessary and conversation protection allows removal.
 
 The Jev Go adapter enables this policy with `KeepScoring: true`. Existing loss
 scores and legacy replay scores retain their original interpretation.
+
+### Independent result mode
+
+Set `reduce_results_individually: true` to preserve all call records and reduce eligible tool results separately. The default remains false. See [scoring details](scoring-v0.3.md) for protection rules and diagnostics.

@@ -65,6 +65,7 @@ func (e *Engine) Compact(ctx context.Context, req Request) (Result, error) {
 	for _, g := range groups {
 		if g.protected {
 			protected = append(protected, groupMessages(req.Messages, g)...)
+			result.Stats.ProtectedGroups++
 		}
 	}
 	minimum, err := e.counter.Count(protected)
@@ -87,7 +88,13 @@ func (e *Engine) Compact(ctx context.Context, req Request) (Result, error) {
 		return finish(), nil
 	}
 	scoreStart := time.Now()
-	scores, scoreErr := e.scorer.Score(ctx, evaluation)
+	var scores map[string]Score
+	var scoreErr error
+	if scorer, ok := e.scorer.(DiagnosticScorer); ok {
+		scores, result.Stats.Scoring, scoreErr = scorer.ScoreWithStats(ctx, evaluation)
+	} else {
+		scores, scoreErr = e.scorer.Score(ctx, evaluation)
+	}
 	result.Stats.ScoringMillis = float64(time.Since(scoreStart)) / float64(time.Millisecond)
 	if err := ctx.Err(); err != nil {
 		return Result{}, err
@@ -112,6 +119,30 @@ func (e *Engine) Compact(ctx context.Context, req Request) (Result, error) {
 	if err := ctx.Err(); err != nil {
 		return Result{}, err
 	}
+	for _, d := range decisions {
+		switch {
+		case d.Score == nil:
+		case d.Action == "drop":
+			result.Stats.DroppedGroups++
+		case d.Action != "keep":
+			result.Stats.ReducedGroups++
+		default:
+			result.Stats.KeptGroups++
+			allowed := false
+			for _, c := range evaluation.Candidates {
+				if c.ID != d.GroupID {
+					continue
+				}
+				for _, v := range c.Variants {
+					_, ok := actionLoss(*d.Score, v.Action)
+					allowed = allowed || ok
+				}
+			}
+			if !allowed {
+				result.Stats.RejectedGroups++
+			}
+		}
+	}
 	result.Stats.CandidateOutputTokens = after
 	if after > req.TargetTokens && (!req.AllowPartial || after >= before) {
 		result.Status = "budget_unmet"
@@ -135,14 +166,13 @@ func (e *Engine) Compact(ctx context.Context, req Request) (Result, error) {
 
 func (e *Engine) evaluate(req Request, groups []group, snapshot string) (Evaluation, error) {
 	eval := Evaluation{Goal: req.Goal, Candidates: []Candidate{}}
-	// Global context is explicitly sampled; it is not a claim of complete history.
-	var contextText strings.Builder
+	eval.Context = scoringContext(req.Messages, req.Goal)
+	calls := make(map[string]ToolCall)
 	for _, m := range req.Messages {
-		if m.Role != "tool" && m.Text != "" {
-			fmt.Fprintf(&contextText, "[%s %s]\n%s\n", m.ID, m.Role, excerpt(m.Text, req.Goal, 800))
+		for _, call := range m.ToolCalls {
+			calls[call.ID] = call
 		}
 	}
-	eval.Context = excerpt(contextText.String(), req.Goal, 4000)
 	for _, g := range groups {
 		if g.protected {
 			continue
@@ -158,6 +188,10 @@ func (e *Engine) evaluate(req Request, groups []group, snapshot string) (Evaluat
 			for _, c := range m.ToolCalls {
 				fmt.Fprintf(&b, "tool=%s arguments=%s\n", c.Name, c.Arguments)
 			}
+			if req.ReduceResultsIndividually && m.ToolCallID != "" {
+				call := calls[m.ToolCallID]
+				fmt.Fprintf(&b, "tool=%s arguments=%s\n", call.Name, call.Arguments)
+			}
 			b.WriteString(m.Text)
 			b.WriteByte('\n')
 		}
@@ -165,6 +199,15 @@ func (e *Engine) evaluate(req Request, groups []group, snapshot string) (Evaluat
 		variants, err := e.variants(messages, req.Goal, snapshot, count)
 		if err != nil {
 			return Evaluation{}, err
+		}
+		if req.ReduceResultsIndividually {
+			filtered := variants[:0]
+			for _, variant := range variants {
+				if variant.Action != "drop" {
+					filtered = append(filtered, variant)
+				}
+			}
+			variants = filtered
 		}
 		eval.Candidates = append(eval.Candidates, Candidate{ID: g.id, Preview: excerpt(full, req.Goal, 16000), Complete: len(full) <= 16000, Tokens: count, Variants: variants})
 	}

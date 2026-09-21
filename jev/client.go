@@ -12,10 +12,12 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"sync"
 	"time"
 	"unicode/utf8"
 
 	"github.com/muratmirgun/compact-engine/compact"
+	"github.com/muratmirgun/compact-engine/token"
 )
 
 // Config controls transport, model selection, and bounded request batching.
@@ -29,12 +31,17 @@ type Config struct {
 	Timeout         time.Duration
 	MaxRequestBytes int
 	MaxBatches      int
+	// MaxConcurrent bounds requests per scoring pass; default two.
+	MaxConcurrent int
+	// MaxRequestTokens uses o200k_base as an estimate, not provider billing.
+	MaxRequestTokens int
 }
 
 // Client is safe for concurrent calls. It performs no automatic paid retries.
 type Client struct {
-	config Config
-	http   *http.Client
+	counter *token.Counter
+	config  Config
+	http    *http.Client
 }
 
 // New validates transport settings. HTTP is allowed only for loopback tests.
@@ -57,6 +64,15 @@ func New(cfg Config) (*Client, error) {
 	if cfg.MaxBatches == 0 {
 		cfg.MaxBatches = 32
 	}
+	if cfg.MaxConcurrent == 0 {
+		cfg.MaxConcurrent = 2
+	}
+	if cfg.MaxRequestTokens == 0 {
+		cfg.MaxRequestTokens = 8000
+	}
+	if cfg.MaxConcurrent < 1 || cfg.MaxConcurrent > 8 || cfg.MaxRequestTokens < 256 || cfg.MaxRequestTokens > 30000 {
+		return nil, errors.New("jev: invalid scoring limits")
+	}
 	if cfg.Timeout < 0 || cfg.MaxRequestBytes < 1024 || cfg.MaxRequestBytes > 120000 || cfg.MaxBatches < 1 || cfg.MaxBatches > 128 {
 		return nil, errors.New("jev: invalid transport limits")
 	}
@@ -75,7 +91,11 @@ func New(cfg Config) (*Client, error) {
 	}
 	transport := baseTransport.Clone()
 	transport.MaxIdleConnsPerHost = 8
-	return &Client{config: cfg, http: &http.Client{Timeout: cfg.Timeout, Transport: transport, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}}, nil
+	counter, err := token.New("o200k_base")
+	if err != nil {
+		return nil, err
+	}
+	return &Client{counter: counter, config: cfg, http: &http.Client{Timeout: cfg.Timeout, Transport: transport, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}}, nil
 }
 
 // Close releases pooled idle connections. It does not interrupt active calls.
@@ -108,16 +128,87 @@ type batch struct {
 // Score sends content-aware batches. Missing or malformed answers fail the pass.
 // The byte cap is a conservative payload guard, not Jev's exact token count.
 func (c *Client) Score(ctx context.Context, eval compact.Evaluation) (map[string]compact.Score, error) {
+	scores, _, err := c.ScoreWithStats(ctx, eval)
+	return scores, err
+}
+
+// ScoreWithStats returns diagnostics for this invocation without shared mutable state.
+func (c *Client) ScoreWithStats(ctx context.Context, eval compact.Evaluation) (map[string]compact.Score, compact.ScoringStats, error) {
+	var stats compact.ScoringStats
+	if err := ctx.Err(); err != nil {
+		return nil, stats, err
+	}
+	original := eval.Context
+	// Reserve room for at least one candidate and its questions.
+	for len(eval.Context) > 0 {
+		body, err := c.body(eval, nil)
+		if err != nil {
+			return nil, stats, err
+		}
+		n, err := c.counter.CountText(string(body))
+		if err != nil {
+			return nil, stats, err
+		}
+		if len(body) <= c.config.MaxRequestBytes/2 && n <= c.config.MaxRequestTokens/2 {
+			break
+		}
+		runes := []rune(eval.Context)
+		nrun := len(runes) / 4
+		if nrun == 0 {
+			eval.Context = ""
+		} else {
+			eval.Context = string(runes[:nrun]) + "\n[scoring context omitted]\n" + string(runes[len(runes)-nrun:])
+		}
+		if len(runes) < 80 {
+			eval.Context = ""
+		}
+	}
+	stats.ContextShortened = eval.Context != original
 	batches, err := c.batches(eval)
 	if err != nil {
-		return nil, err
+		return nil, stats, err
+	}
+	stats.Requests = len(batches)
+	ctx, cancel := context.WithCancel(ctx)
+	defer cancel()
+	parts := make([]map[string]compact.Score, len(batches))
+	var wg sync.WaitGroup
+	var once sync.Once
+	var firstErr error
+	jobs := make(chan int)
+	for range min(c.config.MaxConcurrent, len(batches)) {
+		wg.Go(func() {
+			for i := range jobs {
+				if ctx.Err() != nil {
+					continue
+				}
+				part, err := c.send(ctx, batches[i])
+				if err != nil {
+					once.Do(func() { firstErr = err; cancel() })
+					continue
+				}
+				parts[i] = part
+			}
+		})
+	}
+dispatch:
+	for i := range batches {
+		select {
+		case jobs <- i:
+		case <-ctx.Done():
+			break dispatch
+		}
+	}
+	close(jobs)
+	wg.Wait()
+	if firstErr != nil {
+		return nil, stats, firstErr
+	}
+	if err := ctx.Err(); err != nil {
+		return nil, stats, err
 	}
 	scores := make(map[string]compact.Score, len(eval.Candidates))
-	for _, b := range batches {
-		part, err := c.send(ctx, b)
-		if err != nil {
-			return nil, err
-		}
+	for _, part := range parts {
 		for id, s := range part {
 			if previous, exists := scores[id]; exists && previous.Loss != nil && s.Loss != nil {
 				for action, loss := range s.Loss {
@@ -129,7 +220,7 @@ func (c *Client) Score(ctx context.Context, eval compact.Evaluation) (map[string
 			}
 		}
 	}
-	return scores, nil
+	return scores, stats, nil
 }
 
 func (c *Client) batches(eval compact.Evaluation) ([]batch, error) {
@@ -142,7 +233,7 @@ func (c *Client) batches(eval compact.Evaluation) ([]batch, error) {
 			if err != nil {
 				return nil, err
 			}
-			if len(body) > c.config.MaxRequestBytes {
+			if !c.fits(body) {
 				break
 			}
 			accepted = body
@@ -281,7 +372,7 @@ func (c *Client) splitCandidate(eval compact.Evaluation, candidate compact.Candi
 			if err != nil {
 				return nil, err
 			}
-			if len(body) <= c.config.MaxRequestBytes {
+			if c.fits(body) {
 				return []batch{{body: body, candidates: []compact.Candidate{candidate}}}, nil
 			}
 			if len(candidate.Preview) == 0 {
@@ -306,7 +397,7 @@ func (c *Client) splitCandidate(eval compact.Evaluation, candidate compact.Candi
 			if err != nil {
 				return nil, err
 			}
-			if len(body) <= c.config.MaxRequestBytes {
+			if c.fits(body) {
 				parts = append(parts, batch{body: body, candidates: []compact.Candidate{part}})
 				break
 			}
@@ -321,4 +412,12 @@ func (c *Client) splitCandidate(eval compact.Evaluation, candidate compact.Candi
 		}
 	}
 	return parts, nil
+}
+
+func (c *Client) fits(body []byte) bool {
+	if len(body) > c.config.MaxRequestBytes {
+		return false
+	}
+	n, err := c.counter.CountText(string(body))
+	return err == nil && n <= c.config.MaxRequestTokens
 }

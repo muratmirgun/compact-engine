@@ -58,3 +58,12 @@ func (c *Counter) Count(messages []compact.Message) (int, error) {
 	}
 	return total, nil
 }
+
+// CountText counts raw text without message framing. The encoding is explicit;
+// this is an estimate for providers that use a different tokenizer.
+func (c *Counter) CountText(text string) (int, error) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	ids, _, err := c.codec.Encode(text)
+	return len(ids), err
+}

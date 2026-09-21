@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.3.0
+
+- Add bounded concurrent Jev requests (default two, configurable from one to eight).
+- Fit requests to both byte limits and an explicit o200k_base token estimate.
+- Build chronological scoring context with tool identities and result metadata.
+- Add opt-in independent result reduction without removing call records.
+- Preserve side effects, errors, explicit dependencies, and recent messages.
+- Return per-pass request counts and proposed reduction diagnostics.
+- Test overlapping requests, cancellation, Unicode fitting, and mixed call protection.
+
+
 ## Unreleased
 
 - Added twelve real Codex continuations with paired histories, held-out tests, and published patches.

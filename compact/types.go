@@ -39,11 +39,13 @@ type Message struct {
 // RecentMessages defaults to four; an explicit zero disables recency protection.
 // AllowPartial permits reductions that still exceed TargetTokens.
 type Request struct {
-	Goal           string    `json:"goal"`
-	Messages       []Message `json:"messages"`
-	TargetTokens   int       `json:"target_tokens"`
-	RecentMessages *int      `json:"recent_messages,omitempty"`
-	AllowPartial   bool      `json:"allow_partial,omitempty"`
+	// ReduceResultsIndividually retains call records and reduces eligible results separately.
+	ReduceResultsIndividually bool      `json:"reduce_results_individually,omitempty"`
+	Goal                      string    `json:"goal"`
+	Messages                  []Message `json:"messages"`
+	TargetTokens              int       `json:"target_tokens"`
+	RecentMessages            *int      `json:"recent_messages,omitempty"`
+	AllowPartial              bool      `json:"allow_partial,omitempty"`
 }
 
 // Candidate shows literal excerpts of a dependency group to a scorer.
@@ -119,6 +121,12 @@ type Decision struct {
 
 // Stats separates local work from scoring latency. Durations are milliseconds.
 type Stats struct {
+	Scoring         ScoringStats `json:"scoring"`
+	ProtectedGroups int          `json:"protected_groups"`
+	KeptGroups      int          `json:"kept_groups"`
+	ReducedGroups   int          `json:"reduced_groups"`
+	DroppedGroups   int          `json:"dropped_groups"`
+	RejectedGroups  int          `json:"rejected_groups"`
 	// ProtectedTokens counts groups that must remain verbatim.
 	ProtectedTokens int `json:"protected_tokens"`
 	// CandidateOutputTokens reports the evaluated output even if not applied.
@@ -147,4 +155,16 @@ type Result struct {
 	Scores     map[string]Score `json:"scores,omitempty"`
 	Warnings   []string         `json:"warnings"`
 	Stats      Stats            `json:"stats"`
+}
+
+// ScoringStats describes one scoring pass; Requests counts planned HTTP batches.
+type ScoringStats struct {
+	Requests         int  `json:"requests"`
+	ContextShortened bool `json:"context_shortened"`
+}
+
+// DiagnosticScorer supplies per-call statistics without a shared last-result field.
+type DiagnosticScorer interface {
+	Scorer
+	ScoreWithStats(context.Context, Evaluation) (map[string]Score, ScoringStats, error)
 }

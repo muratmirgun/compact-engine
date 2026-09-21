@@ -22,11 +22,7 @@ func collectGroups(req Request) ([]group, error) {
 	if len(req.Messages) == 0 || len(req.Messages) > 10000 || !utf8.ValidString(req.Goal) {
 		return nil, fmt.Errorf("%w: require 1..10000 messages and utf-8 text", ErrInvalid)
 	}
-	recent := 4
-	if req.RecentMessages != nil {
-		recent = *req.RecentMessages
-	}
-	if recent < 0 {
+	if req.RecentMessages != nil && *req.RecentMessages < 0 {
 		return nil, fmt.Errorf("%w: recent_messages cannot be negative", ErrInvalid)
 	}
 	parents := make([]int, len(req.Messages))
@@ -90,7 +86,23 @@ func collectGroups(req Request) ([]group, error) {
 		if !ok || call >= result {
 			return nil, fmt.Errorf("%w: result %q requires an earlier call", ErrInvalid, id)
 		}
-		join(parents, call, result)
+		if !req.ReduceResultsIndividually {
+			join(parents, call, result)
+		}
+	}
+	return assembleGroups(req, parents, calls, results), nil
+}
+
+func assembleGroups(req Request, parents []int, calls, results map[string]int) []group {
+	recent := 4
+	if req.RecentMessages != nil {
+		recent = *req.RecentMessages
+	}
+	depended := make(map[string]bool)
+	for _, m := range req.Messages {
+		for _, id := range m.DependsOn {
+			depended[id] = true
+		}
 	}
 	groups := make([]group, 0, len(req.Messages))
 	positions := make(map[int]int)
@@ -104,13 +116,17 @@ func collectGroups(req Request) ([]group, error) {
 		}
 		g := &groups[pos]
 		g.indices = append(g.indices, i)
-		if reason := protection(m, i >= len(req.Messages)-recent, results); reason != "" {
+		reason := protection(m, i >= len(req.Messages)-recent, results)
+		if req.ReduceResultsIndividually && m.Role == "tool" && reason == "" {
+			reason = resultProtection(req, calls[m.ToolCallID], m.ToolCallID, results, depended)
+		}
+		if reason != "" {
 			g.protected = true
 			g.reason = reason
 		}
 	}
 	protectConversationGroups(groups, req.Messages)
-	return groups, nil
+	return groups
 }
 
 func protection(m Message, isRecent bool, results map[string]int) string {
@@ -174,4 +190,24 @@ func protectConversationGroups(groups []group, messages []Message) {
 			g.protected, g.reason = true, "conversation text preserved"
 		}
 	}
+}
+
+// resultProtection carries the originating call's guarantees onto its result.
+func resultProtection(req Request, parentIndex int, callID string, results map[string]int, depended map[string]bool) string {
+	parent := req.Messages[parentIndex]
+	if parent.Group != "" || len(parent.DependsOn) > 0 || depended[parent.ID] {
+		return "explicit call dependency"
+	}
+	parent.ToolCalls = nil
+	for _, call := range req.Messages[parentIndex].ToolCalls {
+		if call.ID == callID {
+			parent.ToolCalls = []ToolCall{call}
+			break
+		}
+	}
+	recent := 4
+	if req.RecentMessages != nil {
+		recent = *req.RecentMessages
+	}
+	return protection(parent, parentIndex >= len(req.Messages)-recent, results)
 }
